@@ -15,11 +15,6 @@
 | `데이터 저장 및 마이닝 & 서버사이드 컴포넌트 구현 및 개발2` | `Mongo DB`<br>`AI 감정분석` | 56H |
 | `최종프로젝트` | `팀 프로젝트`<br>`프로젝트 멘토링`<br>`프로젝트 경진대회` | 224H<br>32H<br>8H |
 
-<<<<<<< HEAD
-## re initialize
-=======
-## re initialize
+<br>
 
-##
-- add test1.md
->>>>>>> parent of ecad61c (add test2.md)
+## re initialize
