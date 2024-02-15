@@ -28,3 +28,5 @@
 
 ## add footer
 - add footer.md
+## add sidebar
+- add sidebar.md
