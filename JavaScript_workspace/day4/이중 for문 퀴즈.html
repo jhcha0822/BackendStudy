@@ -1,0 +1,19 @@
+<script>
+    // JS에서 테이블 태그 출력해보기
+    // 1) document.createElement("table")로 만들고
+    //    document.createElement("tr").. document.createElement("td")로 만들기
+    //    dom 객체 생성법
+    // 2) document.write("2*2 <table>");
+
+    let tag = "<table width=\"300px\" height=\"250px\" border=\""+1+"px\" align=\"center\">"; // 이스케이프시퀀스
+    for(let i=0; i<3; i++) {
+        tag = tag + "<tr>";
+        for(let j=0; j<5; j++)
+            tag = tag + "<td></td>";
+        tag = tag + "</tr>";    
+    }
+    tag = tag + "</table>";
+    
+    document.write(tag);
+
+</script>

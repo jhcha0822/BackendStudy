@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 800px;
+            height: 800px;
+            margin: auto;
+            background-color: beige;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        let box;
+        let percentage = 0.1;
+        let targetX = -170;
+
+        // 박스의 움직임에 감속도 공식 적용
+        // 나의위치 = 현재 나의 위치 + 보폭(목표 위치 - 현재 나의 위치)
+        function move() {
+            box.style.left = parseInt(box.style.left) + percentage*(targetX - parseInt(box.style.left)) + "px";
+        }
+
+        // 초기화할 작업
+        function init() {
+            // 서랍장을 생성하여 적당한 위치에 부착
+            createRect();
+        }
+
+        function createRect(){
+            let wrapper = document.getElementById("wrapper");
+            
+            box = document.createElement("div"); // <div></div>
+            box.style.width = 200+"px";
+            box.style.height = 120+"px";
+            box.style.background = "black";
+            box.style.position = "absolute";
+            box.style.left = targetX + "px";
+            box.style.top = 100 + "px";
+            box.style.borderRadius = 5 + "%";
+
+            // box라는 div에 이벤트 연결
+            // <div onMouseOver=""> 불가: div를 JS에서 만들었기 때문에 이벤트도 JS에서 연결
+            box.addEventListener("mouseover", function(){
+                // console.log("마우스 오버");
+                targetX = 0;
+                setInterval("move()", 10);
+            });
+            box.addEventListener("mouseout", function(){
+                // console.log("마우스 아웃");
+                targetX = -170;
+                setInterval("move()", 10);
+            });
+
+            wrapper.appendChild(box);
+        }
+
+        // window는 창이 하나이므로 생략 가능
+        addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>갤러리 예제</title>
+    <style>
+        /* internal 방식 */
+        #wrapper{
+            margin: auto;
+            width: 600px;
+            height: 600px;
+            background-color: yellow;
+        }
+        #header{
+            width: 100%;
+            height: 100px;
+            background-color: magenta;
+            /* div 내의 컨텐츠의 가운데정렬 */
+            /* 수평 정렬 */
+            text-align: center;
+            /* 수직 정렬: div의 높이와 동일하게 설정 */
+            line-height: 100px;
+        }
+        #content{
+            width: 100%;
+            height: 500px;
+            background-color: aquamarine;
+            text-align: center;
+            line-height: 500px;
+        }
+        /* content 안의 이미지에 대한 CSS 적용 */
+        /* content img --> content 선택자 내부의 자식 img 태그에 대해 */
+        #content img{ 
+            width: 90%;
+            height: 90%;
+
+            /* CSS3 부터는 다양한 효과가 적용됨 */
+            /* opacity: 0에 가까울 수록 투명, 1에 가까울 수록 불투명 */
+            opacity: 0.1;
+        }
+    </style>
+    <script>
+        let n=1;
+        // 투명도를 설정할 수 있는 전역변수
+        let op=1;
+        function prev(){
+            n--;
+            let photo = document.getElementById("photo");
+            photo.src="../images/redvelvet/rv"+n+".jpg";
+        }
+        function next(){
+            n++;
+            let photo = document.getElementById("photo");
+            photo.src="../images/redvelvet/rv"+n+".jpg";
+        }
+        function opacityPlus(){
+            // 문서내의 photo에 대해 opacity 스타일 속성을 0에 가깝게 감소
+            op-=0.1;
+            let photo = document.getElementById("photo");
+            photo.style.opacity = op;
+        }
+        function opacityMinus(){
+            op+=0.1;
+            let photo = document.getElementById("photo");
+            photo.style.opacity = op;
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <button onClick="prev()">Prev</button>
+            <button onClick="opacityPlus()">투명하게</button>
+            <button onClick="opacityMinus()">불투명하게</button>
+            <button onClick="next()">Next</button>
+        </div>
+        <div id="content">
+            <img src="../images/redvelvet/rv1.jpg" id="photo">
+        </div>
+    </div>
+</body>
+</html>

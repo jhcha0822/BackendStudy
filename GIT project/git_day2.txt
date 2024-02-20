@@ -1,0 +1,162 @@
+복습
+
+초기화 git init
+파일추가 git add
+체크포인트 설정 git commit
+
+위에서 로컬의 체크포인트 생성 후 원격으로 저장
+git push
+원격에서 로컬로 체크포인트 받아오기
+git pull
+원격에서 로컬로 저장소 복제
+git clone
+
+원격과 연결
+git remote
+사용자 설정
+git config
+
+
+
+branch
+
+branch가 하나라면 협업 시 pull - commit을 시간에 따라 한명씩 기여 가능
+branch가 여러개라면 병렬로 작업 가능
+
+main: 상용 branch. 유저들이 바로 서비스를 이용하게 해주는 branch
+따라서 이쪽의 코드를 수정 시 공개적으로 확인 가능
+기능 개발을 위한 branch 추가 시 개발이 완료되고 배포 가능
+
+일반적으로 branch는 기능 개발의 대상인 것으로 feat/header 식으로 설정
+
+원격으로 추가시 origin/main 으로 추가되었음
+
+
+
+issue 관리
+
+리포지터리 상단의 project 클릭
+프로젝트의 관리 도구를 여기서 설정 가능
+to-do >> ing >> done
+
+다른 사용자의 저장소에 가서 이슈 추가 가능 (문의)
+
+1. 메인 branch에는 직접 커밋하지 않기
+  - pull request 를 통해 모두의 확인을 받고
+2. 기능 개발 전 main branch를 기준으로 새 branch 생성
+  - main을 토대로 feat/... 개발
+3. branch 이름은 feature/기능이름 으로 지정 (혹은 feat/)
+  - 6개 정도 범례
+4. feature branch는 한 명만 커밋
+  - 여러명이서 작업 시 충돌 발생 가능
+
+미니홈페이지:
+네비게이션 feat/navigation
+서비스소개 feat/about
+푸터 feat/footer
+
+
+
+branch를 관리, 통합하기 위한 규칙
+-git flow / github flow 로 검색
+
+git flow: 규모가 있는 회사/프로젝트 시
+
+develop을 토대로 feature 생성 후 merge
+어느정도 develop이 쌓이면 release
+release를 master에 merge
+
+github flow: 깃허브에 기능추가하는 flow. 규모가 작음
+main과 feature로 구성
+버그수정을 위해 hot fix 정도 추가해도 ㄱㅊ
+
+
+
+merge
+
+merge에는 총 세가지 존재
+
+1. fast-foward (빨리감기)
+충돌 오류 발생 가능성이 없음
+( ) + 1 2 3 = 1 2 3
+
+2. merge commit (병합 커밋)
+1 2 3 + 4 5 = 1 2 3 4 5
+
+3. conflict(충돌)
+merge commit과 동일하지만 충돌 발생하는 경우
+1 2 3 4 + 1 2 5 6 = 1 2 ? ?
+직접 정해줘야 함
+충돌 발생시 경고창 발생
+VS code 열어 정리하여 add, commit
+
+머지 후 로컬에서 합친 feature 삭제
+push 하면 원격에서도 삭제됨
+
+main에 바로 merge 하지 않고 다른 branch와 merge해서 conflict를 해결한 뒤 merge
+
+불필요한 merge 이후의 branch는 정리하자 (로컬, 원격)
+
+
+
+Pull Request (PR)
+
+github에서 pull request
+
+description에서
+- close #n
+- 관련 있는 이슈
+
+md 문법 지원
+프리뷰 가능
+
+Assignees: 작업자
+Label: 할당되는 라벨
+Project: 관련 프로젝트
+Milestone
+
+아래에 어느 부분이 수정되었는지 알려줌
+
+일반적으로 다른 사람이 merge를 승인
+
+코드트리에서는 새로고침(패치) 해야 보임
+
+로컬에서 작업시 메인이 앞서가고 origin-main이 뒤임
+이때 해결하기 위하여 push
+
+반대로 PR 이후 origin-main이 앞이고 로컬 메인이 뒤임
+따라서 pull
+
+
+
+팀 프로젝트: 콜라보레이터
+
+
+
+Branch: 가지쳐나가기
+Fork: 원격->원격 복사
+
+
+
+정적 호스팅
+index.html 메인 페이지 호스팅 (HTML, CSS, JS)
+깃허브 리포 내 pages 이용
+도메인 돈주고 사면 가능
+
+
+cli 실습
+
+$ git branch 로 main이 맞는지 확인
+$ git branch feat/test
+$ git switch feat/test
+
+// switch 없으면 checkout
+$ git checkout feat/test
+
+$ git add README.md
+$ git commit -m "cli-test"
+
+cli로 branch 보기
+git log --oneline --all --graph
+나올때 q
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let wrapper;
+        let count = 10;
+        let width = 20; // 막대 하나당 너비
+        let height = 150;
+
+        function init(){
+            wrapper = document.createElement("div");
+            wrapper.style.margin = "auto";
+            wrapper.style.background = "gray";
+
+            wrapper.style.width = count*width + "px";
+            wrapper.style.height = height + "px";
+
+            document.body.appendChild(wrapper);
+        }
+
+        addEventListener("load", function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

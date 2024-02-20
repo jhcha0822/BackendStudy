@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+    <script>
+        // 5개 이상의 다른 색상의 화살이 
+        // 각각 다른 속도, 다른 y축위치로 날라가게 작성
+
+        let span;
+        // 화살의 색, 속도, 시작 x좌표, 시작 y좌표를 담고 있는 이차원 배열
+        let arrow=[["red",   10, 0, 329],
+                   ["orange", 5, 0, 210],
+                   ["blue",  15, 0, 221],
+                   ["green", 13, 0, 403],
+                   ["purple", 9, 0, 305]];
+
+        function createArrow(){
+            for(let i=0; i<arrow.length; i++) {
+                span = document.createElement("span");
+                span.setAttribute("id", `arrow${i+1}`); // 수업시간에 안배웠음
+                span.innerText = ">--→";
+                span.style.color = arrow[i][0];
+                span.style.position = "absolute";
+                span.style.left = arrow[i][2]+"px";
+                span.style.top = arrow[i][3]+"px";
+                document.body.appendChild(span);        
+            }
+        }
+
+        function move(){
+            for(let i=0; i<arrow.length; i++) {
+                arrow[i][2] += arrow[i][1];
+                document.getElementById(`arrow${i+1}`).style.left = arrow[i][2] + "px";
+            }
+        }
+
+        function init(){
+            createArrow();
+            setInterval("move()", 30);
+        }
+    </script>
+</head>
+<body onload="init()">
+    
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+    <script>
+        // 셀의 크기와 개수가 정해져있지 않다
+        // wrapper도 동적으로 생성하자
+        let canvas;
+        let cellSize=10; // 정사각형인 각 cell의 크기
+        let cellCount=100; // 셀이 모여 만들어진 전체영역
+        let cellArray=[]; // 삭제할 cell을 담은 목록
+        let playArray=[]; // 재생할 cell을 담은 목록 (그림 그린 좌표만)
+        let playIndex=0; // setInterval의 시간 간격마다 1씩 증가될 변수
+        let flag=false;
+
+        function createCell(y, x){
+            // 생성된 canvas에 저장된 크기와 갯수만큼의 셀을 생성하여 부착
+            let cell = document.createElement("div");
+            cell.style.border="1px solid white";
+            cell.style.boxSizing="border-box";
+            cell.style.width=cellSize+"px";
+            cell.style.height=cellSize+"px";
+            cell.style.position="absolute";
+            cell.style.left=cellSize*x+"px";
+            cell.style.top=cellSize*y+"px";
+
+            cell.addEventListener("mouseover", function(){
+                // 익명 함수 영역에서는 이벤트를 일으킨 주체가 되는 요소를 대명사로
+                // 가리킬 수 있는데, 이때 사용되는 변수명은 this
+                this.style.background="red";
+                console.log("over");
+                playArray.push(cell);
+            });
+
+            canvas.appendChild(cell);
+
+            return cell;
+        }
+
+        function createCanvas(){
+            // wrapper의 기능
+            canvas = document.createElement("div");
+            canvas.style.width=(cellSize*cellCount)+"px";
+            canvas.style.height=(cellSize*cellCount)+"px";
+            canvas.style.background="black";
+            canvas.style.margin="auto";
+            canvas.style.position="relative";
+
+            // 생성된 canvas에 저장된 크기와 갯수만큼의 셀을 생성하여 부착
+            for(let i=0; i<cellCount; i++) {
+                let arr=[];
+                for(let j=0; j<cellCount; j++) {
+                    let cell = createCell(i, j);
+                    arr.push(cell);
+                }
+                cellArray.push(arr);
+            }
+
+            // 문서 내에 body는 하나이기에 아래 문법이 가능함(정의됨)
+            document.body.appendChild(canvas);
+        }
+
+        // 기존 배경색을 모두 지우고 playArray에 들어있는 좌표를 대상으로 색상 부여
+        function play() {
+            if(flag) {
+                playArray[playIndex++].style.background="red"
+                if(playIndex >= playArray.length)
+                    flag=false;
+            }
+            
+            /* for문은 너무 빠르다
+            erase();
+            for(let i=0; i<playArray.length; i++){
+                playArray[i].style.background="red";
+            }
+            */
+        }
+
+        // 모든 cell이 이차원배열에 담겨 있으므로 삭제 시에 이용한다
+        function erase() {
+            for(let i=0; i<cellArray.length; i++) {
+                for(let j=0; j<cellArray[i].length; j++) {
+                    cellArray[i][j].style.background="black";
+                }
+            }
+        }
+
+        function init(){
+            createCanvas();
+        }
+
+        addEventListener("load", function(){
+            init();
+            document.getElementById("bt_play").addEventListener("click", function(){
+                erase();
+                flag = true;
+            });
+            document.getElementById("bt_del").addEventListener("click", function(){
+                erase();
+            });
+            setInterval("play()" , 10)
+        });
+    </script>
+</head>
+<body>
+    <button id="bt_play">재생</button>
+    <button id="bt_del">삭제</button>
+</body>
+</html>

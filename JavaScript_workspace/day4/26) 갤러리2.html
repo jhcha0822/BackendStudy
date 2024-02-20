@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 600px;
+            height: 500px;
+            margin: auto;
+        }
+        #aside{
+            width: 100px;
+            height: 100%;
+            background-color: gray;
+            float: left;
+            text-align: center; /* 이미지 가운데로 */
+            overflow: scroll;  /* 넘쳐나는 컨텐츠에 대해 스크롤바 적용 */
+        }
+        #aside img{
+            width: 90px;
+            height: 90px;
+        }
+        #content{
+            width: 500px;
+            height: 100%;
+            background-color: whitesmoke;
+            float: left;
+        }
+        #content img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script>
+        function rollOver(bg){
+            // let content = document.getElementById("content");
+            
+            // 아이디를 부여하지 않고도 css 선택자를 이용하여 이미지 접근 가능
+            let content = document.querySelector("#content img"); // JQuery 스타일
+            content.src="../images/redvelvet/rv"+bg+".jpg";
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside">
+            <img onClick="rollOver('1')" src="../images/redvelvet/rv1.jpg">
+            <img onClick="rollOver('2')" src="../images/redvelvet/rv2.jpg">
+            <img onClick="rollOver('3')" src="../images/redvelvet/rv3.jpg">
+            <img onClick="rollOver('4')" src="../images/redvelvet/rv4.jpg">
+            <img onClick="rollOver('5')" src="../images/redvelvet/rv5.jpg">
+            <img onClick="rollOver('6')" src="../images/redvelvet/rv6.jpg">
+            <img onClick="rollOver('7')" src="../images/redvelvet/rv7.jpg">
+            <img onClick="rollOver('8')" src="../images/redvelvet/rv8.jpg">
+            <img onClick="rollOver('9')" src="../images/redvelvet/rv9.jpg">
+        </div>
+        <div id="content">
+            <img src="../images/redvelvet/rv1.jpg">
+        </div>
+    </div>
+</body>
+</html>

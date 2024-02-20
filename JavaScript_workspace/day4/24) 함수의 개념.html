@@ -1,0 +1,33 @@
+<script>
+
+    // 재사용할 목적의 코드에 영역을 지정하고 이름을 붙인 단위: 함수
+    // JS에서는 사용자가 정의한 함수를 '사용자 정의 함수'라 하며 앞에 function키워드를 붙여 선언 가능
+    
+    function dan(n){
+        for(let i=1; i<10; i++)
+            document.write(`${n}*${i}=${n*i}<br>`);
+        document.write("<br>");
+    }
+    
+    /*
+    n = parseInt(prompt("출력할 구구단 단수 입력:"));
+    dan(n);
+    dan(n);
+    */
+
+    // 함수에는 두가지 유형이 있다
+    // 1) 매개변수 있는 함수
+    // 2) 리턴값이 있는 함수
+
+    // 두 수의 합을 구하는 로직
+    function getSum(x, y) {
+        let sum = x+y;
+        // document.write(sum+"<br>");
+        return sum;
+    }
+
+    document.write(getSum(6, 8)+"<br>");
+    document.write(getSum(11, 9)+"<br>");
+    
+
+</script>

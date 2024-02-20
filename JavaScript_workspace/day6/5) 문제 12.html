@@ -1,0 +1,14 @@
+<script>
+    let arr = new Array(20);
+    /*
+    for(let i=0; i<10; i++)
+        arr[i] = 0;
+    for(let i=10; i<20; i++)
+        arr[i] = 1;
+    */
+    for(let i=0; i<arr.length; i++)
+        arr[i] = (i<arr.length/2) ? 0 : 1;
+
+    for(let i=0; i<arr.length; i++)
+        document.write(arr[i]+" ");
+</script>

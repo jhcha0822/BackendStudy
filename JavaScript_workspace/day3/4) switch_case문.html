@@ -1,0 +1,17 @@
+<script>
+    //다중적 조건을 판단할 때 사용하는 else ~ if문 대신 switch ~ case 문을 이용할 수 있다.
+
+    let n = prompt("점수 입력"); // 프롬프트는 입력을 받아 문자열에 저장함
+
+    n = parseInt(n); // 지정한 문자열을 정수화하는 함수
+
+    switch(n) { // 조건 판단을 위한 대상 변수값을 소괄호에 위치
+        case 10: document.write("영업부서");
+            // break;
+        case 20: document.write("마케팅부서");
+            break;
+        case 30: document.write("인사부서");
+            break;
+        default: document.write("존재하는 부서만 입력"); // else문과 동일
+    }
+</script>

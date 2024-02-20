@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #parent{
+            width: 500px;
+            height: 500px;
+            border: 1px solid red;
+            margin: auto;
+            /* 개발자가 자식에게 위치 속성을 부여하면, 반드시 그 부모도 위치 속성을 명시해야 함 */
+            position: relative;
+            /* 부모 영역 밖으로 나간 컨텐츠에 대해 안보이게 처리 */
+            overflow: hidden;
+        }
+
+        #child{
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            /* 부모를 기준으로 한 위치 속성 */
+            position: absolute;
+            /* 부모 기준 x축값을 100, y축값을 150 */
+            left: -70px;
+            top: -50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 모든 태그는 위치속성을 갖는다
+        개발자가 아무것도 지정하지 않아도, 디폴트 위치 속성이 지정됨
+        relative(상대위치): 기본 위치 속성, 다른 태그와의 관계에서 결정되는 위치 속성
+        absolute(절대위치): 부모 요소를 기준으로 한 위치 속성 -->
+    <div id="parent">
+        <div id="child"></div>
+    </div>
+</body>
+</html>

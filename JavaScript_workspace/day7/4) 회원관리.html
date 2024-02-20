@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 1200px;
+            height: 800px;
+            background-color: beige;
+            margin: auto;
+        }
+        #aside1, #aside2{
+            width: 200px;
+            height: 100%;
+            background-color: azure;
+            float: left;
+        }
+        #section{
+            width: 800px;
+            height: 100%;
+            background-color: bisque;
+            float: left;
+        }
+        #header{
+            width: 100%;
+            height: 50px;
+            background-color: cornsilk;
+        }
+        #content{
+            width: 100%;
+            height: 750px;
+            background-color: aliceblue;
+        }
+    </style>
+    <script>
+        let memberArray = []; // 회원정보를 모아놓을 2차원 배열
+        let content; // 회원정보의 목록이 출력될 div
+        let currentIndex=-1; //  현재 사용자가 선택한 회원의 층수: memberArray의 index
+
+        // 한 사람에 대한 정보를 일차원 배열에 담고, 이 일차원 배열을 각 사람마다 누적시켜
+        // 이차원 배열 형태의 테이블, 데이터베이스를 생성할 수 있다.
+        function register(){
+            let member = [];
+            
+            let id = document.getElementById("ID");
+            let pw = document.getElementById("P/W");
+            let email = document.getElementById("Email");
+            let age = document.getElementById("Age");
+            member.push(id.value);
+            member.push(pw.value);
+            member.push(email.value);
+            member.push(age.value);
+
+            memberArray.push(member);
+        }
+
+        // 현재까지 누적된 회원들의 정보를 table tag로 표현해보기
+        function getList(){
+            let tag="<table width=\"100%\" border=\"1px\">";
+            
+            tag += "<tr>";
+            tag += "<th>ID</th>";
+            tag += "<th>P/W</th>";
+            tag += "<th>Email</th>";
+            tag += "<th>Age</th>";
+            tag += "</tr>";
+
+            for(let i=0; i<memberArray.length; i++) {
+                tag += "<tr align='center' onMouseOver=\"this.style.background='yellow'\" onMouseOut=\"this.style.background=''\" onClick='showDetail("+i+")'>";
+                for(let j=0; j<memberArray[i].length; j++)
+                    tag += "<td>"+memberArray[i][j]+"</td>";
+                tag += "</tr>";
+            }
+
+            tag += "<tr>";
+            tag += "<td colspan='4' align='right'>누적 회원수 "+memberArray.length+"</th>";
+            tag += "</tr>";
+            // content.innerText=tag; // text로 출력됨
+            content.innerHTML=tag; 
+        }
+
+        // 표에서 선택한 한 회원의 정보를 우측 aside2 영역에 출력
+        function showDetail(n){
+            // console.log("상세보기");
+            currentIndex = n; // 전역변수로 저장. 다른함수에서 사용하기 위함.
+
+            let id2 = document.getElementById("ID2");
+            let pw2 = document.getElementById("P/W2");
+            let email2 = document.getElementById("Email2");
+            let age2 = document.getElementById("Age2");
+            id2.value=memberArray[n][0];
+            pw2.value=memberArray[n][1];
+            email2.value=memberArray[n][2];
+            age2.value=memberArray[n][3];
+        }
+
+        // 현재 보고 있는 회원의 정보를 우측 입력양식의 정보로 변경한 후
+        // 목록을 갱신
+        function edit(){
+            let id2 = document.getElementById("ID2");
+            let pw2 = document.getElementById("P/W2");
+            let email2 = document.getElementById("Email2");
+            let age2 = document.getElementById("Age2");
+            
+            let member = memberArray[currentIndex];
+            member[0] = id2.value;
+            member[1] = pw2.value;
+            member[2] = email2.value;
+            member[3] = age2.value;
+            // memberArray[currentIndex][0] = id2.value;
+            getList();
+        }
+
+        // 현재 보고 있는 회원의 정보를 2차원배열 memberArray에서 제거 후
+        // 목록을 갱신
+        function del(){
+            //memberArray.splice( ,1);
+            let result = confirm(currentIndex+1+"번째 회원을 삭제하시겠습니까?")          
+            if(result){//사용자가 '확인'(긍정) 을 누르면 
+                memberArray.splice(currentIndex,  1);
+                //목록을 갱신
+                getList();
+            }
+        }
+
+        addEventListener("load", function(){
+            content = document.getElementById("content");
+            // 등록 버튼에 이벤트 연결
+            document.getElementById("bt_reg").addEventListener("click", function(){
+                register();
+                getList();
+            });
+            document.getElementById("bt_edit").addEventListener("click", function(){
+                edit()
+            });
+            document.getElementById("bt_del").addEventListener("click", function(){
+                del();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside1">
+            <input type="text" placeholder="ID" id="ID">
+            <input type="password" placeholder="P/W" id="P/W">
+            <input type="text" placeholder="Email" id="Email">
+            <input type="text" placeholder="Age" id="Age">
+            <button id="bt_reg">등록</button>
+        </div>
+        <div id="section">
+            <div id="header"></div>
+            <div id="content"></div>
+        </div>
+        <div id="aside2">
+            <input type="text" placeholder="ID" id="ID2">
+            <input type="password" placeholder="P/W" id="P/W2">
+            <input type="text" placeholder="Email" id="Email2">
+            <input type="text" placeholder="Age" id="Age2">
+            <button id="bt_edit">수정</button>
+            <button id="bt_del">삭제</button>
+        </div>
+    </div>    
+</body>
+</html>

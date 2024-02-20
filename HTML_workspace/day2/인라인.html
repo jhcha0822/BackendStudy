@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span{
+            background-color: blue;
+            width: 300px;
+            height: 200px;
+            /* span은 inline이므로 너비 및 높이 적용 불가 */
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 모든 태그는 공존 가능성을 기준으로 했을 떄,
+        inline: 공존 가능, 단 너비와 높이 적용 불가.
+        block:  공존 불가, 너비와 높이 적용이 가능.
+     -->
+     <img src="../images/wendy.jpg">
+     <!-- image는 inline-block으로 크기도 변경가능하며 공존 가능 -->
+     <span>바나나</span>
+     <span>파인애플</span>
+</body>
+</html>

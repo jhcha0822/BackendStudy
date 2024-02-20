@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 800px;
+            height: 600px;
+            background-color: aquamarine;
+            margin: auto;
+        }
+    </style>
+    <script>
+        // wrapper안에, 기존에 없었던 inline 태그의 방식 중 하나인 span 태그를 생성하여 부착해 넣어보자
+        let cnt = 0;
+        function setCount(){
+            // 문서에 동적으로 태그를 생성하기 위해
+            cnt++;
+            let span = document.createElement("span"); // <span></span>과 동일 효과
+            //span.innerText=cnt; // <span>1</span>과 동일 효과
+            span.innerText = (cnt%3 == 0) ? "*" : cnt;
+            
+            // wrapper 태그 안에 자식으로 넣기
+            let wrapper = document.getElementById("wrapper");
+            wrapper.appendChild(span); // 자식으로 추가
+        }
+    </script>
+</head>
+<body>
+    <button onClick="setCount()">counter</button>
+    <div id="wrapper">
+        <!-- span태그는 아무런 시각적 효과가 없는, 마크업만을 위한 태그임 -->
+        <!-- <span></span> -->
+    </div>
+</body>
+</html>

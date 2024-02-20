@@ -1,0 +1,9 @@
+mysql 가동:
+바이너리버전) bin 폴더에서 cmd > mysqld 입력
+다른 cmd창으로 접속: mysql -u root (포터블 버전이라 host 입력하지 않아도 됨)
+
+데이터베이스 확인
+use jsdb;
+show databases;
+
+select * from emp;

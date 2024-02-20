@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 900px;
+            height: 700px;
+            background-color: yellow;
+            margin: auto;
+        }
+        #aside{
+            width: 100px;
+            height: 700px;
+            background-color: aqua;
+            float: left;
+        }
+        #content{
+            width: 800px;
+            height: 700px;
+            background-color: bisque;
+            float: left;
+        }
+    </style>
+    <script>
+        let n=0; // 카드 번호 누적을 위한 전역변수
+
+        function createCard() {
+            // 동적으로 런타임 시 태그를 생성하여 content에 부착
+            let img = document.createElement("img"); // <img> 작성과 동일
+            n++;
+            let filename = (n%3 == 0) ? "joker.png" : "h" + n + ".png";
+            img.src="../images/card/" + filename;
+            img.style.width = 100+"px";
+            img.style.height = 110+"px";
+
+            // content div에 자식 요소로 부착
+            let content = document.getElementById("content");
+            content.appendChild(img); // <div><img></div> 와 동일
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside">
+            <button onClick="createCard()">카드 출력</button>
+        </div>
+        <div id="content">
+            <!-- <img src="../images/card/h1.png"> 정적 생성-->
+        </div>
+    </div>
+</body>
+</html>

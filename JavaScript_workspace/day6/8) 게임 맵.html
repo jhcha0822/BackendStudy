@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper {
+            width: 900px;
+            height: 675px;
+            margin: auto;
+            background-color: skyblue;
+            position: relative;
+        }
+    </style>
+    <script>
+        // 맵을 표현할 이차원 배열을 정의
+        let map = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2],
+            [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2],
+            [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+        ];
+
+        let wrapper;
+
+        function createItem(filename, y, x){
+            console.log("y:"+y+" x: "+x);
+            let brick = document.createElement("img");
+            brick.src = "../images/mario/"+filename;
+            brick.style.position = "absolute";
+            brick.style.left=(45*x)+"px";
+            brick.style.top=(45*y)+"px";
+            brick.style.width=45+"px";
+            brick.style.height=45+"px";
+            brick.style.float="left"
+            wrapper.appendChild(brick);
+        }
+
+        // 밟는 벽돌
+        function createMap(){
+            for(let i=0; i<map.length; i++) { // map의 전 좌표 대상으로
+                for(let j=0; j<map[i].length; j++) {
+                    switch(map[i][j]) {
+                        case 1: 
+                            createItem("mario.png", i, j);
+                            break;
+                        case 2: 
+                            createItem("ground.png", i, j);
+                            break;
+                        case 3: 
+                            createItem("brick.png", i, j);
+                            break;
+                        case 4: 
+                            createItem("toad.png", i, j);
+                            break;
+                        case 5: createItem("koopa.png", i, j);
+                    }
+                }
+            }
+        }
+
+        function init() {
+            wrapper = document.getElementById("wrapper");
+            createMap();
+        }
+
+        addEventListener("load", function(){
+            init();
+        });
+
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+    </style>
+    <script>
+        // JS에서 테이블 태그 출력해보기
+        // 1) document.createElement("table")로 만들고
+        //    document.createElement("tr").. document.createElement("td")로 만들기
+        //    dom 객체 생성법
+        // 2) document.write("2*2 <table>");
+
+        let f = parseInt(prompt("층수 입력"));
+        let r = parseInt(prompt("객실수 입력"));
+        let b = parseInt(prompt("두께 입력"));
+        let tag = "<table border=\""+b+"px\" align=\"center\">"; // 이스케이프시퀀스
+        for(let i=f; i>0; i--) {
+            tag = tag + "<tr>";
+            for(let j=1; j<=r; j++)
+                tag = tag + "<td>"+i+"0"+j+"호</td>";
+            tag = tag + "</tr>";    
+        }
+        tag = tag + "</table>";
+        
+        document.write(tag);
+
+    </script>
+</head>
+<body>
+    <!--
+    <table width="400px" border="1px" align="center">
+        <tr>
+            <td>301</td>
+            <td>302</td>
+        </tr>
+        <tr>
+            <td>201</td>
+            <td>202</td>
+        </tr>
+        <tr>
+            <td>101</td>
+            <td>102</td>
+        </tr>
+    </table>
+     -->
+</body>
+</html>

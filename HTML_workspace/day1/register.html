@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <!-- 스타일시트 코드를 외부 파일로 빼놓고 link로 가져오는 방식: external -->
+    <link rel="stylesheet" href="../css/register.css">
+</head>
+<body>
+    <table width="600px" border="1px" align="center">
+        <tr>
+            <td colspan="2" align="center">회원가입</td>
+        </tr>
+        <tr>
+            <td width="150px" align="center">ID</td>
+            <td>
+                <input type="text" class="inputStyle" placeholder="아이디를 4자 이상 입력하시오.">
+            </td>
+        </tr>
+        <tr>
+            <td align="center">Password</td>
+            <td>
+                <input type="password" class="inputStyle">
+            </td>
+        </tr>
+        <tr>
+            <td align="center">Email</td>
+            <td>
+                <input type="text" class="inputStyle">@
+                <select id="mailserver">
+                    <option>naver.com</option>
+                    <option>gmail.com</option>
+                    <option>daum.net</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">이메일 수신 여부</td>
+            <td>
+                예 <input type="radio" name="select">
+                아니오 <input type="radio" name="select">
+            </td>
+        </tr>
+        <tr>
+            <td align="center">보유기술</td>
+            <td class="skill">
+                java <input type="radio">
+                jsp <input type="radio">
+                spring <input type="radio">
+                mybatis <input type="radio">
+                jquery<input type="radio">
+                oracle <input type="radio">
+                ML <input type="radio">
+            </td>
+        </tr>
+        <tr>
+            <td align="center">이력서</td>
+            <td>
+                <input type="file">
+            </td>
+        </tr>
+        <tr>
+            <td align="center">자기소개</td>
+            <td>
+                <textarea></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button>회원가입</button>
+                <button>로그인</button>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

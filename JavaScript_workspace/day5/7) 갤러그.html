@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 1000px;
+            height: 800px;
+            margin: auto;
+            background-image: url(../images/Gallerxy/bg.png);
+            /* background-position: 0px 0px; */
+            position: relative;
+        }
+    </style>
+    <script>
+        let wrapper;
+        let yPos=0;
+
+        function init(){
+            wrapper = document.getElementById("wrapper");
+            wrapper.style.backgroundPosition="0px 0px";
+        }
+
+        function createEnemy(rows, cols, filename){ // 다수의 적군을 만들되, 여러 행, 여러 열로 배치해야함: 이중 반복문
+            for(let i=0; i<rows; i++) {
+                for(let j=0; j<cols; j++) {
+                    let img = document.createElement("img");
+                    img.src = "../images/Gallerxy/"+ filename; //enemy2.png";
+                    img.style.width = 35+"px";
+                    img.style.position = "absolute";
+                    img.style.top = 50+(50*i)+"px";
+                    img.style.left = (1000-35*cols)/2+(35*j)+"px";
+                    
+                    wrapper.appendChild(img);
+                }
+            }
+            /*
+            for(let i=0; i<2; i++) {
+                for(let j=0; j<15; j++) {
+                    let img = document.createElement("img");
+                    img.src = "../images/Gallerxy/enemy1.png";
+                    img.style.width = 35+"px";
+                    img.style.position = "absolute";
+                    img.style.top = 200+(50*i)+"px";
+                    img.style.left = 237.5+(35*j)+"px";
+                    
+                    wrapper.appendChild(img);
+                }
+            }
+            */
+        }
+
+        function bgEffect(){ // 배경을 y축값으로 증가시켜 날아가는 효과를 준다
+            yPos += 1;
+            wrapper.style.backgroundPosition=`0px ${yPos}px`;
+        }
+
+        addEventListener("load", function(){
+            init();
+            createEnemy(5, 22, "enemy2.png");
+            setInterval("bgEffect()", 10);
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper"></div>
+</body>
+</html>

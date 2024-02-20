@@ -1,0 +1,41 @@
+/* 아이디, 패스워드, 이메일ID는 노란색 배경으로 처리하자 
+나만의 스타일을 적용한 코드영역을 적용한다: CSS 클래스
+클래스는 앞에 . 으로 구분 */
+.inputStyle{
+    background: yellow;
+    border: solid 1px orange;
+}
+/* 문서내의 모든 td에 대한 CSS */
+td{
+    font-size: 11px;
+}
+/* 어느 요소가 될 지는 모르지만 추후 아래의 클래스를 적용할 때
+    CSS 효과를 발생하게 됨. */
+.skill{
+    color: red;
+    font-weight: bold;
+}
+/* 문서내의 textarea 너비를 98%로 지정 */
+textarea{
+    width: 98%;
+    height: 50px;
+    background-color: aqua;
+    color: white;
+}
+
+table{
+    border: 10px;
+    border: 10px dotted #cccccc;
+}
+/* 문서 내 mailserver 라는 아이디를 갖는 요소에 대해 */
+#mailserver{
+    background-color: blue;
+    color: skyblue;
+    font-size: 16px;
+    font-weight: bold;
+    width: 200px;
+}
+button{
+    background-color: green;
+    border: 2px solid red;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        CSS란 HTML의 디자인적 능력을 보완하기 위해 쓰임.
+        CSS: 3가지 방법으로 적용 가능
+        1) inline으로 태그 내에 직접 입력
+        2) internal로 style 태그 적용
+        3) external로 외부 .css 파일 링크
+     -->
+     <style>
+        /* 
+        CSS의 문법 구조(syntax)는 단순
+        (선택자)를 (어떻게). 
+        */
+        div{
+            width: 200px;
+            height: 200px;
+        }
+        #a{ background-color: red; }
+        #b{ background-color: blue; }
+     </style>
+</head>
+<body>
+    <!-- 문서를 분할하는 태그는 div.
+        웹표준 제정 이전에는 table로 작성하였으나 표준화 됨. -->
+    <!-- 모든 태그는 다른 태그와의 공존 관계를 기준으로
+        block 속성과 inline 속성으로 구분됨
+        block: 수평선(x축) 상의 어떤 태그와도 공존 불가능
+        inline: 수평선 상의 다른 태그와 공존 가능함 -->
+    <div id="a">A</div>
+    <div id="b">B</div>
+</body>
+</html>

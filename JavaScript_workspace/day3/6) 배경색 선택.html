@@ -1,0 +1,36 @@
+<body>
+</body>
+
+<script>
+    let n = prompt("색상을 선택하시오\n1.빨간색 2.주황색 3.노란색 4.초록색 5.파란색 6.남색 7.보라색");
+    let bg;
+    n = parseInt(n);
+    switch(n) {
+        case 1:
+            bg = "red";
+            break;
+        case 2:
+            bg = "orange";
+            break;
+        case 3:
+            bg = "yellow";
+            break;
+        case 4:
+            bg = "green";
+            break;
+        case 5:
+            bg = "blue";
+            break;
+        case 6:
+            bg = "navy";
+            break;
+        case 7:
+            bg = "purple";
+            break;
+        default:
+            document.write("잘못된 색상값 입력");
+    }
+
+    document.body.style.background=bg;
+
+</script>

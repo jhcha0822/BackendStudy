@@ -1,0 +1,20 @@
+<script>
+    
+    let box = new Array(3);
+    
+    // 배열 안에 배열
+    let fruit = ["사과", "딸기", "포도", "바나나"];
+    let car = ["Benz", "Audi", "BMW", "KIA"];
+    let subject = ["MongoDB", "Spring", "Komoran", "Cloud"];
+
+    box[0] = fruit;
+    box[1] = car;
+    box[2] = subject;
+
+    for(let i=0; i<box.length; i++) {
+        for(let j=0; j<4; j++) {
+            console.log(box[i][j]);
+        }
+    }
+
+</script>

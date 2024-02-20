@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* CSS에서 모든 태그는 위치속성을 가진 것으로 보고
+            CSS에서 지원하는 태그의 위치속성은 다음과 같은 것들이 있다.
+            relative: 다른 태그와의 상대적 위치, absolute:  */
+        img{
+            border: 2px solid black;
+            /* 이미지가 부모를 기준으로 위치를 표현 */
+            position: absolute;
+            /* 부모의 좌측 벽으로부터, left와 top 밖에 없다 */
+            left: 500px; 
+            /* 위쪽 벽으로부터 */
+            top: 100px;
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+    <img src="../images/wendy.jpg">
+</body>
+</html>

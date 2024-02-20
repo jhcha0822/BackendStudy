@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- html은 화려한 그래픽이나 디자인을 지원하기 위한 기술이 아니라,
+        모니터에서 볼 수 있는 형식을 네트워크로 전송하기 위해 개발된 군사 문서 포맷이다.
+        하지만 PC(개인용 컴퓨터) 및 인터넷이 보편화된 현 시대에 모든 생활은 인터넷을 통해 처리됨.
+        따라서 html 문서는 사용자의 눈높이에 맞게 업그레이드 될 필요가 있다.
+        따라서, html의 디자인 능력을 보완하기 위한 기술 CSS(스타일 시트)가 탄생하였다. -->
+    <!-- CSS란 html도 아니고 프로그래밍 언어는 더더욱 아니다.
+        단지 html 태그의 디자인적 능력을 증폭시킨 기술이다.
+        CSS의 작성 방법에는 세가지가 존재함.
+        1. inline 방식: 해당 태그에 style 속성을 직접 명시
+        2. internal 방식: 내부. CSS를 <style>스타일태그</style> 에 작성하는 방법
+        3. external 방식: 외부. CSS파일을 링크로 가져오는 방법 
+        JQuery는 CSS의 작성방식을 따르기 때문에 공부할 필요가 있다. -->
+    <font style="font-size: 10px">자바</font> 개발자
+    <!-- html 문서에서 표를 작성해보자
+        표 조차도 마크업으로 표현해야 함 -->
+    <!-- 외형: table 태그 -->
+    <table border="1px" width="500px">
+        <!-- 여는 tr은 한 층의 천장 -->
+        <tr>
+            <!-- 여는 td는 왼쪽의 벽 -->
+            <td rowspan="5"> 501호 </td>
+            <td colspan="3"> 502호 </td>
+            <!-- <td> 503호 </td>
+            <td> 504호 </td> -->
+            <!-- 닫는 td는 오른쪽의 벽 -->
+        </tr>
+        <tr>
+            <!-- <td> 401호 </td> -->
+            <td> 402호 </td>
+            <td> 403호 </td>
+            <td> 404호 </td>
+        </tr>
+        <tr>
+            <!-- <td> 301호 </td> -->
+            <td> 302호 </td>
+            <td colspan="2"> 303호 </td>
+            <!-- <td> 304호 </td> -->
+        </tr>
+        <tr>
+            <!-- <td> 201호 </td> -->
+            <td rowspan="2"> 202호 </td>
+            <td> 203호 </td>
+            <td> 204호 </td>
+        </tr>
+        <tr>
+            <!-- <td> 101호 </td> -->
+            <!-- <td> 102호 </td> -->
+            <td> 103호 </td>
+            <td> 104호 </td>
+        </tr>
+        <!-- 닫는 tr은 한 층의 바닥 -->
+    </table>
+</body>
+</html>

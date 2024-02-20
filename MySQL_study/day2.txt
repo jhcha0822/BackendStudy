@@ -1,0 +1,318 @@
+mySQL은 오라클과는 달리 디폴트가 auto commit임
+insert 뒤 자동적으로 commit이 들어감
+
+따라서 오라클처럼 auto commit을 false로 놓으면 됨
+set autocommit=0;
+
+sub query 서브쿼리
+소괄호 내부가 먼저 수행
+
+
+
+
+
+
+mysql 내부의 bin에서 mysqld 실행 -- 서버 오픈
+
+
+다른 터미널에서 접속
+
+
+Microsoft Windows [Version 10.0.19045.3930]
+(c) Microsoft Corporation. All rights reserved.
+
+D:\mysql-5.5.62-winx64\bin>mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+4 rows in set (0.01 sec)
+
+mysql> create database jsdb;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use jsdb;
+Database changed
+mysql> create table member(
+    -> name varchar(20)
+    -> , phone varchar(13)
+    -> , age int);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> -- 한번도 dml을 수행한 적이 없기에 현재 트랜잭션은 세부 dml 수가 0인 상태
+mysql> ;
+ERROR:
+No query specified
+
+mysql> insert into member(name, phone, age) values('xman', '010', 23);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into member(name, phone, age) values('batman', '011', 33);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from member;
++--------+-------+------+
+| name   | phone | age  |
++--------+-------+------+
+| xman   | 010   |   23 |
+| batman | 011   |   33 |
++--------+-------+------+
+2 rows in set (0.00 sec)
+
+mysql> set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from member;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from member;
+Empty set (0.00 sec)
+
+mysql> insert into member(name, phone, age) values('pikachu', '111', 5);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from member;
+Empty set (0.00 sec)
+
+mysql> create table dept(deptno int primary key auto_increment,dname varchar(14),loc varchar(13));insert into dept(deptno,dname,loc) values(10,'ACCOUNTING','NEW YORK');insert into dept(deptno,dname,loc) values(20,'RESEARCH','DALLAS');insert into dept(deptno,dname,loc) values(30,'SALES','CHICAGO');insert into dept(deptno,dname,loc) values(40,'OPERATIONS','BOSTON');
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+mysql> create table emp(empno int primary key auto_increment,ename varchar(10)     ,job varchar(9)         ,mgr int,hiredate timestamp,sal int,comm int,deptno int);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7369,'SMITH','CLERK',7902,'80/12/17',800,20);insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7499,'ALLEN','SALESMAN',7698,'81/02/20',1600,300,30);insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7521,'WARD','SALESMAN',7698,'81/02/22',1250,500,30);insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7566,'JONES','MANAGER',7839,'81/04/02',2975,20);insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7654,'MARTIN','SALESMAN',7698,'81/09/28',1250,1400,30);insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7698,'BLAKE','MANAGER',7839,'81/05/01',2850,30);insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7782,'CLARK','MANAGER',7839,'81/06/09',2450,10);insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7788,'SCOTT','ANALYST',7566,'87/04/19',3000,20);insert into emp(empno,ename,job,hiredate,sal,deptno) values(7839,'KING','PRESIDENT','81/11/17',5000,10);insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7844,'TURNER','SALESMAN',7698,'81/09/08',1500,0,30);insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7876,'ADAMS','CLERK',7788,'87/05/23',1100,20);insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7900,'JAMES','CLERK',7698,'81/12/03',950,30);insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7902,'FORD','ANALYST',7566,'81/12/03',3000,20);insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7934,'MILLER','CLERK',7782,'82/01/23',1300,10);
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from EMP;
++-------+--------+-----------+------+---------------------+------+------+--------+
+| empno | ename  | job       | mgr  | hiredate            | sal  | comm | deptno |
++-------+--------+-----------+------+---------------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 00:00:00 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 00:00:00 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 00:00:00 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 00:00:00 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 00:00:00 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 00:00:00 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 00:00:00 | 2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987-04-19 00:00:00 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 00:00:00 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 00:00:00 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987-05-23 00:00:00 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 00:00:00 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 00:00:00 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 00:00:00 | 1300 | NULL |     10 |
++-------+--------+-----------+------+---------------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+mysql> select * from DEPT;
++--------+------------+----------+
+| deptno | dname      | loc      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> -- 부서번호의 종류를 출력하시오
+mysql> ;
+ERROR:
+No query specified
+
+mysql> select deptno from emp;
++--------+
+| deptno |
++--------+
+|     20 |
+|     30 |
+|     30 |
+|     20 |
+|     30 |
+|     30 |
+|     10 |
+|     20 |
+|     10 |
+|     30 |
+|     20 |
+|     30 |
+|     20 |
+|     10 |
++--------+
+14 rows in set (0.00 sec)
+
+mysql> select deptno
+    -> from emp
+    -> where dept;
+ERROR 1054 (42S22): Unknown column 'dept' in 'where clause'
+mysql> select deptno, count(*)
+    -> from emp
+    -> group by deptno;
++--------+----------+
+| deptno | count(*) |
++--------+----------+
+|     10 |        3 |
+|     20 |        5 |
+|     30 |        6 |
++--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select ename, deptno, count(*)
+    -> from emp
+    -> group by deptno;
++-------+--------+----------+
+| ename | deptno | count(*) |
++-------+--------+----------+
+| CLARK |     10 |        3 |
+| SMITH |     20 |        5 |
+| ALLEN |     30 |        6 |
++-------+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> -- mysql은 에러는 안나는데 짤려서 나온다
+mysql> select * from emp;
++-------+--------+-----------+------+---------------------+------+------+--------+
+| empno | ename  | job       | mgr  | hiredate            | sal  | comm | deptno |
++-------+--------+-----------+------+---------------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 00:00:00 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 00:00:00 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 00:00:00 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 00:00:00 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 00:00:00 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 00:00:00 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 00:00:00 | 2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987-04-19 00:00:00 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 00:00:00 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 00:00:00 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987-05-23 00:00:00 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 00:00:00 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 00:00:00 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 00:00:00 | 1300 | NULL |     10 |
++-------+--------+-----------+------+---------------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+mysql> --최대급여를 받는 사원의 이름과 급여 출력
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--최대급여를 받는 사원의 이름과 급여 출력' at line 1
+mysql> select ename, sal
+    -> from emp
+    -> where sal=(select max(sal) from emp);
++-------+------+
+| ename | sal  |
++-------+------+
+| KING  | 5000 |
++-------+------+
+1 row in set (0.00 sec)
+
+mysql> -- 10번 부서의 최소급여를 받는 사원보다 급여가 높은 사원의 이름, 부서, 급여를 출력
+mysql> ;
+ERROR:
+No query specified
+
+mysql> select ename, deptno, sal
+    -> from emp
+    -> where sal>(select min(sal) from emp where deptno=10);
++--------+--------+------+
+| ename  | deptno | sal  |
++--------+--------+------+
+| ALLEN  |     30 | 1600 |
+| JONES  |     20 | 2975 |
+| BLAKE  |     30 | 2850 |
+| CLARK  |     10 | 2450 |
+| SCOTT  |     20 | 3000 |
+| KING   |     10 | 5000 |
+| TURNER |     30 | 1500 |
+| FORD   |     20 | 3000 |
++--------+--------+------+
+8 rows in set (0.00 sec)
+
+mysql> -- 업무가 영업사원인 사원들의 급여의 평균보다 낮은 급여를 받는 사원의 이름, 급여 출력
+mysql> select ename, sal
+    -> from emp
+    -> where sal < (select avg(sal) from emp where job='salesman');
++--------+------+
+| ename  | sal  |
++--------+------+
+| SMITH  |  800 |
+| WARD   | 1250 |
+| MARTIN | 1250 |
+| ADAMS  | 1100 |
+| JAMES  |  950 |
+| MILLER | 1300 |
++--------+------+
+6 rows in set (0.00 sec)
+
+mysql> select ename, sal
+    -> from emp
+    -> where empno=(select mgr from emp where ename='smith');
++-------+------+
+| ename | sal  |
++-------+------+
+| FORD  | 3000 |
++-------+------+
+1 row in set (0.00 sec)
+
+mysql>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* CSS에서 ,로 AND 가능 */
+        #box1, #box2{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+        #box2{
+            background-color: blue;
+            /* left와 top 같은 위치정보를 부여하기 위해서는 position을 명시해야 함. */
+            position: relative;
+            /* normal position이 box1 아래인 0,100 지점을 0,0으로 사용하기에 이 위치로부터 100px 아래로 이동 */
+            top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 모든 태그는 개발자가 아무것도 지정하지 않을 경우, 위치 default는 relative임.
+        태그가 생성될 때 부여받는 위치를 normal position이라 하며,
+        이 normal position이 상대 태그에 의해 영향을 받는 위치 속성을 가리켜 상대위치라 함. -->
+    <div id="box1"></div>
+    <div id="box2"></div>
+</body>
+</html>

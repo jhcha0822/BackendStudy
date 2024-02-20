@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 400px;
+            height: 500px;
+            border: 2px solid black;
+            border-radius: 10px;
+            margin: auto;
+        }
+        #question{
+            width: 100%;
+            height: 200px;
+            background-color: aliceblue;
+            line-height: 200px;
+            font-size: 75px;
+            text-align: center;
+        }
+        #keyInput{
+            width: 100%;
+            height: 100px;
+            background-color: antiquewhite;
+        }
+        #keyInput input{
+            width: 98%;
+            height: 98%;
+            font-size: 50px;
+        }
+        #feedback{
+            width: 100%;
+            height: 150px;
+            background-color: azure;
+            line-height: 150px;
+            font-size: 130px;
+            font-weight: bold;
+            text-align: center;
+            color: red;
+        }
+        #total{
+            width: 100%;
+            height: 50px;
+            background-color: blanchedalmond;
+            line-height: 50px;
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+    <script>
+        // 게임에 사용할 단어 10개
+        let question;
+        let feedback;
+        let index=0; // 화면에 띄울 wordArray의 index
+        let score=0; // 10점씩 누적될 전역변수
+        let txt;
+
+        let wordArray=["배주현", "강슬기", "손승완", "박수영", "김예림", 
+                       "레드", "벨벳", "러시안", "룰", "렛"];
+        
+        function next(){
+            let mark;
+            let key = event.keyCode;
+            // console.log(key);
+            if(key == 13) {// 사용자가 엔터를 쳤을 때
+                if(question.innerText == txt.value) {
+                    // 단어가 일치할 경우만 아래 실행
+                    question.innerText = wordArray[++index];
+                    // O 또는 X로 피드백 처리
+                    mark="O";
+                    score+=10;
+                }
+                else
+                    mark="X";
+                feedback.innerText = mark;
+                total.innerText = `점수: ${score}점`;
+                // 입력칸 초기화
+                txt.value="";
+            }
+        }
+
+        addEventListener("load", function(){
+            question = document.getElementById("question");
+            feedback = document.getElementById("feedback");
+            total = document.getElementById("total");
+            question.innerText = wordArray[index];
+            // CSS 선택자를 이용한 요소 접근
+            txt = document.querySelector("#keyInput input");
+            // onLoad 시점에 커서 올리기
+            txt.focus();
+            txt.addEventListener("keyup", function(){
+                // 엔터를 치면 다음 단어가 나오게 처리
+                next();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="question">제시어</div>
+        <div id="keyInput">
+            <input type="text" placeholder="단어 입력">
+        </div>
+        <div id="feedback">X</div>
+        <div id="total">점수</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{margin: 0px;}
+        #wrapper{
+            width: 1200px;
+            height: 800px;
+            background-color: skyblue;
+        }
+        #content{
+            width: 1000px;
+            height: 800px;
+            background-image: url(../images/mario/rollercoaster.avif);
+            background-size: 1000px 100%;
+            float: left;
+            position: relative;
+        }
+        #info{
+            width: 200px;
+            height: 800px;
+            background-color: white;
+            float: left;
+        }
+    </style>
+    <script>
+        let data=[]; //일차원 배열(x, y)을 누적시킬 배열
+        let content;
+        let info;
+        let pointer=0; //어느 i을 접근해야 하는지를 결정짓는 data 이차원배열의 index 값
+        let mario;
+        let flag=false; //move() 호출 여부를 결정짓는 논리값
+
+        function createDot(){
+            let span = document.createElement("span"); // <span></span>
+            span.style.background="red";
+            //span 은 inline 이기 때문에 width, height 를 적용할 수 없다..
+            span.style.display="inline-block"; //공존O, width,height O
+            span.style.width=3+"px";
+            span.style.height=3+"px";
+            span.style.borderRadius=50+"px";//모서리 둥글게..
+            
+            span.style.position="absolute";
+            let x = event.clientX;
+            let y = event.clientY;
+
+            let dot = [x, y];
+            data.push(dot);
+
+            printDot();
+
+            span.style.left = x+"px";
+            span.style.top = y+"px";
+
+            content.appendChild(span);
+        }
+
+        // info div에 현재까지 누적되어 있는 data 배열의 내용 출력
+        function printDot() {
+            info.innerText="";
+            for(let i=0; i<data.length; i++){
+                let arr = data[i];
+                let x = arr[0];
+                let y = arr[1];
+                info.innerText=info.innerText+`[${x}, ${y}]\n`;
+            }
+        }
+
+        // db 좌표 데이터를 이용하여 캐릭터 위치 이동
+        function move() {
+            // 버튼을 누릴때마다 data하는 이차원 배열의 각 인덱스를 이용해 일차원 배열 하나씩 꺼내기
+            let dot = data[pointer++];
+
+            mario.style.left = dot[0]+"px";
+            mario.style.top = dot[1]+"px";
+        }
+
+        function createMario() {
+            mario = document.createElement("img");
+            mario.src = "../images/mario/mario.png";
+            mario.style.position="absolute";
+            mario.style.left=100+"px";
+            mario.style.top=150+"px";
+            mario.style.width=45+"px";
+            content.appendChild(mario); //자식 요소로 부착
+        }
+
+        function auto() {
+            if(flag){
+                move();
+            }
+        }
+
+        addEventListener("load", function(){
+            info = document.getElementById("info");
+            // content에 마우스 이벤트 연결
+            content = document.getElementById("content");
+
+            createMario();
+
+            content.addEventListener("mousedown", function(){
+                createDot();
+            });
+
+            document.querySelector("button").addEventListener("click", function(){
+                flag=true;
+            });
+            
+            setInterval("auto()", 100);
+        });
+    </script>
+
+</head>
+<body>
+    <div id="wrapper">
+        <div id="content"></div>
+        <div id="info"></div>
+    </div>
+    <button>출발</button>
+</body>
+</html>

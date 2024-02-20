@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <!-- 이 영역은 html 태그의 영역이 아닌 CSS 영역임 
+        style 태그 안에 작성하는 방식으로, internal 방식임
+    
+        CSS 문장 형식(syntax)
+        (누구: 선택자)를 (어떻게 할 지) -->
+    <style>
+        button{
+            background: pink;
+        }
+
+    /* 선택자 중 아이디를 이용한 선택자는 #을 이용해 처리 */
+        #bt{
+            border:5px solid red;
+        }
+    /* 선택자 중 이름을 이용한 선택자 */
+        button[name='btn']{
+            background: blue;
+        }
+    </style>
+<body>
+    <!-- inline: 해당 태그에 직접 스타일 적용 -->
+    <button style="background: yellow;">나버튼</button>
+    <button style="background: yellow;">나버튼</button>
+    <button style="background: yellow;">나버튼</button>
+    <button style="background: yellow;">나버튼</button>
+    <button style="background: yellow;">나버튼</button>
+    <!-- internal: style 내부에 작성 -->
+    <button>나버튼</button>
+    <button>나버튼</button>
+    <button>나버튼</button>
+    <button id="bt" name="btn">나버튼</button>
+    <button>나버튼</button>
+</body>
+</html>

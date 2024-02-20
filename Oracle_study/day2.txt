@@ -1,0 +1,225 @@
+SQL> --PP PPP PPP PPPP PPPP PPPP PP, PP, PP PP PPP PP
+SQL> --°° °° °° °°° °° °°
+SQL> --ààà àà àààà àààà à
+
+SQL> --                            
+SQL> --                
+
+SQL> --°, °° °°° °°°
+
+SQL> --°° °°° °°° °°° °°° °°,
+SQL> --°°° °°°° °°° °°°° DBA_° °°°° °°° °°
+SQL> show user
+USER is "SYSTEM"
+SQL> --PPP PPP PP PP PPP PPP PP
+SQL> SELECT USER_NAME FROM DBA_USERS;
+SELECT USER_NAME FROM DBA_USERS
+       *
+ERROR at line 1:
+ORA-00904: "USER_NAME": invalid identifier 
+
+
+SQL> SELECT USERNAME FROM DBA_USERS;
+
+USERNAME                                                                        
+------------------------------------------------------------                    
+SYS                                                                             
+SYSTEM                                                                          
+ANONYMOUS                                                                       
+TEST                                                                            
+WENDY                                                                           
+APEX_PUBLIC_USER                                                                
+FLOWS_FILES                                                                     
+APEX_040000                                                                     
+OUTLN                                                                           
+DIP                                                                             
+ORACLE_OCM                                                                      
+
+USERNAME                                                                        
+------------------------------------------------------------                    
+XS$NULL                                                                         
+MDSYS                                                                           
+CTXSYS                                                                          
+DBSNMP                                                                          
+XDB                                                                             
+APPQOSSYS                                                                       
+HR                                                                              
+
+18 rows selected.
+
+SQL> --WENDY °°°° °° °°
+SQL> CONN WENDY/1234
+Connected.
+SQL> SHOW USER
+USER is "WENDY"
+SQL> --PP PPP PPP PP PPPPP PPPPP PPPPP PPPP PP USER_P PP
+SQL> SELECT TABLE_NAME FROM USER_TABLES;
+
+TABLE_NAME                                                                      
+------------------------------------------------------------                    
+REDVELVET                                                                       
+
+SQL> --@@@ @@@@ @@@@ @@@@ @@ @@ @ @@@@ @@
+SQL> --ÀÀÀ ÀÀÀ ÀÀ ÀÀÀÀ SQLÀÀÀ ÀÀÀÀ DMLÀÀ ÀÀ.
+SQL> --DATA MANIPULATION LANGUAGE( )
+SQL> --°°°° °° °°° °°
+SQL> CREATE TABLE STREAMER(
+  2  name varchar2(20)
+  3  , birthdate number
+  4  , military service varchar2(10)
+  5  );
+, military service varchar2(10)
+                   *
+ERROR at line 4:
+ORA-00907: missing right parenthesis 
+
+
+SQL> CREATE TABLE STREAMER(
+  2  name varchar2(20)
+  3  , birthdate number
+  4  , military_service varchar2(10)
+  5  );
+
+Table created.
+
+SQL> --@@@ @@@@ @@@(@@@) 4@@ @@
+SQL> --°°° °°° °°
+SQL> INSERT INTO STREAMER(NAME, BIRTHDATE, MILITARY_SERVICE)
+  2  VALUES('PHOENIX_PARK', 19930510, 'DISCHARGE');
+
+1 row created.
+
+SQL> INSERT INTO STREAMER(NAME, BIRTHDATE, MILITARY_SERVICE)
+  2  VALUES('RALO', 19940608, 'AGENT');
+
+1 row created.
+
+SQL> INSERT INTO STREAMER(NAME, BIRTHDATE, MILITARY_SERVICE)
+  2  VALUES('PAKA', 19940521, 'DISCHARGE');
+
+1 row created.
+
+SQL> INSERT INTO STREAMER(NAME, BIRTHDATE, MILITARY_SERVICE)
+  2  VALUES('MONSTER_RAT', 19951224, 'AGENT');
+
+1 row created.
+
+SQL> --```` `` ````` ``
+SQL> SELECT NAME, BIRTHDATE, MILITARY_SERVICE FROM STREAMER;
+
+NAME                                      BIRTHDATE MILITARY_SERVICE            
+---------------------------------------- ---------- --------------------        
+PHOENIX_PARK                               19930510 DISCHARGE                   
+RALO                                       19940608 AGENT                       
+PAKA                                       19940521 DISCHARGE                   
+MONSTER_RAT                                19951224 AGENT                       
+
+SQL> --°° °°° °°°° °°°°, °°°° °°°°° DML°°° ° UPDATE° °°
+SQL> --° °° °° °°° °° °°°° °°°°°
+
+SQL> CREATE TABLE STREAMER2
+  2  AS
+  3  SELECT NAME, BIRTHDATE, MILITARY_SERVICE FROM STREAMER;
+
+Table created.
+
+SQL> --€€€€ €€€€€€ €€€€ STREAMER€ €€€€€
+SQL> --ÐÐÐÐ STREAMER2Ð ÐÐÐÐ
+SQL> UPDATE STREAMER2 SET BIRTHDATE=19991231;
+
+4 rows updated.
+
+SQL> SELECT NAME, BIRTHDATE, MILITARY_SERVICE FROM STREAMER2;
+
+NAME                                      BIRTHDATE MILITARY_SERVICE            
+---------------------------------------- ---------- --------------------        
+PHOENIX_PARK                               19991231 DISCHARGE                   
+RALO                                       19991231 AGENT                       
+PAKA                                       19991231 DISCHARGE                   
+MONSTER_RAT                                19991231 AGENT                       
+
+SQL> --UPDATE`` ``` `` ``` ````.
+SQL> 
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT NAME, BIRTHDATE, MILITARY_SERVICE FROM STREAMER2;
+
+NAME                                      BIRTHDATE MILITARY_SERVICE            
+---------------------------------------- ---------- --------------------        
+PHOENIX_PARK                               19930510 DISCHARGE                   
+RALO                                       19940608 AGENT                       
+PAKA                                       19940521 DISCHARGE                   
+MONSTER_RAT                                19951224 AGENT                       
+
+SQL> --P...
+SQL> --ROLLBACK` TRANSACTION` ``` `.
+SQL> --ààà àààà ààà àà àààà ààà ààà
+
+SQL> --ÐÐÐ ÐÐÐ ÐÐÐ ÐÐÐ Ð
+
+SQL> UPDATE STREAMER2 SET BIRTHDATE=3240202 WHERE NAME='MONSTER_RAT';
+
+1 row updated.
+
+SQL> SELECT NAME, BIRTHDATE, MILITARY_SERVICE FROM STREAMER2;
+
+NAME                                      BIRTHDATE MILITARY_SERVICE            
+---------------------------------------- ---------- --------------------        
+PHOENIX_PARK                               19930510 DISCHARGE                   
+RALO                                       19940608 AGENT                       
+PAKA                                       19940521 DISCHARGE                   
+MONSTER_RAT                                 3240202 AGENT                       
+
+SQL> UPDATE STREAMER2 SET MILITARY_SERVICE='FEMALE' WHERE NAME='MONSTER_RAT';
+
+1 row updated.
+
+SQL> SELECT NAME, BIRTHDATE, MILITARY_SERVICE FROM STREAMER2;
+
+NAME                                      BIRTHDATE MILITARY_SERVICE            
+---------------------------------------- ---------- --------------------        
+PHOENIX_PARK                               19930510 DISCHARGE                   
+RALO                                       19940608 AGENT                       
+PAKA                                       19940521 DISCHARGE                   
+MONSTER_RAT                                 3240202 FEMALE                      
+
+SQL> UPDATE STREAMER2 SET NAME='AIRI_KANNA' WHERE BIRTHDATE=3240202;
+
+1 row updated.
+
+SQL> SELECT NAME, BIRTHDATE, MILITARY_SERVICE FROM STREAMER2;
+
+NAME                                      BIRTHDATE MILITARY_SERVICE            
+---------------------------------------- ---------- --------------------        
+PHOENIX_PARK                               19930510 DISCHARGE                   
+RALO                                       19940608 AGENT                       
+PAKA                                       19940521 DISCHARGE                   
+AIRI_KANNA                                  3240202 FEMALE                      
+
+SQL> --°°°° °°°°°
+
+SQL> DELETE STREAMER2;
+
+4 rows deleted.
+
+SQL> --ÀÀ...
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> DELETE STREAMER2 WHERE NAME='AIRI_KANNA';
+
+0 rows deleted.
+
+SQL> SELECT NAME, BIRTHDATE, MILITARY_SERVICE FROM STREAMER2;
+
+NAME                                      BIRTHDATE MILITARY_SERVICE            
+---------------------------------------- ---------- --------------------        
+PHOENIX_PARK                               19930510 DISCHARGE                   
+RALO                                       19940608 AGENT                       
+PAKA                                       19940521 DISCHARGE                   
+MONSTER_RAT                                19951224 AGENT                       
+
+SQL> SPOOL OFF

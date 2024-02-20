@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 700px;
+            height: 500px;
+            margin: auto;
+            background-color: gray;
+        }
+        #header div{
+            width: 100px;
+            height: 100px;
+            float: left;
+        }
+        #content{
+            width: 100%;
+            height: 400px;
+            background-color: black;
+            clear: both; /* 다른 block요소가 float되었을 때, 그 아래에 파고들지 않게 하는 요소 */
+        }
+    </style>
+    <script>
+        // 외부로부터 변수값을 전달받아 내부에서 사용하기 위해 함수의 매개변수를 정의할 수 있다
+        // 매개변수 사용시의 장점: 함수의 수를 줄여 준다
+        
+        function rollOver(bg){
+            // content라는 div의 배경색을 해당 속성으로 변경
+            // console.log("함수로 전달된 bg값은 ", bg);
+            let content = document.getElementById("content");
+            content.style.backgroundColor = bg;
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <div onMouseOver="rollOver('red')" style="background-color: red;" id="red"></div>
+            <div onMouseOver="rollOver('orange')" style="background-color: orange;" id="orange"></div>
+            <div onMouseOver="rollOver('yellow')" style="background-color: yellow;" id="yellow"></div>
+            <div onMouseOver="rollOver('green')" style="background-color: green;" id="green"></div>
+            <div onMouseOver="rollOver('blue')" style="background-color: blue;" id="blue"></div>
+            <div onMouseOver="rollOver('navy')" style="background-color: navy;" id="navy"></div>
+            <div onMouseOver="rollOver('purple')" style="background-color: purple;" id="purple"></div>
+        </div>
+        <div id="content"></div>
+    </div>
+</body>
+</html>

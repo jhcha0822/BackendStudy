@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 700px;
+            height: 600px;
+            background-color: azure;
+            margin: auto;
+        }
+        #aside{
+            width: 100px;
+            height: 600px;
+            background-color: beige;
+            float: left;
+        }
+        #content{
+            width: 600px;
+            height: 600px;
+            background-image: url(../images/room/room.webp);
+            background-size: 600px 600px; /* width, height */
+            float: left;
+        }
+        #light{
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 0.8; /* 0(투명) ~ 1(불투명) */
+        }
+    </style>
+    <script>
+        let flag = false;
+        function control() {
+            flag = !flag
+            let bt = document.getElementById("bt");
+            let filename = (flag) ? "on.png" : "off.png";
+            bt.src = "../images/room/" + filename;
+
+            // 스위치 버튼에 맞는 조명처리: light div의 투명도 값을 0과 0.8 번갈아 설정
+            let light = document.getElementById("light");
+            let op = (flag) ? 0 : 0.8;
+            light.style.opacity = op;
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside">
+            <img src="../images/room/off.png" id="bt" onClick="control()">
+        </div>
+        <div id="content">
+            <div id="light"></div>
+        </div>
+    </div>
+</body>
+</html>

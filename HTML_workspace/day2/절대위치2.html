@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 절대위치 속성은 다른 태그에 의해 위치가 밀려나지 않음.
+            (중첩을 허용, 겹치게 됨.)
+            밀려나는 것은 relative의 속성 */
+        #box1, #box2{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+        }
+        #box1{
+            background-color: red;
+            left: 50px;
+            top: 50px;
+        }
+        #box2{
+            background-color: blue;
+            left: 50px;
+            top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 절대위치는 해당 위치에 이미 다른 태그가 존재한다고 하여도 밀려나지 않음.
+        즉, 위치를 덮어쓰게 된다. -->
+    <div id="box1"></div>
+    <div id="box2"></div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            margin: auto;
+        }
+    </style>
+    <script>
+        function init() { // script가 body보다 위에 있으므로 onLoad 사용을 위한 초기화 함수 정의           
+            // for문 등 반복문을 사용하기 위해서는 JS영역에서 이용
+            // option 태그를 동적으로 생성하여 이용
+            let sel_yy = document.getElementById("sel_yy");
+            let sel_mm = document.getElementById("sel_mm");
+            let sel_dd = document.getElementById("sel_dd");
+            
+            for(let i=2024; i>=1945; i--) {
+                let op = document.createElement("option"); // <option></option>
+                op.text = i; // <option>2024</option>
+                sel_yy.add(op); // 생성된 op를 sel_yy에 자식으로 추가
+            }
+
+            for(let i=1; i<=12; i++) {
+                let op = document.createElement("option");
+                op.text = i;
+                sel_mm.add(op);
+            }
+            
+            for(let i=1; i<=31; i++) {
+                let op = document.createElement("option");
+                op.text = i;
+                sel_dd.add(op);
+            }
+
+        }
+    </script>
+</head>
+<body onload="init()">
+    <div id="wrapper">
+        <select id="sel_yy">
+            <!-- html은 언어가 아니기에 반복문 사용이 불가능 -->
+        </select>
+        <select id="sel_mm"></select>
+        <select id="sel_dd"></select>
+    </div>
+    
+</body>
+</html>

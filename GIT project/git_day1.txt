@@ -1,0 +1,67 @@
+깃을 어디에 써먹을까?
+1. 버전관리
+2. 협업
+3. 코드저장
+
+취업시장에서 깃 커밋의 중요도가 높음
+어느 부분을 실제 작성하였는지도 물어봄
+정적 호스팅 가능 ex) 블로그
+TIL: today i learned
+
+깃: 버전관리 서비스
+깃허브: 프로젝트 관리 및 호스팅 서비스
+
+깃허브 사이트 외부(소스트리, 이클립스) 등에서 로그인 할 때는 비밀번호 대신 토큰 이용
+settings - developer settings - generate new token (classic)
+
+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
+
+해당 창이 닫히고 나면 다시는 토큰을 확인 불가하므로 잘 저장해두자
+
+
+
+로컬에서 혼자 사용하기
+
+1. 깃 설치
+https://git-scm.com/downloads
+2. 버전관리 대상 디렉토리로 git bash 이동
+3. git init
+
+// cd.. 상위디렉토리
+// cd. 현재 디렉토리
+// 중간에 tab 누르면 자동완성
+// pwd 현재 디렉토리 확인
+
+commit: 버전관리를 위한 포탈 생성
+
+누가 커밋했는지 알기 위하여 처음 사용자 설정
+git config --global user.email jhcha0822@naver.com
+git config --global user.name jhcha0822
+
+이후 Readme 파일의 변경사항 커밋
+git add README.md
+git commit -m "사이트 추가"
+
+-m: 메시지를 추가하는 플래그
+
+버전 확인
+git log
+
+버전 되돌리기
+git checkout 'commit의 주소'
+
+되돌아가기
+git checkout -
+
+커밋 메시지 컨벤션
+
+
+
+github 이용하기
+
+md문법 공부
+
+
+
+소스트리
+

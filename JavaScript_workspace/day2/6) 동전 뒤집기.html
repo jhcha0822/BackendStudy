@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            height: 40%;
+            width: 40%;
+            margin: auto;
+        }
+        img{
+            margin: 100px; /* top, left, rignt, bottom 모두 */
+        }
+    </style>
+    <script>
+        let flag = true;
+        function flip(){
+            flag = !flag;
+            let coin = document.getElementById("coin");
+            filename = (flag) ? "coin1" : "coin2";
+            coin.src="../images/coin/"+filename+".webp";
+            
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <button onClick="flip()">flip</button>
+        <br>
+        <img src="../images/coin/coin1.webp" id="coin">
+    </div>
+    
+</body>
+</html>

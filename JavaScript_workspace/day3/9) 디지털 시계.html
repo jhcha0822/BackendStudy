@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 600px;
+            height: 300px;
+            background-color: gray;
+            margin: auto;
+            border-radius: 3%; /* 테두리를 동그랗게 */
+        }
+        #content{
+            font-size: 40px;
+            text-align: center;
+            height: 200px;
+            background-color: aqua;
+            line-height: 200px;
+        }
+        .box{
+            width: 130px;
+            height: 130px;
+            font-size: 50px;
+            text-align: right;
+        }
+        #footer{
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+        }
+        /* footer id를 갖는 요소의 자식 중 버튼에 대해 */
+        #footer button{
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+    <script>
+        let hh, mm, ss;
+        let sec=0;
+        let min=0;
+        let hr=0;
+        let flag = false;
+        let  //프로그램이 활성화된 동안 유지되어야 하기에 전역변수 이용
+        function init(){
+            hh = document.getElementById("hh");
+            mm = document.getElementById("mm");
+            ss = document.getElementById("ss");
+            hh.value = 0;
+            mm.value = 0;
+            ss.value = 0;
+
+            // 사용자가 아닌 시스템이 개발자가 정의한 함수를 일정 시간 간격으로 자동 호출하게 하기
+            // setInterval("호출대상함수", ms단위 정수);
+            setInterval("setCount()", 1000);
+        }
+        function setCount(){
+            if(flag) {
+                sec++;
+                ss.value = sec;
+                
+                if(sec>=60) {
+                    sec = 0;
+                    ss.value = sec;
+                    min++;
+                    mm.value = min;
+                }
+                
+                if(min>=60) {
+                    min = 0;
+                    mm.value = min;
+                    hr++;
+                    hh.value = hr;
+                }
+            }
+        }
+    </script>
+</head>
+<body onLoad="init()">
+    <div id="wrapper">
+        <div id="content">
+            <input type="text" class="box" id="hh">시
+            <input type="text" class="box" id="mm">분
+            <input type="text" class="box" id="ss">초
+        </div>
+        <div id="footer">
+            <button id="start" onClick="flag = true;">▶</button>
+            <button id="stop" onClick="flag = false;">■</button>
+            <button onClick="setCount()">수동</button>
+        </div>
+    </div>
+</body>
+</html>

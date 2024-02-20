@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+    <script src="../js/lib.js"></script>
+    <script>
+        let arrowArray=[]; // 화살들을 보관할 배열
+        let colorArray=["red", "orange", "yellow", "green", "blue", "navy", "purple"];
+        let charArray=["->", "-->", "--->", "---->", "----->"];
+
+        // 5개 이상의 다른 색상의 화살이 
+        // 각각 다른 속도, 다른 y축위치로 날라가게 작성
+        class Arrow{ // 클래스는 대문자로 생성하는 것이 관습임
+            // 해당 영역은 Arrow의 내부 영역임
+            // JS에서는 class 내부에서 생성된 변수는 자신의 것임이 강조됨
+            // 단 JS는 완벽한 OOP(java, c#)이 아니기에 본인이 보유한 변수는 생성자라는 함수 내에 선언해야 함
+            // 이렇게 객체가 보유한 변수를 멤버변수 member라 함
+            // property 속성: 객체의 상태를 담고 있음
+            constructor(x, y, color, velX, char){
+                //변수명 앞에 오는 .(점)은 전산에서 소유권을 나타낸다.
+                this.span;
+                this.x=x; //좌표 
+                this.y=y; //y좌표
+                this.velX=velX; //속도
+                this.color=color; //멤버변수에 똑같은 단어로 대입(관습)
+                this.char=char;
+                this.createArrow();
+            }
+            // 클래스 내부에 정의된 함수들은 사물의 동작 방법을 정의한다고 하여 메소드 method라 부름
+            createArrow(){
+                this.span = document.createElement("span"); //<span></span>  inline
+                this.span.innerText=this.char; //"→"; //이미지가 아닌 텍스트 즉 특수 문자임  
+                this.span.style.color=this.color; //폰트 색상
+                this.span.style.position="absolute";
+                this.span.style.top=this.y+"px";
+                this.span.style.left=this.x+"px";
+
+                document.body.appendChild(this.span);
+            }
+            move(){
+                this.x = this.x + this.velX; 
+                this.span.style.left=this.x+"px";
+            }   
+        }
+
+        function makeArrow(){
+            // 화살 인스턴스 하나 생성
+            // arrow = new Arrow(100, 200);
+            for(let i=0; i<100; i++)
+                arrowArray.push(new Arrow(0, 10*i, colorArray[getRandom(colorArray.length-1)], getRandomByRange(1, 7), charArray[getRandomByRange(0, 4)]));
+        }
+
+        function gameLoop(){
+            // arrow.move();
+            for(let i=0; i<arrowArray.length; i++)
+                arrowArray[i].move();
+        }
+
+        function init(){
+            makeArrow();
+            setInterval("gameLoop()", 10);
+        }
+    </script>
+</head>
+<body onload="init()">
+    
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 500px;
+            height: 500px;
+            /* #ccc == #cccccc */
+            background-color: #000000; 
+            margin: auto;
+        }
+    </style>
+    <script>
+        let flag = true;
+        function setBg(){
+            flag = !flag;
+            let wrapper = document.getElementById("wrapper");
+            let bg = flag ? "black" : "white"
+            wrapper.style.backgroundColor=bg;
+        }
+    </script>
+</head>
+<body>
+    <button onClick="setBg()">배경 뒤집기</button>
+    <div id="wrapper">
+        <img src="../images/room/">
+    </div>
+</body>
+</html>

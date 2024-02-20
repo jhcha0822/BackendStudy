@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+    <script src="./Missile.js"></script>
+    <script>
+        let cannon;
+        let missileArray=[];
+
+        function init(){
+            cannon.style.position = "absolute"; // body를 부모로
+            cannon.style.left = 0+"px";
+            cannon.style.top = 200+"px";
+            // cannon.style.width = 35+"%";
+        }
+
+        function fire(){
+            let x = parseInt(cannon.style.left);
+            let y = parseInt(cannon.style.top);
+            // src, x, y, velX, velY, width, height
+            let missile = new Missile("../images/cannon/m1.png", x+50, y-40, 5, 0, 50, 30);
+            missileArray.push(missile);
+        }
+
+        // 모든 미사일 대상으로 move 호출
+        function gameLoop(){
+            for(let i=0; i<missileArray.length; i++)
+                missileArray[i].move();
+        }
+
+        addEventListener("load", function(){
+            cannon = document.getElementById("cannon");
+            init();
+
+            // body에 키보드 이벤트 연결
+            // addEventListener() 메소드의 두번째 매개변수인 익명함수는
+            // 매개변수를 보유할 수 있고 이때 이 매개변수로 전달되어져 오는 객체가 event 객체이다
+            document.body.addEventListener("keyup", function(e){
+                // e: event 객체
+                if(e.keyCode == 32){ // spacebar
+                    fire();
+                }
+            });
+            setInterval("gameLoop()", 10);
+        });
+    </script>
+</head>
+<body>
+    <select name="" id="sel">
+        <option value="">미사일 선택</option>
+        <option value="m1.png">미사일 1</option>
+        <option value="m2.png">미사일 2</option>
+    </select>
+    
+    <p></p>
+
+    <img src="../images/cannon/cannon.png" id="cannon">
+</body>
+</html>

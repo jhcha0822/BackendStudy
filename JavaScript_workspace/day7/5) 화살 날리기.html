@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+    <script>
+        // 5개 이상의 다른 색상의 화살이 
+        // 각각 다른 속도, 다른 y축위치로 날라가게 작성
+
+        let span;
+        let x=0;
+        let velX=5;
+        let y=0;
+        let velY=0;
+
+        function createArrow(){
+            span = document.createElement("span");
+            span.innerText = ">--→";
+            span.style.color = "red";
+            span.style.position = "absolute";
+            span.style.left = 0+"px";
+            span.style.top = 200+"px";
+            document.body.appendChild(span);
+        }
+
+        function move(){
+            x += velX;
+            span.style.left = x;
+        }
+
+        function init(){
+            createArrow();
+            setInterval(move(), 10);
+        }
+    </script>
+</head>
+<body onload="init()">
+    
+</body>
+</html>

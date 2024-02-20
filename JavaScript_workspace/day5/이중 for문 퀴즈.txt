@@ -1,0 +1,87 @@
+#1
+15
+
+#2
+12
+
+#3
+36
+
+#4
+2
+
+#5
+36
+
+#6
+22
+
+#7
+<script>
+    let tag = "<table width=\"300px\" height=\"250px\" border=\""+1+"px\" align=\"center\">"; // 이스케이프시퀀스
+    for(let i=0; i<3; i++) {
+        tag = tag + "<tr>";
+        for(let j=0; j<5; j++)
+            tag = tag + "<td></td>";
+        tag = tag + "</tr>";    
+    }
+    tag = tag + "</table>";
+    
+    document.write(tag);
+</script>
+
+
+#8
+<script>
+for(let i=0; i<4; i++)    
+    for(let j=0; j<5; i++)
+        document.write("☆");
+</script>
+
+#9
+<script>
+for(let i=0; i<5; i++)    
+    for(let j=0; j<3; i++)
+        document.write("☆");
+</script>
+
+#11
+<script>
+        let f = parseInt(prompt("층수 입력"));
+        let r = parseInt(prompt("객실수 입력"));
+        let b = parseInt(prompt("두께 입력"));
+        let tag = "<table border=\""+b+"px\" align=\"center\">"; // 이스케이프시퀀스
+        for(let i=f; i>0; i--) {
+            tag = tag + "<tr>";
+            for(let j=1; j<=r; j++)
+                tag = tag + "<td>"+i+"0"+j+"호</td>";
+            tag = tag + "</tr>";    
+        }
+        tag = tag + "</table>";
+        
+        document.write(tag);
+</script>
+
+#12
+<script>
+for(let i=0; i<5; i++)    
+    for(let j=0; j<5; i++)
+        if(j<4)
+            document.write("☆");
+        else
+            document.write("★");
+</script>
+
+
+숙제
+제목: 22차_차정현_숙제
+
+html 문서에 이미지 하나 올려두기
+버튼을 두개 생성
+버튼1: 수동
+버튼2: 자동
+
+수동버튼을 누를 때마다 현재위치에서 점점 오른쪽으로
+한계지점 지정하여 도달시 뒤로 돌아오게
+왼쪽도 역시 한계점 0에 도달하면 방향 전환
+

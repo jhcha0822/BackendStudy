@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let deg = 0;
+        function rotate(){
+            let box = document.getElementById("box");
+            box.style.transform="rotate("+deg+"deg)";
+            console.log("각도 ", deg);
+            deg+=10;
+        }
+    </script>
+    <style>
+        #box{
+            width: 200px;
+            height: 100px;
+            background-color: red;
+            margin-top: 200px;
+            margin-left: 100px;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="rotate();">회전시키기</button>
+
+    <div id="box"></div>
+</body>
+</html>

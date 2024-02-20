@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let cnt = 0;
+        function next(){
+            cnt++;
+            if(cnt==18) cnt=1;
+            let h = document.getElementById("hero");
+            h.src="../images/hero/image"+cnt+".png";
+        }
+    </script>
+</head>
+<body>
+    <button onclick="next();">다음사진</button>
+    <img id="hero" src="../images/hero/image1.png">
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iframe 학습</title>
+    <!-- iframe은 구 frame과 동일하게 하나의 문서 내에 여러 창을 띄울 수 있으나,
+        frame과 달리 화면을 자유자제로 조정 가능하다.
+        (frame는 양분할 하는데 매우 못생겼다.) -->
+    <style>
+        body{
+            margin: 0px;
+        }
+        #wrapper{
+            width: 100%;
+            height: 920px;
+        }
+        #aside{
+            width: 10%;
+            height: 100%;
+            background-color: aquamarine;
+            float: left;
+        }
+        #content{
+            width: 90%;
+            height: 100%;
+            background-color: darkgray;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside">
+            <ul>
+                <li><h3>Day 1</h3></li>
+                <li>
+                    <a href="../day1/test.html" target="myframe">예제 1</a>
+                </li>
+                <li>
+                    <a href="../day1/test2.html" target="myframe">예제 2</a>
+                </li>
+                <li>
+                    <a href="../day1/test3.html" target="myframe">예제 3</a>
+                </li>
+                <li>
+                    <a href="../day1/test4.html" target="myframe">예제 4</a>
+                </li>
+                <li>
+                    <a href="../day1/css_test.html" target="myframe">CSS 예제</a>
+                </li>
+                <li>
+                    <a href="../day1/BoxModel.html" target="myframe">박스 모델</a>
+                </li>
+                <li>
+                    <a href="../day1/위치.html" target="myframe">위치 지정 예제</a>
+                </li>
+                <li>
+                    <a href="../day1/register.html" target="myframe">회원가입</a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="content">
+            <!-- 
+                프레임이란? 하나의 브라우저안에 html 문서를 여러개 둘 수 있는데,
+                이때 html 문서는 프레임 단위로 넣을 수 있다.
+                iframe은 기존 프레임과는 달리 크기와 위치를 자유롭게 둘 수 있다.
+             -->
+             <iframe name="myframe" frameborder="0" width="98%" height="100%"></iframe>
+        </div>
+    </div>
+</body>
+</html>

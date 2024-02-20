@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Document</title>
+    <style>
+        /* 문서의 게임 배경을 배경 이미지로 적용해보기 */
+        #wrapper{
+            width: 1280px;
+            height: 640px;
+            margin: auto;
+            position: relative;
+            background-image: url(../images/plane/game_bg.jpg);
+        }
+        #plane{
+            width: 60px;
+            position: absolute;
+            left: 200px;
+            top: 150px;
+        }
+    </style>
+    <script>
+        let x=200;
+        let y=150;
+        function moveUp(){
+            y-=100;
+            let plane = document.getElementById("plane");
+            plane.style.top=y+"px";
+        }
+        function moveDown(){
+            y+=100;
+            let plane = document.getElementById("plane");
+            plane.style.top=y+"px";
+        }
+        function moveRight(){
+            x+=100;
+            let plane = document.getElementById("plane");
+            plane.style.left=x+"px";
+        }
+        function moveLeft(){
+            x-=100;
+            let plane = document.getElementById("plane");
+            plane.style.left=x+"px";
+        }
+
+    </script>
+</head>
+<body>
+    <!-- 게임의 스테이지(무대) 역할을 할 div -->
+    <div id="wrapper">
+        <table>
+            <tr>
+                <td></td>
+                <td><button onclick="moveUp();">↑</button></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button onclick="moveLeft();">←</button></td>
+                <td><button onclick="moveDown();">↓</button></td>
+                <td><button onclick="moveRight();">→</button></td>
+            </tr>
+        </table>
+        <img src="../images/plane/plane.png" id="plane">
+    </div>
+</body>
+</html>

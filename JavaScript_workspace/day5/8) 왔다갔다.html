@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하라는공부는안하고</title>
+    <style>
+        #wrapper{
+            width: 1280px;
+            height: 600px;
+            margin: 0px;
+            position: relative;
+        }
+        /* 296*396 */
+        #wrapper img{
+            position: absolute;
+        }
+        #fatherRight{
+            left: 1000px;
+        }
+    </style>
+    <script>
+        let img;
+        let xPos=296;
+        let flag = 0; // image goes 0: left->right, 1: right->left
+
+        function init(){
+            // 문서 내의 이미지의 (절대)위치를 지정: body tag 기준
+            img = document.getElementById("son"); //181*220
+            img.style.left = 296+"px";
+            img.style.top = 150+"px";
+            img.style.position = "absolute";          
+        }
+
+        function move(){ // x축 방향으로 이동하는 함수
+            if(!flag) {
+                xPos += 5;  
+                img.style.left = xPos+"px";
+                if(xPos >= 1000-181) {
+                    flag = !flag;
+                    img.src = "../images/Smash/2_1.png";
+                }
+            }
+            else{
+                xPos -= 5;  
+                img.style.left = xPos+"px";
+                if(xPos <= 296) {
+                    flag = !flag;
+                    img.src = "../images/Smash/2.png";
+                }
+            }
+        }
+
+        function auto(){
+            setInterval("move()", 10);
+        }
+
+        addEventListener("load", function(){
+            init();
+        });
+
+    </script>
+</head>
+<body>
+    <div style="text-align: center;">
+        <button onClick="move()">수동</button>
+        <button onClick="auto()">자동</button>
+    </div>
+    <div id="wrapper">
+        <img src="../images/Smash/1.png" id="fatherLeft">
+        <img src="../images/Smash/2.png" id="son">
+        <img src="../images/Smash/1_1.png" id="fatherRight">
+    </div>
+</body>
+</html>

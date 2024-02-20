@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+
+        addEventListener("load", function(){
+            // master 체크박스에 클릭 이벤트 연결
+            let master = document.getElementById("master");
+            master.addEventListener("click", function(){
+                let ch = document.getElementsByName("ch");
+                for(let i=0; i<ch.length; i++)
+                    ch[i].checked = master.checked;        
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- <button id="bt" onClick="document.getElementById('bt').style.background='yellow'">버튼</button> -->
+    <button id="bt" onClick="this.style.background='yellow'">버튼</button>
+
+    <input type="checkbox" id="master">전체선택
+    <p></p><!-- p: 문단태그 (줄바꿈) -->
+    <!-- 식별자) id: 중복불가 name: 중복가능 -->
+    <!-- 
+        html 태그가 브라우저 실행 시 메모리에 올라올 때,
+        만약 이름이 동일하게 부여되어 있다면 해당 이름으로 배열이 생성됨
+     -->
+    <input type="checkbox" name="ch">(광고) 망설일시간없다...<br>
+    <input type="checkbox" name="ch">(광고) 망설일시간없다...<br>
+    <input type="checkbox" name="ch">(광고) 망설일시간없다...<br>
+    <input type="checkbox" name="ch">(광고) 망설일시간없다...<br>
+    <input type="checkbox" name="ch">(광고) 망설일시간없다...<br>
+    <input type="checkbox" name="ch">(광고) 망설일시간없다...<br>
+    
+</body>
+</html>

@@ -1,0 +1,28 @@
+<script>
+    let a = 3;
+    let b = 7;
+    // 변수를 나란히 선언한다 하여도 그 위치가 연속적이라고 보장할 수 없다
+
+    // 배열 선언 (내장 객체 Array)
+    let arr = new Array(3); // 명시적 선언
+    // 암묵적 선언 let arr = [];
+
+    // 연속적인 공간을 할당하여 압도적인 활용이 가능
+    arr[0] = 3;
+    arr[1] = 7;
+    arr[2] = 12;
+
+    // 자바스크립트에선 알아서 배열 크기를 늘린다
+    arr[3] = 20;
+    // 따라서 크기가 자유로운 배열로 자주 사용
+    // let arr = new Array();
+
+    // 여태까지 썼던 변수선언 방식과 달리, 대량의 데이터 혹은 규칙성을 가진 데이터 처리 시 유리함
+    /*
+    for(let i=0; i<3; i++)
+        document.write(arr[i]+"<br>");
+    */
+    for(let i=0; i<arr.length; i++)
+        document.write(arr[i]+"<br>");
+
+</script>
