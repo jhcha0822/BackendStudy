@@ -17,3 +17,19 @@ function getRandom(max) {
 function getRandomByRange(min, max) {
     return min + getRandom(max-min); // 0.xxxxxxxxxx 1보다 작은 실수가 난수로 반환
 }
+
+function collisionCheck(box1, box2){
+    //좌측상단 모서리(북서)1사분면
+    let side1 = ((box1.x+box1.width) >= box2.x) && ((box1.y+box1.height) >= box2.y);
+
+    //우측상단 모서리 (북동) 2사분면
+    let side2 = (box1.x <= (box2.x+box2.width)) && ((box1.y+box1.height) >= box2.y);
+
+    //우측하단 모서리(동남) 3사분면 
+    let side3 = (box1.x <= (box2.x+box2.width)) && (box1.y <=(box2.y+box2.height));
+
+    //좌측하단 모서리(서남) 4사분면
+    let side4 = ( (box1.x+box1.width) >= box2.x ) && (box1.y <=(box2.y+box2.height));
+
+    return (side1 && side2 && side3 && side4)
+}

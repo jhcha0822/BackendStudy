@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0px;
+        }
+        #wrapper{
+            width: 100%;
+            height: 900px;
+            background-color: aliceblue;
+            position: relative;
+        }
+    </style>
+    <script>
+        let wrapper;
+        let box1, box2;
+        let flag = false; // 박스를 움직일지 여부를 결정짓는 논리값
+
+        class Box{
+            constructor(container, bg, x, y, width, height){
+                this.container = container;
+                this.div = document.createElement("div");
+                this.bg = bg;
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+
+                // style
+                this.div.style.background = this.bg;
+                this.div.style.fontSize = 50+"px";
+                this.div.style.position = "absolute";
+                
+                this.div.style.left = this.x+"px";
+                this.div.style.top = this.y+"px";
+                this.div.style.width = this.width+"px";
+                this.div.style.height = this.height+"px";
+
+                this.container.appendChild(this.div);
+
+                this.showInfo(); // this.가 없으면 전역함수라 생각
+            }
+
+            showInfo(){
+                this.div.innerText = `x: ${this.x}\ny: ${this.y}`;
+                this.div.style.textAlign = "center";
+                this.div.style.lineHeight = 90+"px";
+            }
+
+            collisionCheck(){
+                //좌측상단 모서리(북서)1사분면
+                let side1 = ((box1.x+box1.width) >= box2.x) && ((box1.y+box1.height) >= box2.y);
+
+                //우측상단 모서리 (북동) 2사분면
+                let side2 = (box1.x <= (box2.x+box2.width)) && ((box1.y+box1.height) >= box2.y);
+
+                //우측하단 모서리(동남) 3사분면 
+                let side3 = (box1.x <= (box2.x+box2.width)) && (box1.y <=(box2.y+box2.height));
+
+                //좌측하단 모서리(서남) 4사분면
+                let side4 = ( (box1.x+box1.width) >= box2.x ) && (box1.y <=(box2.y+box2.height));
+                
+                // // 초록색박스 좌상단 모서리
+                // let side1 = ((box1.x+box1.width >= box2.x)  && (box1.y+box1.height >= box2.y));
+                // // 초록색박스 우상단 모서리
+                // let side2 = ((box1.x <= box2.x+box.width) && (box1.y+box1.height >= box2.y));
+                // // 좌하단 모서리
+                // let side3 = ((box1.x+box1.width >= box2.x) && (box1.y <= box2.y+box2.height));
+                // // 우하단 모서리
+                // let side4 = ((box1.x <= box2.x+box2.width) && (box1.y <= box2.y+box2.height));
+
+                return (side1 && side2 && side3 && side4)
+            }
+
+            move(x, y){
+                this.x = x;
+                this.y = y;
+
+                // rendering
+                this.div.style.left = this.x+"px";
+                this.div.style.top = this.y+"px";
+
+                this.showInfo();
+
+                if(this.collisionCheck())
+                    this.div.style.background="yellow";
+                else
+                    this.div.style.background=this.bg;
+            }
+        }
+
+        function createBox(){
+            box1 = new Box(wrapper, "red", 300, 400, 200, 200);
+            box2 = new Box(wrapper, "green", 700, 400, 200, 200);
+        }
+
+        addEventListener("load", function(){
+            wrapper = document.getElementById("wrapper");
+            
+            createBox();
+
+            box1.div.addEventListener("click", function(){
+                flag = !flag;
+            });
+
+            document.body.addEventListener("mousemove", function(e){
+                if(flag)
+                    box1.move(e.clientX, e.clientY);
+            });
+            
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper"></div>
+</body>
+</html>

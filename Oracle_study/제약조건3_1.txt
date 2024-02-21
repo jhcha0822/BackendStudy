@@ -1,0 +1,52 @@
+SQL> CREATE TABLE MEMBER7(
+  2  MEMBER7_IDX NUMBER PRIMARY KEY
+  3  , ID VARCHAR2(20)
+  4  , AGE NUMBER
+  5  , CONSTRAINT CHK_AGE CHECK(AGE>=18)
+  6  );
+
+Table created.
+
+SQL> CREATE SEQUENCE SEQ_MEMBER7
+  2  INCREMENT BY 1
+  3  START WITH 1;
+
+Sequence created.
+
+SQL> INSERT INTO MEMBER7(MEMBER7_IDX, ID, AGE)
+  2  VALUES(SEQ_MEMBER7.NEXTVAL, 'AAA' 13);
+VALUES(SEQ_MEMBER7.NEXTVAL, 'AAA' 13)
+                                  *
+ERROR at line 2:
+ORA-00917: missing comma 
+
+
+SQL> VALUES(SEQ_MEMBER7.NEXTVAL, 'AAA', 13);
+SP2-0734: unknown command beginning "VALUES(SEQ..." - rest of line ignored.
+SQL> VALUES(SEQ_MEMBER7.NEXTVAL, 'AAA', 13);
+SP2-0734: unknown command beginning "VALUES(SEQ..." - rest of line ignored.
+SQL> SHOW * FROM MEMBER7;
+SP2-0158: unknown SHOW option "*"
+SP2-0158: unknown SHOW option "FROM"
+SP2-0158: unknown SHOW option "MEMBER7"
+SQL> SHOW * FROM MEMBER7
+SP2-0158: unknown SHOW option "*"
+SP2-0158: unknown SHOW option "FROM"
+SP2-0158: unknown SHOW option "MEMBER7"
+SQL> SELECT * FROM MEMBER7
+  2  ;
+
+no rows selected
+
+SQL> -- 위 INSERT는 체크 제약 조건에 위배될 것이므로 안된다
+SQL> -- 때로는 테스트 목적으로 제약조건을 삭제하기도 해야 함
+SQL> ALTER TABLE MEMBER7
+  2  DROP CONSTRAINT SEQ_MEMBER7
+  3  ;
+DROP CONSTRAINT SEQ_MEMBER7
+                *
+ERROR at line 2:
+ORA-02443: Cannot drop constraint  - nonexistent constraint 
+
+
+SQL> SPOOL OFF

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #info{
+            width: 1280px;
+            height: 50px;
+            margin: auto;
+        }
+        #wrapper{
+            width: 1280px;
+            height: 640px;
+            background-image: url(../images/plane/game_bg.jpg);
+            margin: auto;
+            position: relative;
+            background-position: 0px 0px; /* (x, y), CSS에서는 backgroundPosition */
+            overflow: hidden; /* 스크롤바 없애기 */
+        } 
+    </style>
+    <script src="./Hero.js"></script>
+    <script src="./Bullet.js"></script>
+    <script src="./Enemy.js"></script>
+    <script src="../js/lib.js"></script>
+    <script>
+        let wrapper;
+        let info;
+        let flag = true; // gameLoop를 일시정지시킬 논리값
+        let bgX = 0; // 배경이미지의 x좌표
+        let hero; // 생성한 주인공(움직일 이미지)
+        let bulletArray = []; // 총알 여러개를 담을 배열
+        let enemyArray = []; // 다수의 적군을 담을 배열
+        let count=0;
+        let score=0;
+
+        let enemyFile = ["e1.png", "e2.png", "e3.png"];
+
+        function bgEffect(){ // 배경이미지 이동
+            wrapper.style.backgroundPosition = `${bgX--}px 0px`; // x값을 음수방향으로 보내야 앞으로 주행하는 것으로 보임
+        }
+
+        function createHero(){
+            // constructor(container, src, x, y, width, height, velX, velY)
+            hero = new Hero(wrapper, "../images/plane/plane.png", 50, 100, 50, 40, 0, 0)
+        }
+
+        function createEnemy(){
+            for(let i=0; i<enemyFile.length;i++){
+                // container, src, direct, x, y, width, height, velX, velY
+                let direct = (i==2) ? -1:1;
+                let enemy = new Enemy(wrapper, "../images/plane/"+enemyFile[i], direct, i*10+10, 1200, 100*i, 50, 50, -3, 0);
+                // 생성된 적군의 인스턴스를 배열에 추가
+                enemyArray.push(enemy);
+            }
+        }
+
+        function fire(){ // Bullet의 인스턴스를 생성하되, 몸체 끝 부분서부터
+            // constructor(container, x, y, width, height, velX, velY)
+            let bullet = new Bullet(wrapper, (hero.x+hero.width), (hero.y+(hero.height)/2), 
+                                    15, 5, 5, 0);
+            bulletArray.push(bullet);
+        }
+
+        function gameLoop(){
+            if(flag){
+                bgEffect();
+                hero.move();
+                for(let i=0; i<bulletArray.length; i++)
+                    bulletArray[i].move();
+
+                for(let i=0; i<enemyArray.length; i++)
+                    enemyArray[i].move();
+
+                // info 영력에 실시간으로 정보 출력
+                let str = "총알 수: "+bulletArray.length;
+                str += " 적군 수: "+enemyArray.length;
+                str += " 점수: "+score;
+                
+                info.innerText = str;
+
+                if((count++)%100==0)
+                    createEnemy();
+            }
+        }
+
+        addEventListener("load", function(){ // 얘도 메서드. 상위객체인 window가 생략되어 있음. 즉 window.addEventListener. 소속관계가 있음->메서드          
+            wrapper = document.getElementById("wrapper");
+            info = document.getElementById("info")
+            
+            // 키보드 이벤트 연결
+            document.body.addEventListener("keydown", function(e){
+                switch(e.keyCode){
+                    case 27: // ESC
+                        flag = !flag; break; // 일시정지
+                    case 32: // Spacebar
+                        fire(); break;
+                    case 37: 
+                        hero.velX=-5; break;// Left
+                    case 38: 
+                        hero.velY=-5; break;// Top
+                    case 39: 
+                        hero.velX=5; break;// Right
+                    case 40: 
+                        hero.velY=5; break;// Down
+                }
+            });
+            
+            // 키보드에서 손을 떼면
+            document.body.addEventListener("keyup", function(e){
+                switch(e.keyCode){
+                    case 37: hero.velX=0; break;// Left
+                    case 38: hero.velY=0; break;// Top
+                    case 39: hero.velX=0; break;// Right
+                    case 40: hero.velY=0; break;// Down
+                }
+            });
+
+            createHero();
+            createEnemy();
+
+            // interval은 조작이 다 끝난 이후가 안전하다.
+            setInterval("gameLoop()", 10);
+        });
+    </script>
+</head>
+<body>
+    <div id="info"></div>
+    <div id="wrapper"></div>
+</body>
+</html>

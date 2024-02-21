@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+    <script>
+        // 5개 이상의 다른 색상의 화살이 
+        // 각각 다른 속도, 다른 y축위치로 날라가게 작성
+
+        let span;
+        // 화살의 색, 속도, 시작 x좌표, 시작 y좌표를 담고 있는 이차원 배열
+        //■ 강사의견1 : 이차원 배열을 아주 잘 활용하셨네요, 추후 JSON 처리시 바로 이렇게 응용하게 되는데, 
+        //정현씨는 감각이 있으시네요~
+        let arrow=[["red",   10, 0, 329],
+                   ["orange", 5, 0, 210],
+                   ["blue",  15, 0, 221],
+                   ["green", 13, 0, 403],
+                   ["purple", 9, 0, 305]];
+
+        function createArrow(){
+            for(let i=0; i<arrow.length; i++) {
+                span = document.createElement("span");
+                span.setAttribute("id", `arrow${i+1}`); // 수업시간에 안배웠음  
+                //■ 강사의견2 id 뿐만 아니라  html의 속성을 동적으로 부여하는 방법이 바로 setAttribute() 인데요, 고민을 많이하시고 아이디를 내신 흔적이 보입니다 ㅎㅎ
+                //아주 칭찬해드리고 싶네요 
+                span.innerText = ">--→";
+                span.style.color = arrow[i][0];
+                span.style.position = "absolute";
+                span.style.left = arrow[i][2]+"px";
+                span.style.top = arrow[i][3]+"px";
+                document.body.appendChild(span);        
+            }
+        }
+
+        function move(){
+            for(let i=0; i<arrow.length; i++) {
+                arrow[i][2] += arrow[i][1]; //■ 강사의견3 : 배열안에서 필요한 속도 데이터를 아주 잘 활용하고 있으시네요
+                document.getElementById(`arrow${i+1}`).style.left = arrow[i][2] + "px";
+            }
+        }
+
+        function init(){
+            createArrow();
+            setInterval("move()", 30);
+        }
+    </script>
+</head>
+<body onload="init()">
+    
+</body>
+</html>
