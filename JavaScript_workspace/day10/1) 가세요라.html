@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 두개의 채팅창이 같은 너비, 높이 스타일을 가지기에 클래스로 정의하여 처리 */
+        .chatWin{
+            width:300px;
+            height:400px;
+            border:3px solid gray;
+            border-radius: 5px;
+            background-color: aquamarine;
+            box-sizing: border-box; /*바깥쪽으로 크기에 영향을 주지 않음*/
+        }
+        #chat1{
+            position: absolute;
+            left:100px;
+            top:200px;
+        }
+        #chat2{
+            position: absolute;
+            left:600px;
+            top:200px;
+        }
+
+        textarea{
+            width:98%;
+            height:360px;
+            background-color: yellow;
+        }
+        input[type='text']{
+            width:98%;
+            height:25px;
+        }
+    </style>
+    <script src="../js/lib.js"></script>
+    <script>
+        let bad=["꺼져", "미친", "개새"];
+        let good=["가세요", "어머", "삐약"];
+
+        addEventListener("load", function(){
+            let keyInput = document.getElementsByName("keyInput"); // input
+            let log = document.getElementsByName("log"); // textarea
+            
+            // 좌측 텍스트박스에 입력 발생 시
+            keyInput[0].addEventListener("keyup", function(e){
+                if(e.keyCode == 13) { // Enter 발생 시
+                    // 메시지 처리 이전 필터링 적용
+                    str = filterLang(this.value, bad, good);
+                    // 상대방에게 텍스트 출력
+                    log[1].append("상대: "+str+"\n");
+                    // 나의 textarea에 기록을 남김
+                    log[0].append("나: "+str+"\n");
+                    // 입력한 텍스트 초기화
+                    this.value = "";
+                }
+            });
+
+            // 우측 텍스트박스에 입력 발생 시
+            keyInput[1].addEventListener("keyup", function(e){
+                if(e.keyCode == 13) { // Enter 발생 시
+                    str = filterLang(this.value, bad, good);
+                    log[0].append("상대: "+str+"\n");
+                    log[1].append("나: "+str+"\n");                
+                    this.value = "";
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="chatWin" id="chat1">
+            <textarea name="log"></textarea>
+            <input type="text" name="keyInput">
+        </div>
+        <div class="chatWin" id="chat2">
+            <textarea name="log"></textarea>
+            <input type="text" name="keyInput">
+        </div>
+    </div>
+</body>
+</html>

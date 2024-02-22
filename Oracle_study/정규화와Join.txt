@@ -1,0 +1,43 @@
+SQL> desc member;
+ERROR:
+ORA-04043: object member does not exist 
+
+
+SQL> -- ERD: Entity Relation Diagram
+SQL> create table nation(
+  2  nation_idx number primary key
+  3  , nation_name varchar2(20)
+  4  );
+create table nation(
+*
+ERROR at line 1:
+ORA-01658: unable to create INITIAL extent for segment in tablespace MYSPACE 
+
+
+SQL> show user;
+USER is "WENDY"
+SQL> create table nation(
+  2  nation_idx number primary key
+  3  , nation_name varchar2(20)
+  4  );
+create table nation(
+*
+ERROR at line 1:
+ORA-01658: unable to create INITIAL extent for segment in tablespace MYSPACE 
+
+
+SQL> create table member(
+  2  member_idx number priamary key
+  3  , name varchar2(20)
+  4  , gender varchar2(5)
+  5  , nation_idx number
+  6  , constraint fk_nation_member foreign key(nation_idx)
+  7  	references nation(nation_idx)
+  8  );
+member_idx number priamary key
+                  *
+ERROR at line 2:
+ORA-00907: missing right parenthesis 
+
+
+SQL> spool off
