@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 700px;
+            height: 720px;
+            margin: auto;
+            background-color: aliceblue;
+        }
+        #header{
+            width: 100%;
+            height: 70px;
+            line-height: 70px;
+            text-align: center;
+            background-color: antiquewhite;
+        }
+        #header span{
+            font-size: 35px;
+            font-weight: bold;
+        }
+        #header button{
+            width: 50px;
+            height: 30px;
+        }
+        #header span{
+            /* 위아래, 좌우 */
+            margin: 0px 30px;
+            box-sizing: border-box;
+        }
+        #dayTitle{
+            width: 100%;
+            height: 50px;
+            position: relative;
+            background-color: azure;
+        }
+        #content{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: beige;
+        }
+    </style>
+    <script src="./Cell.js"></script>
+    <script>
+        let wrapper;
+        let dayTitle; // 요일이 들어갈 div
+        let content;
+
+        let dayTitleArray = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+        let cellSize = 100; // 셀의 크기: 모여서 달력의 크기를 결정
+        let cellArray = []; // 이차원 배열의 달력
+        let currentDate;
+
+        function createDayCell(){
+            // constructor(container, x, y, width, height, content)
+            for(let i=0; i<dayTitleArray.length; i++) {
+                let cell = new Cell(dayTitle, i*cellSize, 0, cellSize, 50, dayTitleArray[i]);
+                cell.div.style.lineHeight = 50+"px";
+                cell.div.style.textAlign = "center";
+            }
+        }
+
+        function createNumCell(){
+            for(let i=0;i<6;i++){
+                let arr=[];
+                for(let j=0; j<dayTitleArray.length;j++){ //호수
+                    //container, x, y, width, height, content
+                    let cell = new Cell(content, j*cellSize, i*cellSize, cellSize, cellSize, "");
+                    arr.push(cell); //일차원 배열에 담기
+                }
+                cellArray.push(arr);
+            }
+        }
+
+        // 프로그램 가동 직후 달력의 제목(n년 n일)을 출력하는 함수
+        function printTitle(){
+            let span = document.querySelector("#header span");
+            let yy = currentDate.getFullYear();
+            let mm = currentDate.getMonth(); 
+            let n = mm+1;
+            let str = (n<10) ? "0"+n : n;
+            span.innerText = `${yy}년 ${str}월`; // 월은 0부터 시작하므로 +1
+        }
+
+        // 이차원 배열의 각각의 Cell에 날짜 출력
+        function printNum(){
+            let order = 0; // 어떤 요일부터 어떤 날까지 날짜를 출력할 지를 결정짓는 변수
+            let num = 1; // 날짜 출력을 위한 변수
+            for(let i=0; i<cellArray.length; i++){
+                for(let j=0; j<cellArray[i].length; j++){
+                    if(order >= getStartDayOfWeek() && num <= getLastDateOfMonth())
+                        cellArray[i][j].setContent(num++);
+                    else
+                        cellArray[i][j].setContent("");
+                    order++;
+                }
+            }
+        }
+
+        // 해당 월이 무슨 요일부터 시작하는지 알려주는 함수
+        function getStartDayOfWeek(){
+            // 현재 날짜 객체를 만지지 말고 별도의 객체를 이용하여 정보 획득
+            let d = new Date();
+
+            let yy = currentDate.getFullYear(); // 현재 사용자가 보고 있는 날짜 객체로부터 연도 추출
+            let mm = currentDate.getMonth(); // 월-1
+            d.setFullYear(yy);
+            d.setMonth(mm);
+
+            d.setDate(1); // 해당 월의 시작 요일을 구하기 위해 1일로 설정
+            return d.getDay();
+        }
+
+        // 해당 월의 마지막 날짜 구하기
+        function getLastDateOfMonth(){
+            let d = new Date();
+
+            d.setFullYear(currentDate.getFullYear()); // 현재 사용자가 보고 있는 날짜 객체로부터 연도 추출
+            d.setMonth(currentDate.getMonth()+1); // 보고 있는 달의 한달 뒤
+
+            d.setDate(0);
+            return d.getDate();
+        }
+
+        function init(){
+            wrapper.style.width = cellSize*7+"px"; // 달력의 너비
+            wrapper.style.width = cellSize*6+(70+50)+"px"; // 달력의 높이
+            
+            content.style.height=cellSize*6+"px";
+        }
+
+        addEventListener("load", function(){
+            wrapper = document.getElementById("wrapper");
+            dayTitle = document.getElementById("dayTitle");
+            content = document.getElementById("content");
+
+            init();
+            createDayCell(); // 요일 Cell 생성
+            createNumCell(); // 날짜 Cell 생성
+
+            currentDate = new Date();
+            printTitle();
+            printNum();
+
+            let btn = document.getElementsByName("btn"); // 배열 주의
+            btn[0].addEventListener("click", function(){
+                currentDate.setMonth(currentDate.getMonth()-1);
+                printTitle();
+                printNum();
+            });
+            btn[1].addEventListener("click", function(){
+                // 다음 달로 변경
+                currentDate.setMonth(currentDate.getMonth()+1);
+                printTitle();
+                printNum();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <button name="btn">◀</button>
+            <span>n년 n월</span>
+            <button name="btn">▶</button>
+        </div>
+        <div id="dayTitle"></div>
+        <div id="content"></div>
+    </div>
+</body>
+</html>

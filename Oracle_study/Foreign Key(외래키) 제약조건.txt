@@ -1,0 +1,148 @@
+SQL> -- 정규화란 데이터의 무결성을 위해 중복된 데이터가 있다면 테이블을 분리시켜 관리하는 데이터 설계 기법
+SQL> -- 데이터베이스 용량이 부족할 경우 tablespace 파일을 늘려줘야 함
+SQL> conn system/1234
+Connected.
+SQL> alter database
+  2  datafile 'C:\oraclexe\app\oracle\oradata\XE\TESTSPACE.DBF' resize 5M;
+
+Database altered.
+
+SQL> conn wendy/1234
+Connected.
+SQL> CREATE TABLE MEMBER(
+  2  MEMBER_IDX NUMBER PRIMARY KEY
+  3  , NAME VARCHAR2(20)
+  4  , GENDER VARCHAR2(5)
+  5  , NATION_IDX NUMBER
+  6  , CONSTRAINT FK_NATION_MEMBER FOREIGN KEY(NATION_IDX)
+  7  	REFERENCES NATION(NATION_IDX)
+  8  );
+	REFERENCES NATION(NATION_IDX)
+	           *
+ERROR at line 7:
+ORA-00942: table or view does not exist 
+
+
+SQL> CONN SYSTEM/1234
+Connected.
+SQL> alter database
+  2  datafile 'C:\oraclexe\app\oracle\oradata\XE\MYSPACE.DBF' resize 10M;
+
+Database altered.
+
+SQL> conn wendy/1234
+Connected.
+SQL> create table nation(
+  2  nation_idx number primary key
+  3  , nation_name varchar2(20)
+  4  );
+
+Table created.
+
+SQL> CREATE TABLE MEMBER(
+  2  MEMBER_IDX NUMBER PRIMARY KEY
+  3  , NAME VARCHAR2(20)
+  4  , GENDER VARCHAR2(5)
+  5  , NATION_IDX NUMBER
+  6  , CONSTRAINT FK_NATION_MEMBER FOREIGN KEY(NATION_IDX)
+  7  	REFERENCES NATION(NATION_IDX)
+  8  );
+
+Table created.
+
+SQL> -- 외래키 제약조건은 어떤 효과를 갖는가?
+SQL> -- PRIMARY KEY를 위한 SEQUENCE
+SQL> CREATE SEQUENCE SEQ_NATION
+  2  increment by 1
+  3  start with 1;
+
+Sequence created.
+
+SQL> CREATE SEQUENCE SEQ_NUMBER
+  2  increment by 1
+  3  start with 1;
+
+Sequence created.
+
+SQL> insert into nation(nation_idx, nation_name)
+  2  values(seq_nation.nextval, 'korea'
+  3  );
+
+1 row created.
+
+SQL> insert into nation(nation_idx, nation_name)
+  2  values(seq_nation.nextval, 'canada'
+  3  );
+
+1 row created.
+
+SQL> insert into nation(nation_idx, nation_name)
+  2  values(seq_nation.nextval, 'japan'
+  3  );
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from nation;
+
+NATION_IDX NATION_NAME                                                          
+---------- ----------------------------------------                             
+         1 korea                                                                
+         2 canada                                                               
+         3 japan                                                                
+
+SQL> -- 자식 테이블에 데이터를 넣을 때, 존재하지 않는 부모의 키 값을 넣게 되면
+SQL> -- foreign key 제약조건에 위배되어 insert 불가
+SQL> desc member;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ MEMBER_IDX                                NOT NULL NUMBER
+ NAME                                               VARCHAR2(20)
+ GENDER                                             VARCHAR2(5)
+ NATION_IDX                                         NUMBER
+
+SQL> insert into member(member_idx, name, gender, nation_idx)
+  2  values(seq_member.nextval, 'irene', 'women', 4
+  3  );
+values(seq_member.nextval, 'irene', 'women', 4
+       *
+ERROR at line 2:
+ORA-02289: sequence does not exist 
+
+
+SQL> -- parent key에 4가 없으므로 오류 발생
+SQL> insert into member(member_idx, name, gender, nation_idx)
+  2  values(seq_member.nextval, 'irene', 'women', 1
+  3  );
+values(seq_member.nextval, 'irene', 'women', 1
+       *
+ERROR at line 2:
+ORA-02289: sequence does not exist 
+
+
+SQL> insert into member(member_idx, name, gender, nation_idx)
+  2  values(seq_number.nextval, 'irene', 'women', 1
+  3  );
+
+1 row created.
+
+SQL> delete nation where nation_idx==1;
+delete nation where nation_idx==1
+                               *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> delete nation where nation_idx=1;
+delete nation where nation_idx=1
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (WENDY.FK_NATION_MEMBER) violated - child
+record found 
+
+
+SQL> -- 자식이 존재하여 삭제 불가
+SQL> spool off
