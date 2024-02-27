@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 1800px;
+            height: 900px;
+            background-color: aliceblue;
+            margin: auto;
+        }
+        #aside{
+            width: 200px;
+            height: 100%;
+            background-color: antiquewhite;
+            float: left;
+        }
+        #aside *{
+            width: 98%;
+            height: 35px;
+            background-color: blanchedalmond;
+            margin-top: 3px;
+        }
+        #content{
+            width: 1100px;
+            height: 100%;
+            background-color: azure;
+            float: left;
+        }
+        #list{
+            width: 500px;
+            height: 100%;
+            background-color: beige;
+            float: left;
+        }
+    </style>
+    <script>
+        // DOM: Document Object Model
+        let iconArray = ["apple.webp", "banana.webp", "cherry.webp", "grape.webp", "lemon.webp"];
+        let content, list;
+        let pos, lati, longi, msg, url, sel;
+        let storeArray=[]; // 상점 정보들을 모아놓을 배열
+        let map;
+        
+        function createIcon(){
+            // select box의 option 태그 요소를 동적으로 생성하여 부착
+            sel = document.getElementById("sel");
+
+            // 자식 요소인 option dom 생성
+            for(let i=0; i<iconArray.length; i++){
+                let op = document.createElement("option");
+                op.text = iconArray[i];
+                op.value = "../images/item/"+iconArray[i];
+                sel.add(op);
+            }
+        }
+
+        function regist(){
+            // JSON으로 전달
+            // 일반적인 프로그래밍 언어에서는 아래와 같이 json 문자열을 코드에서 사용하려면
+            // " " 처리해야 하나 자바스크립트는 " " 처리하지 않아도 JSON 내장객체로 인정함
+            let store = {
+                "lati": parseFloat(lati.value),
+                "longi": parseFloat(longi.value),
+                "msg" : msg.value,
+                "url" : url.value,
+                "icon" : sel.value			
+            }
+            storeArray.push(store);
+
+            printList(); // 우측 영역에 출력
+            render(store);
+        }
+
+        function render(obj){ // 등록한 상점 정보를 json 객체로 전달받아
+            // 맵에 마커 추가하기
+            let latiLongi = new google.maps.LatLng(obj.lati, obj.longi)
+            var marker = new google.maps.Marker({
+                position: latiLongi,
+                animation: google.maps.Animation.BOUNCE,
+                icon:{
+                    url: obj.icon,
+                    scaledSize: new google.maps.Size(45, 45)
+                }
+            });
+            marker.setMap(map);
+
+            // 정보 윈도우 띄우기
+            let tag = obj.msg;
+            tag += obj.msg + "<br>";
+            tag += "<a href="+obj.url+">바로가기</a>";
+            var infowindow = new google.maps.InfoWindow({
+                content: obj.msg + tag
+            });
+
+            infowindow.open(map, marker);
+        }
+
+        // 상점 등록 결과를 보유한 storeArray 배열의 내용을 우측 list에 출력
+        function printList(){
+            let tag = "<table width='100%' border='1px'>";
+            tag += "<tr>";
+            tag += "<th>위도</th>"
+            tag += "<th>경도</th>"
+            tag += "<th>정보</th>"
+            tag += "</tr>";
+
+            // storeArray 배열의 정보
+            for(let i=0; i<storeArray.length; i++) {
+                let json = storeArray[i];
+                tag += "<tr>";
+                tag += "<td>"+json.lati+"</td>"
+                tag += "<td>"+json.longi+"</td>"
+                tag += "<td>"+json.msg+"</td>"
+                tag += "</tr>";
+            }
+            tag += "</table>";
+
+            list.innerHTML = tag;
+        }
+
+        function init(){
+            list = document.getElementById("list");
+            pos = document.getElementById("pos");
+            lati = document.getElementById("lati");
+            longi = document.getElementById("longi");
+            msg = document.getElementById("msg");
+            url = document.getElementById("url");
+
+            // 아이콘 채우기
+            createIcon();
+            
+            // 위도, 경도에 값이 입력 완료된 시점(커서가 벗어났을 때) 값을 분리시켜
+            // 위도 / 경도 text box에 나누어 출력하자
+            pos.addEventListener("blur", function(){
+                // pos에 입력한 위도, 경도 문자열을 쉼표를 기준으로 분리
+                lati.value = this.value.split(", ")[0].trim();
+                longi.value = this.value.split(", ")[1].trim();
+            });
+
+            // 선택상자의 바뀐 값으로 이미지 미리보기 구현
+            // change: 기존의 값과 다른 값으롭 변경될 때 발생하는 이벤트
+            sel.addEventListener("change", function(){
+                let preview = document.getElementById("preview");
+                preview.src = this.value;
+            });
+
+            // 정보 등록 버튼에 이벤트 연결
+            let bt = document.querySelector("form button");
+            bt.addEventListener("click", function(){
+                regist();
+            });
+        }
+
+        function initMap(){
+            init();
+
+            // 쌍따옴표가 없는, JSON 표기를 따른 JS 내장 객체
+            // map의 설정정보를 JSON 객체로 표현
+
+            /*
+                var: 자바스크립트의 변수 선언 시 앞에 명시하는 키워드
+                중복 선언이 가능하며 호이스팅 현상이 발생하는 단점 존재
+                - 호이스팅: var 선언된 변수는 전역변수화 됨
+                { var x = 5; }
+                console. log(x);
+                프로그래밍 언어의 보편적 원칙상 x는 소멸되어야 하지만 
+                자바스크립트에서는 global 객체에 등록되므로 전역변수화 되버림 
+                ES6(2015년에 발표된 ECMAScript 2015)에서 큰 변화가 생김
+                - let: 변수의 중복 선언 불허, class 등
+                
+                변수 선언의 종류
+                - var
+                - let
+                - const (constant 상수의 약어)
+            */
+            var mapProp = {
+                center: new google.maps.LatLng(37.57129, 126.9884),
+                zoom: 18,
+            };
+            
+            document.getElementsByName
+            document.getElementsByTagNameNS
+
+            map = new google.maps.Map(document.getElementById("content"), mapProp);
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside">
+            <!-- 
+                form 태그는 입력 양식(component)들의 전송 범위를 설정하는 태그
+                주 목적: 입력한 내용들을 서버로 전송하는 역할
+                현재는 로컬이라 상관없으나 미래를 위해 미리 배우자
+            -->
+            <form name="form1">
+                <input type="text" placeholder="위도, 경도 입력" id="pos">
+                <input type="text" placeholder="위도" id="lati">
+                <input type="text" placeholder="경도" id="longi">
+                
+                <input type="text" placeholder="메시지" id="msg">
+                <input type="text" placeholder="URL" id="url">
+
+                <select id="sel">
+                    <option value="">아이콘 선택</option>
+                </select>
+
+                <img id="preview" style="height: 150px;">
+
+                <!-- HTML5에서 등장한 버튼 태그
+                기본 속성으로 type = 'submit'이 적용되어 있음
+                form 태그 안에 둘 경우 현재 form 양식을 전송해버림
+                전송 주소가 없어 현재 페이지로 새로고침됨
+                type='submit'이 아닌 일반 버튼으로 변경
+                <button type = "button"> 고전적 버튼 -->
+                <button type="button">정보등록</button>
+            </form>
+        </div>
+        <div id="content"></div>
+        <div id="list"></div>
+    </div>
+</body>
+</html>
+<!-- onLoad가 없어 외부 라이브러리는 맨 마지막에 넣어야 함 -->
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=initMap"></script>

@@ -1,0 +1,358 @@
+SQL> -- 중복된 데이터를 정규화에 의해 별도의 테이블로 분리시켰다면,
+SQL> -- 물리적으로 분리되어진 여러개의 테이블을 마치 하나의 원래 테이블처럼 합쳐서 보여주는
+SQL> -- select 기법인 join에 대한 실습
+SQL> select * from topcategory;
+
+TOPCATEGORY_IDX TOPNAME                                                         
+--------------- ----------------------------------------                        
+              1 top                                                             
+              2 down                                                            
+              3 accessory                                                       
+
+SQL> select * from subcategory;
+
+SUBCATEGORY_IDX SUBNAME                                  TOPCATEGORY_IDX        
+--------------- ---------------------------------------- ---------------        
+              1 cardigan                                               1        
+              2 knit                                                   1        
+              3 jumper                                                 1        
+              4 jean                                                   2        
+              5 skirt                                                  2        
+              6 ring                                                   3        
+              7 necklace                                               3        
+
+7 rows selected.
+
+SQL> select *
+  2  from topcategory, subcategory;
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX        
+--------------- ---------------------------------------- ---------------        
+SUBNAME                                  TOPCATEGORY_IDX                        
+---------------------------------------- ---------------                        
+              1 top                                                    1        
+cardigan                                               1                        
+                                                                                
+              1 top                                                    2        
+knit                                                   1                        
+                                                                                
+              1 top                                                    3        
+jumper                                                 1                        
+                                                                                
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX        
+--------------- ---------------------------------------- ---------------        
+SUBNAME                                  TOPCATEGORY_IDX                        
+---------------------------------------- ---------------                        
+              1 top                                                    4        
+jean                                                   2                        
+                                                                                
+              1 top                                                    5        
+skirt                                                  2                        
+                                                                                
+              1 top                                                    6        
+ring                                                   3                        
+                                                                                
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX        
+--------------- ---------------------------------------- ---------------        
+SUBNAME                                  TOPCATEGORY_IDX                        
+---------------------------------------- ---------------                        
+              1 top                                                    7        
+necklace                                               3                        
+                                                                                
+              2 down                                                   1        
+cardigan                                               1                        
+                                                                                
+              2 down                                                   2        
+knit                                                   1                        
+                                                                                
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX        
+--------------- ---------------------------------------- ---------------        
+SUBNAME                                  TOPCATEGORY_IDX                        
+---------------------------------------- ---------------                        
+              2 down                                                   3        
+jumper                                                 1                        
+                                                                                
+              2 down                                                   4        
+jean                                                   2                        
+                                                                                
+              2 down                                                   5        
+skirt                                                  2                        
+                                                                                
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX        
+--------------- ---------------------------------------- ---------------        
+SUBNAME                                  TOPCATEGORY_IDX                        
+---------------------------------------- ---------------                        
+              2 down                                                   6        
+ring                                                   3                        
+                                                                                
+              2 down                                                   7        
+necklace                                               3                        
+                                                                                
+              3 accessory                                              1        
+cardigan                                               1                        
+                                                                                
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX        
+--------------- ---------------------------------------- ---------------        
+SUBNAME                                  TOPCATEGORY_IDX                        
+---------------------------------------- ---------------                        
+              3 accessory                                              2        
+knit                                                   1                        
+                                                                                
+              3 accessory                                              3        
+jumper                                                 1                        
+                                                                                
+              3 accessory                                              4        
+jean                                                   2                        
+                                                                                
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX        
+--------------- ---------------------------------------- ---------------        
+SUBNAME                                  TOPCATEGORY_IDX                        
+---------------------------------------- ---------------                        
+              3 accessory                                              5        
+skirt                                                  2                        
+                                                                                
+              3 accessory                                              6        
+ring                                                   3                        
+                                                                                
+              3 accessory                                              7        
+necklace                                               3                        
+                                                                                
+
+21 rows selected.
+
+SQL> set linesize 150
+SQL> select *
+  2  from topcategory, subcategory;
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX SUBNAME                                  TOPCATEGORY_IDX                     
+--------------- ---------------------------------------- --------------- ---------------------------------------- ---------------                     
+              1 top                                                    1 cardigan                                               1                     
+              1 top                                                    2 knit                                                   1                     
+              1 top                                                    3 jumper                                                 1                     
+              1 top                                                    4 jean                                                   2                     
+              1 top                                                    5 skirt                                                  2                     
+              1 top                                                    6 ring                                                   3                     
+              1 top                                                    7 necklace                                               3                     
+              2 down                                                   1 cardigan                                               1                     
+              2 down                                                   2 knit                                                   1                     
+              2 down                                                   3 jumper                                                 1                     
+              2 down                                                   4 jean                                                   2                     
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX SUBNAME                                  TOPCATEGORY_IDX                     
+--------------- ---------------------------------------- --------------- ---------------------------------------- ---------------                     
+              2 down                                                   5 skirt                                                  2                     
+              2 down                                                   6 ring                                                   3                     
+              2 down                                                   7 necklace                                               3                     
+              3 accessory                                              1 cardigan                                               1                     
+              3 accessory                                              2 knit                                                   1                     
+              3 accessory                                              3 jumper                                                 1                     
+              3 accessory                                              4 jean                                                   2                     
+              3 accessory                                              5 skirt                                                  2                     
+              3 accessory                                              6 ring                                                   3                     
+              3 accessory                                              7 necklace                                               3                     
+
+21 rows selected.
+
+SQL> set pagesize 120
+SQL> select *
+  2  from topcategory, subcategory;
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX SUBNAME                                  TOPCATEGORY_IDX                     
+--------------- ---------------------------------------- --------------- ---------------------------------------- ---------------                     
+              1 top                                                    1 cardigan                                               1                     
+              1 top                                                    2 knit                                                   1                     
+              1 top                                                    3 jumper                                                 1                     
+              1 top                                                    4 jean                                                   2                     
+              1 top                                                    5 skirt                                                  2                     
+              1 top                                                    6 ring                                                   3                     
+              1 top                                                    7 necklace                                               3                     
+              2 down                                                   1 cardigan                                               1                     
+              2 down                                                   2 knit                                                   1                     
+              2 down                                                   3 jumper                                                 1                     
+              2 down                                                   4 jean                                                   2                     
+              2 down                                                   5 skirt                                                  2                     
+              2 down                                                   6 ring                                                   3                     
+              2 down                                                   7 necklace                                               3                     
+              3 accessory                                              1 cardigan                                               1                     
+              3 accessory                                              2 knit                                                   1                     
+              3 accessory                                              3 jumper                                                 1                     
+              3 accessory                                              4 jean                                                   2                     
+              3 accessory                                              5 skirt                                                  2                     
+              3 accessory                                              6 ring                                                   3                     
+              3 accessory                                              7 necklace                                               3                     
+
+21 rows selected.
+
+SQL> -- n by m이 이루어짐 (3*7=21)
+SQL> select *
+  2  from topcategory, subcategory
+  3  where topcategory.topcategory_idx = subcategory.topcategory_idx
+  4  ;
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX SUBNAME                                  TOPCATEGORY_IDX                     
+--------------- ---------------------------------------- --------------- ---------------------------------------- ---------------                     
+              1 top                                                    1 cardigan                                               1                     
+              1 top                                                    2 knit                                                   1                     
+              1 top                                                    3 jumper                                                 1                     
+              2 down                                                   4 jean                                                   2                     
+              2 down                                                   5 skirt                                                  2                     
+              3 accessory                                              6 ring                                                   3                     
+              3 accessory                                              7 necklace                                               3                     
+
+7 rows selected.
+
+SQL> -- 이를 join 이라 한다
+SQL> select *
+  2  from topcategory, subcategory
+  3  where topcategory.topcategory_idx = subcategory.topcategory_idx
+  4  and topcategory.topcategory_idx = 3
+  5  ;
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX SUBNAME                                  TOPCATEGORY_IDX                     
+--------------- ---------------------------------------- --------------- ---------------------------------------- ---------------                     
+              3 accessory                                              6 ring                                                   3                     
+              3 accessory                                              7 necklace                                               3                     
+
+SQL> -- 너무 길면 alias를 사용
+SQL> select *
+  2  from topcategory  t , subcategory s
+  3  where t.topcategory_idx= s.topcategory_idx
+  4  and t.topcategory_idx=3
+  5  ;
+
+TOPCATEGORY_IDX TOPNAME                                  SUBCATEGORY_IDX SUBNAME                                  TOPCATEGORY_IDX                     
+--------------- ---------------------------------------- --------------- ---------------------------------------- ---------------                     
+              3 accessory                                              6 ring                                                   3                     
+              3 accessory                                              7 necklace                                               3                     
+
+SQL> select * from dept;
+
+    DEPTNO DNAME                        LOC                                                                                                           
+---------- ---------------------------- --------------------------                                                                                    
+        10 ACCOUNTING                   NEW YORK                                                                                                      
+        20 RESEARCH                     DALLAS                                                                                                        
+        30 SALES                        CHICAGO                                                                                                       
+        40 OPERATIONS                   BOSTON                                                                                                        
+
+SQL> select * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                               
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                               
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                               
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                               
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                               
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                               
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                               
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                               
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                               
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                               
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                               
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                               
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                               
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                               
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                               
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                               
+
+14 rows selected.
+
+SQL> -- 정규화에 의해 dept, emp는 분리되어 있다.
+SQL> -- join을 통해 하나처럼 합칠 수 있다
+SQL> -- 물리적 합침이 아닌 메모리상의 결합
+SQL> select *
+  2  from dept d, emp e
+  3  where d.deptno = e.deptno
+  4  ;
+
+    DEPTNO DNAME                        LOC                             EMPNO ENAME                JOB                       MGR HIREDATE        SAL  
+---------- ---------------------------- -------------------------- ---------- -------------------- ------------------ ---------- -------- ----------  
+      COMM     DEPTNO                                                                                                                                 
+---------- ----------                                                                                                                                 
+        10 ACCOUNTING                   NEW YORK                         7782 CLARK                MANAGER                  7839 81/06/09       2450  
+                   10                                                                                                                                 
+                                                                                                                                                      
+        10 ACCOUNTING                   NEW YORK                         7839 KING                 PRESIDENT                     81/11/17       5000  
+                   10                                                                                                                                 
+                                                                                                                                                      
+        10 ACCOUNTING                   NEW YORK                         7934 MILLER               CLERK                    7782 82/01/23       1300  
+                   10                                                                                                                                 
+                                                                                                                                                      
+        20 RESEARCH                     DALLAS                           7566 JONES                MANAGER                  7839 81/04/02       2975  
+                   20                                                                                                                                 
+                                                                                                                                                      
+        20 RESEARCH                     DALLAS                           7902 FORD                 ANALYST                  7566 81/12/03       3000  
+                   20                                                                                                                                 
+                                                                                                                                                      
+        20 RESEARCH                     DALLAS                           7876 ADAMS                CLERK                    7788 87/05/23       1100  
+                   20                                                                                                                                 
+                                                                                                                                                      
+        20 RESEARCH                     DALLAS                           7369 SMITH                CLERK                    7902 80/12/17        800  
+                   20                                                                                                                                 
+                                                                                                                                                      
+        20 RESEARCH                     DALLAS                           7788 SCOTT                ANALYST                  7566 87/04/19       3000  
+                   20                                                                                                                                 
+                                                                                                                                                      
+        30 SALES                        CHICAGO                          7521 WARD                 SALESMAN                 7698 81/02/22       1250  
+       500         30                                                                                                                                 
+                                                                                                                                                      
+        30 SALES                        CHICAGO                          7844 TURNER               SALESMAN                 7698 81/09/08       1500  
+         0         30                                                                                                                                 
+                                                                                                                                                      
+        30 SALES                        CHICAGO                          7499 ALLEN                SALESMAN                 7698 81/02/20       1600  
+       300         30                                                                                                                                 
+                                                                                                                                                      
+        30 SALES                        CHICAGO                          7900 JAMES                CLERK                    7698 81/12/03        950  
+                   30                                                                                                                                 
+                                                                                                                                                      
+        30 SALES                        CHICAGO                          7698 BLAKE                MANAGER                  7839 81/05/01       2850  
+                   30                                                                                                                                 
+                                                                                                                                                      
+        30 SALES                        CHICAGO                          7654 MARTIN               SALESMAN                 7698 81/09/28       1250  
+      1400         30                                                                                                                                 
+                                                                                                                                                      
+
+14 rows selected.
+
+SQL> set linesize 250
+SQL> select *
+  2  from dept d, emp e
+  3  where d.deptno = e.deptno
+  4  ;
+
+    DEPTNO DNAME                        LOC                             EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                
+---------- ---------------------------- -------------------------- ---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                
+        10 ACCOUNTING                   NEW YORK                         7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                
+        10 ACCOUNTING                   NEW YORK                         7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                
+        10 ACCOUNTING                   NEW YORK                         7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                
+        20 RESEARCH                     DALLAS                           7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                
+        20 RESEARCH                     DALLAS                           7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                
+        20 RESEARCH                     DALLAS                           7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                
+        20 RESEARCH                     DALLAS                           7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                
+        20 RESEARCH                     DALLAS                           7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                
+        30 SALES                        CHICAGO                          7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                
+        30 SALES                        CHICAGO                          7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                
+        30 SALES                        CHICAGO                          7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                
+        30 SALES                        CHICAGO                          7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                
+        30 SALES                        CHICAGO                          7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                
+        30 SALES                        CHICAGO                          7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                
+
+14 rows selected.
+
+SQL> select dname, sal, loc
+  2  from dept d, emp e
+  3  where d.deptno = e.deptno
+  4  and d.deptno = 10
+  5  ;
+
+DNAME                               SAL LOC                                                                                                                                                                                                               
+---------------------------- ---------- --------------------------                                                                                                                                                                                        
+ACCOUNTING                         2450 NEW YORK                                                                                                                                                                                                          
+ACCOUNTING                         5000 NEW YORK                                                                                                                                                                                                          
+ACCOUNTING                         1300 NEW YORK                                                                                                                                                                                                          
+
+SQL> spool off
