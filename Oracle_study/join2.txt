@@ -1,0 +1,316 @@
+SQL> -- 조인이란 정규화에 의해 분리된 테이블을 하나의 테이블처럼 합쳐서 보여주는 select 기법
+SQL> -- inner join, outer join이 존재
+SQL> -- 현재 공부하고 있는 것은 inner join
+SQL> -- outer join은 면접에서 자주 물어봄
+SQL> select * from dept;
+
+    DEPTNO DNAME                        LOC                                     
+---------- ---------------------------- --------------------------              
+        10 ACCOUNTING                   NEW YORK                                
+        20 RESEARCH                     DALLAS                                  
+        30 SALES                        CHICAGO                                 
+        40 OPERATIONS                   BOSTON                                  
+
+SQL> set pagesize 50
+SQL> set linesize 150
+SQL> -- 아래의 문장이 오류가 없는지 확인
+SQL> select ename from dept;
+select ename from dept
+       *
+ERROR at line 1:
+ORA-00904: "ENAME": invalid identifier 
+
+
+SQL> -- 부서 테이블에는 사원명이 없다
+SQL> select dname from emp;
+select dname from emp
+       *
+ERROR at line 1:
+ORA-00904: "DNAME": invalid identifier 
+
+
+SQL> -- 역시 사원테이블에도 부서명이 없다
+SQL> select * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                               
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                               
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                               
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                               
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                               
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                               
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                               
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                               
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                               
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                               
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                               
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                               
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                               
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                               
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                               
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                               
+
+14 rows selected.
+
+SQL> -- 20번 부서에서 근무하는 사원의 이름, 급여, 부서명, 위치 출력
+SQL> -- 서로 다른 테이블에 존재하는 데이터들 출력은 두테이블을 합쳐 출력해야함
+SQL> select ename, sal, dname, loc
+  2  from emp e, dept d
+  3  where e.deptno = d.deptno and e.deptno=20
+  4  ;
+
+ENAME                       SAL DNAME                        LOC                                                                                      
+-------------------- ---------- ---------------------------- --------------------------                                                               
+SMITH                       800 RESEARCH                     DALLAS                                                                                   
+JONES                      2975 RESEARCH                     DALLAS                                                                                   
+SCOTT                      3000 RESEARCH                     DALLAS                                                                                   
+ADAMS                      1100 RESEARCH                     DALLAS                                                                                   
+FORD                       3000 RESEARCH                     DALLAS                                                                                   
+
+SQL> -- 10번 부서 중 최고급여를 받는 사원보다 입사일이 늦은 사원의 이름, 급여, 입사일, 부서명 출력
+SQL> select ename, sal, hiredate, dname
+  2  from dept d, emp e
+  3  where d.deptno = e.deptno
+  4  and hiredate > (
+  5  	select hiredate from emp
+  6  	where sal = (
+  7  		select max(sal) from emp
+  8  		where deptno=10
+  9  	)
+ 10  );
+
+ENAME                       SAL HIREDATE DNAME                                                                                                        
+-------------------- ---------- -------- ----------------------------                                                                                 
+SCOTT                      3000 87/04/19 RESEARCH                                                                                                     
+ADAMS                      1100 87/05/23 RESEARCH                                                                                                     
+JAMES                       950 81/12/03 SALES                                                                                                        
+FORD                       3000 81/12/03 RESEARCH                                                                                                     
+MILLER                     1300 82/01/23 ACCOUNTING                                                                                                   
+
+SQL> -- 30번 부서의 급여평균보다 높은 급여를 받는 사원의 이름, 급여, 부서명, 부서번호를 출력
+SQL> select ename, sal, dname, deptno
+  2  from emp e, dept d
+  3  where sal > (
+  4  	select avg(sal) from emp
+  5  	where deptno = 30
+  6  )
+  7  ;
+select ename, sal, dname, deptno
+                          *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> select ename, sal, dname, e.deptno
+  2  from emp e, dept d
+  3  where sal > (
+  4  	select avg(sal) from emp
+  5  	where deptno = 30
+  6  )
+  7  ;
+
+ENAME                       SAL DNAME                            DEPTNO                                                                               
+-------------------- ---------- ---------------------------- ----------                                                                               
+ALLEN                      1600 ACCOUNTING                           30                                                                               
+ALLEN                      1600 RESEARCH                             30                                                                               
+ALLEN                      1600 SALES                                30                                                                               
+ALLEN                      1600 OPERATIONS                           30                                                                               
+JONES                      2975 ACCOUNTING                           20                                                                               
+JONES                      2975 RESEARCH                             20                                                                               
+JONES                      2975 SALES                                20                                                                               
+JONES                      2975 OPERATIONS                           20                                                                               
+BLAKE                      2850 ACCOUNTING                           30                                                                               
+BLAKE                      2850 RESEARCH                             30                                                                               
+BLAKE                      2850 SALES                                30                                                                               
+BLAKE                      2850 OPERATIONS                           30                                                                               
+CLARK                      2450 ACCOUNTING                           10                                                                               
+CLARK                      2450 RESEARCH                             10                                                                               
+CLARK                      2450 SALES                                10                                                                               
+CLARK                      2450 OPERATIONS                           10                                                                               
+SCOTT                      3000 ACCOUNTING                           20                                                                               
+SCOTT                      3000 RESEARCH                             20                                                                               
+SCOTT                      3000 SALES                                20                                                                               
+SCOTT                      3000 OPERATIONS                           20                                                                               
+KING                       5000 ACCOUNTING                           10                                                                               
+KING                       5000 RESEARCH                             10                                                                               
+KING                       5000 SALES                                10                                                                               
+KING                       5000 OPERATIONS                           10                                                                               
+FORD                       3000 ACCOUNTING                           20                                                                               
+FORD                       3000 RESEARCH                             20                                                                               
+FORD                       3000 SALES                                20                                                                               
+FORD                       3000 OPERATIONS                           20                                                                               
+
+28 rows selected.
+
+SQL> select ename, sal, dname, deptno
+  2  from emp e, dept d
+  3  where sal > (
+  4  	select avg(sal) from emp
+  5  	where deptno = 30
+  6  )
+  7  and d.deptno = e.deptno
+  8  ;
+select ename, sal, dname, deptno
+                          *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> select ename, sal, dname, d.deptno
+  2  from emp e, dept d
+  3  where sal > (
+  4  	select avg(sal) from emp
+  5  	where deptno = 30
+  6  )
+  7  and d.deptno = e.deptno
+  8  ;
+
+ENAME                       SAL DNAME                            DEPTNO                                                                               
+-------------------- ---------- ---------------------------- ----------                                                                               
+ALLEN                      1600 SALES                                30                                                                               
+JONES                      2975 RESEARCH                             20                                                                               
+BLAKE                      2850 SALES                                30                                                                               
+CLARK                      2450 ACCOUNTING                           10                                                                               
+SCOTT                      3000 RESEARCH                             20                                                                               
+KING                       5000 ACCOUNTING                           10                                                                               
+FORD                       3000 RESEARCH                             20                                                                               
+
+7 rows selected.
+
+SQL> -- Blake 사원의 관리자의 급여보다 높은급여를 받는 사원의 이름, 급여, 부서위치, 부서번호 출력
+SQL> select ename, sal, loc, d.deptno
+  2  from emp e, dept d
+  3  where sal > (
+  4  	select sal from emp
+  5  	where empno = (
+  6  		select mgr from emp
+  7  		where ename = blake
+  8  	)
+  9  )
+ 10  and e.deptno = d.deptno
+ 11  ;
+		where ename = blake
+		              *
+ERROR at line 7:
+ORA-00904: "BLAKE": invalid identifier 
+
+
+SQL> select ename, sal, loc, d.deptno
+  2  from emp e, dept d
+  3  where sal > (
+  4  	select sal from emp
+  5  	where empno = (
+  6  		select mgr from emp
+  7  		where ename = 'blake'
+  8  	)
+  9  )
+ 10  and e.deptno = d.deptno
+ 11  ;
+
+no rows selected
+
+SQL> select * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                               
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                               
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                               
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                               
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                               
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                               
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                               
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                               
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                               
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                               
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                               
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                               
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                               
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                               
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                               
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                               
+
+14 rows selected.
+
+SQL> -- 업무가 salesman인 사원들의 급여의 평균보다 낮은 급여를 받는 사원의 이름, 급여, 부서명을 출력
+SQL> select ename, sal, dname
+  2  from emp e, dept d
+  3  where sal > (
+  4  	select avg(sal) from emp
+  5  	where job = 'salesman'
+  6  )
+  7  ;
+
+no rows selected
+
+SQL> select ename, sal, dname
+  2  from emp e, dept d
+  3  where sal < (
+  4  	select avg(sal) from emp
+  5  	where job = 'salesman'
+  6  )
+  7  ;
+
+no rows selected
+
+SQL> select ename, sal, dname
+  2  from emp e, dept d
+  3  WHERE D.DEPTNO=E.DEPTNO
+  4  AND SAL <(
+  5     SELECT AVG(SAL) FROM EMP
+  6     WHERE JOB='SALESMAN'
+  7  )
+  8  ;
+
+ENAME                       SAL DNAME                                                                                                                 
+-------------------- ---------- ----------------------------                                                                                          
+SMITH                       800 RESEARCH                                                                                                              
+WARD                       1250 SALES                                                                                                                 
+MARTIN                     1250 SALES                                                                                                                 
+ADAMS                      1100 RESEARCH                                                                                                              
+JAMES                       950 SALES                                                                                                                 
+MILLER                     1300 ACCOUNTING                                                                                                            
+
+6 rows selected.
+
+SQL> -- 커미션 계약을 하지 않은 사원들의 급여의 합보다 낮은 급여를 받는 사원의 이름, 급여, 부서번호, 부서명, 부서위치 출력
+SQL> select ename, sal, e.deptno, dname, loc
+  2  from emp e, dept d
+  3  where d.deptno = e.deptno
+  4  ans sal < (
+  5  	select sum(sal) from emp
+  6  	where comm is null
+  7  )
+  8  ;
+ans sal < (
+*
+ERROR at line 4:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select ename, sal, e.deptno, dname, loc
+  2  from emp e, dept d
+  3  where d.deptno = e.deptno
+  4  and sal < (
+  5  	select sum(sal) from emp
+  6  	where comm is null
+  7  )
+  8  ;
+
+ENAME                       SAL     DEPTNO DNAME                        LOC                                                                           
+-------------------- ---------- ---------- ---------------------------- --------------------------                                                    
+SMITH                       800         20 RESEARCH                     DALLAS                                                                        
+ALLEN                      1600         30 SALES                        CHICAGO                                                                       
+WARD                       1250         30 SALES                        CHICAGO                                                                       
+JONES                      2975         20 RESEARCH                     DALLAS                                                                        
+MARTIN                     1250         30 SALES                        CHICAGO                                                                       
+BLAKE                      2850         30 SALES                        CHICAGO                                                                       
+CLARK                      2450         10 ACCOUNTING                   NEW YORK                                                                      
+SCOTT                      3000         20 RESEARCH                     DALLAS                                                                        
+KING                       5000         10 ACCOUNTING                   NEW YORK                                                                      
+TURNER                     1500         30 SALES                        CHICAGO                                                                       
+ADAMS                      1100         20 RESEARCH                     DALLAS                                                                        
+JAMES                       950         30 SALES                        CHICAGO                                                                       
+FORD                       3000         20 RESEARCH                     DALLAS                                                                        
+MILLER                     1300         10 ACCOUNTING                   NEW YORK                                                                      
+
+14 rows selected.
+
+SQL> spool off
