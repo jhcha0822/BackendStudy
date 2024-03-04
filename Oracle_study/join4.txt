@@ -1,0 +1,80 @@
+SQL> -- 부서별 근무자수 출력
+SQL> select deptno, count(*)
+  2  from emp
+  3  group by deptno;
+
+    DEPTNO   COUNT(*)                                                           
+---------- ----------                                                           
+        30          6                                                           
+        20          5                                                           
+        10          3                                                           
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select min(cnt)
+  2  from (
+  3  	select deptno, count(*) as cnt
+  4  	from emp
+  5  	group by deptno
+  6* )
+SQL> /
+
+  MIN(CNT)                                                                      
+----------                                                                      
+         3                                                                      
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select ename, d.deptno, dname
+  2  from dept d, emp e
+  3  where d.deptno = e.deptno
+  4  and d.deptno = (
+  5  	select deptno
+  6  	from emp
+  7  	group by deptno
+  8  	having count(*) = 
+  9  	(
+ 10  		select min(cnt)
+ 11  		from (
+ 12  			select deptno, count(*) as cnt
+ 13  			from emp
+ 14  			group by deptno
+ 15  		)
+ 16  	)
+ 17* )
+SQL> /
+
+ENAME                    DEPTNO DNAME                                           
+-------------------- ---------- ----------------------------                    
+CLARK                        10 ACCOUNTING                                      
+KING                         10 ACCOUNTING                                      
+MILLER                       10 ACCOUNTING                                      
+
+SQL> -- 소속 사원수가 가장 적은 부서의 사원명, 부서번호, 부서명 출력
+SQL> --
+SQL> -- 부서 위치가 CHICAGO인 부서에 근무하는 사원 중 급여가 가장 높은 사원의 이름, 급여, 부서명, 부서위치 출력
+SQL> select ename, sal, dname, loc
+  2  from dept d, emp e
+  3  where d.deptno = e.deptno
+  4  and sal = (
+  5  	select max(sal)
+  6  	from emp
+  7  	where deptno = (
+  8  		select deptno
+  9  		from dept
+ 10  		where loc = 'CHICAGO'
+ 11  	)
+ 12  )
+ 13  ;
+
+ENAME                       SAL DNAME                                           
+-------------------- ---------- ----------------------------                    
+LOC                                                                             
+--------------------------                                                      
+BLAKE                      2850 SALES                                           
+CHICAGO                                                                         
+                                                                                
+
+SQL> spool off
