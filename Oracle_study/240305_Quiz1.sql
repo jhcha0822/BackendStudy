@@ -71,5 +71,22 @@ FROM EMP
 ;
 -- 문제13
 -- FORD 의 입사일로부터 36개월을 더한 날짜보다 늦게 입사한 사원의 이름, 입사일을 출력하세요
+SELECT ename, hiredate
+FROM EMP
+WHERE hiredate > (
+	SELECT ADD_MONTHS(hiredate, 36)
+	FROM EMP
+	WHERE ename='FORD'
+);
+-- 문제14
+-- MARTIN의 입사일의 6개월을 뺀 날짜보다도 더 이전에 입사한사원들의 이름, 입사일을 출력하세요
+SELECT ename, hiredate
+FROM emp
+WHERE hiredate < (
+	SELECT ADD_MONTHS(HIREDATE, -6)
+	FROM emp
+	WHERE ename='MARTIN'
+);
+
 
 
