@@ -3,9 +3,11 @@ package com.sds.project0307.editor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -32,8 +34,13 @@ public class MemoApp extends JFrame implements ActionListener{
 	JTextArea area;
 	JScrollPane scroll;
 	
+	File file; // 열어둔 파일
 	FileInputStream fis; // 바이트기반 스트림
 	InputStreamReader reader; // 문자기반 입력 스트림
+	BufferedReader buffr;
+	
+	FileWriter fw; // 문자 기반의 출력 스트림
+	
 	JFileChooser chooser; // 자바에서 파일 탐색기를 가리켜 JFileChooser라 함	
 	
 	public MemoApp() {
@@ -56,7 +63,7 @@ public class MemoApp extends JFrame implements ActionListener{
 		
 		// 파일 탐색기를 생성
 		// 메서드를 호출하면 창이 띄워짐
-		chooser = new JFileChooser("D:\\MULTICAMPUS\\JAVA_workspace\\project0307");
+		chooser = new JFileChooser("D:\\MULTICAMPUS\\JAVA_workspace\\project0307\\src\\com\\sds\\project0307");
 		
 		// 메뉴를 바에 붙이기
 		bar.add(m_file);
@@ -75,7 +82,7 @@ public class MemoApp extends JFrame implements ActionListener{
 		add(scroll);
 		
 		// area의 폰트 크기 조절
-		area.setFont(new Font("Verdana", Font.BOLD, 25));
+		area.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 		
 		// Window
 		setSize(1400, 800);
@@ -100,27 +107,80 @@ public class MemoApp extends JFrame implements ActionListener{
 			File file = chooser.getSelectedFile();
 			try {
 				fis = new FileInputStream(file); // 파일객체로 스트림 생성
-				int data = -1;
+				reader = new InputStreamReader(fis); // 문자 단위 입력
+				buffr = new BufferedReader(reader); // 버퍼로 읽기
+						
+				// int data = -1; // 바이트, 문자 단위 입력
+				String data = null;
+				int count = 0;
+				
 				while(true) {
-					data = fis.read();
-					if(data == -1)
+					//data = fis.read();
+					//data = reader.read();
+					data = buffr.readLine();
+					count++;
+					if(data == null)
+					//if(data == -1)
 						break;
-					area.append(""+(char)data);
+					area.append(""+data+"\n");
+					//area.append(""+(char)data);
 				}
+				// 윈도우창 제목에 읽어들인 횟수 출력
+				this.setTitle("읽은 횟수 "+count);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
+			} finally {
+				if(buffr != null) {
+					try {
+						buffr.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if(reader != null) {
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if(fis != null) {
+					try {
+						fis.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
-			
+	}
+	
+	public void saveFile() {
+		// 열어놓은 파일을 대상으로 출력스트림 생성
+		try {
+			fw = new FileWriter(file);
+			fw.write(area.getText());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if(fw != null)
+				try {
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		// 이벤트를 일으킨 컴포넌트를 이벤트 소스라 함
 		// e객체로부터 소스를 얻어오기
 		Object obj = e.getSource();
-		if(obj == item[2])
+		if(obj == item[2]) // 열기
 			openFile();
+		else if(obj == item[3]) // 저장
+			saveFile();
 	}
 }
