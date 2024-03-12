@@ -1,0 +1,21 @@
+자바에서 데이터베이스를 연동하는 기술: JDBC(java database connectivity)
+대부분의 클래스가 java.sql에서 지원됨
+
+연동 절차
+1. 드라이버 로드
+드라이버: 프로그래밍 언어가 dbms제품을 제어하기 위한 전용 소프트웨어
+Class.forName("클래스경로"); static 영역으로 지정한 경로의 클래스를 로드
+
+2. 접속
+con = DriverManager 객체로 접속을 시도한 DriverManager.getConnection(주소, 사용자, 비밀번호)
+접속이 성공되면 Connection 인터페이스의 인스턴스를 스스로 생성해 반환해줌
+con == null 이면 실패
+
+3. 쿼리문 수행
+PreparedStatement: 인터페이스이지만, Connection 객체를 통해 인스턴스 생성
+con.prepareStatement("원하는 쿼리문"); // 쿼리문 준비
+con.executeUpdate(); // 쿼리 실행
+
+4. 접속해제
+PreparedStatement 닫고
+con 닫기
