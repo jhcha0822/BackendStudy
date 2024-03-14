@@ -53,6 +53,8 @@ public class ShopMain extends JFrame{
 //	Login login;
 	Page[] pages;
 	
+	public boolean loginflag = false;
+	
 	public ShopMain() {
 		p_north = new JPanel();
 		Dimension d = new Dimension(75, 60);
@@ -74,12 +76,15 @@ public class ShopMain extends JFrame{
 		p_center = new JPanel();
 		// p_center.setBackground(Color.YELLOW);
 		
+		// Oracle 접속 시도
+		connect();
+		
 		// 5개의 페이지 생성
 		pages = new Page[5];
-		pages[0] = new ProductRegist();
-		pages[1] = new ProductList();
+		pages[0] = new ProductRegist(this);
+		pages[1] = new ProductList(this);
 		pages[2] = new AdminRegist(this);
-		pages[3] = new AdminList();
+		pages[3] = new AdminList(this);
 		pages[4] = new Login(this);
 		
 		// 로그인 페이지부터 보여주기
@@ -105,9 +110,6 @@ public class ShopMain extends JFrame{
 		// Visualize
 		setSize(1000, 850);
 		setVisible(true);
-		
-		// Oracle 접속 시도
-		connect();
 		
 		// Window adapter(리스너를 구현한 객체) 연결
 		addWindowListener(new WindowAdapter() {
@@ -169,6 +171,14 @@ public class ShopMain extends JFrame{
 		Image image= icon.getImage();
 		image = image.getScaledInstance(75, 60, Image.SCALE_SMOOTH);
 		return new ImageIcon(image);
+	}
+	
+	// 제목창 관리 메서드 정의
+	public void setCurrentTitle(String id) {
+		if(loginflag)
+			this.setTitle(id+" 로그인 중");
+		else
+			this.setTitle("오라클 로그인 필요");
 	}
 	
 	public static void main(String[] args) {
