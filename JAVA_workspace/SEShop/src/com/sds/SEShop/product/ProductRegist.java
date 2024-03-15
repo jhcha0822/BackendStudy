@@ -35,11 +35,11 @@ import com.sds.SEShop.main.ShopMain;
 
 public class ProductRegist extends Page{
 	JLabel la_top, la_sub, la_product_name, la_price, la_brand, la_image, la_download,la_preview;
-	JComboBox<String> b_top, b_sub; //상위, 하위 선택상자 
+	JComboBox<String> b_top, b_sub; // 상위, 하위 선택상자 
 	JTextField t_product_name, t_price, t_brand, t_url;
-	JProgressBar bar; //다운로드 현황 
-	JPanel p_preview; //이미지 미리보기 패널	
-	JButton bt_collect, bt_regist, bt_list; //수집, 상품 등록, 목록 버튼
+	JProgressBar bar; // 다운로드 현황 
+	JPanel p_preview; // 이미지 미리보기 패널	
+	JButton bt_collect, bt_regist, bt_list; // 수집, 상품 등록, 목록 버튼
 	
 	// 콤보박스는 디자인에 초점을 맞춰놓은 컴포넌트이기 때문에, 실제 데이터를 담을 수 없다
 	// 콤보박스의 index와 각 아이템의 위치 index가 일치하는 배열과 같은 존재를 두자
@@ -48,12 +48,8 @@ public class ProductRegist extends Page{
 	ArrayList<Integer> subIdxList = new ArrayList<Integer>();
 	
 	Thread thread; // 다운로드 progressbar 제어용
-	
 	Image image;
-	
-	String filename;
 	String myName;
-	
 	int subcategory_idx;
 	
 	public ProductRegist(ShopMain shopMain) {
@@ -85,9 +81,10 @@ public class ProductRegist extends Page{
 		bar = new JProgressBar();
 		p_preview  = new JPanel() {
 			public void paint(Graphics g) {
-				g.drawImage(image, 0, 0, 280, 280, null);
+				g.drawImage(image, 0, 0, 280, 280, container);
 			}
-		};
+		}; // 페인트 메서드 재정의
+		
 		bt_regist = new JButton("상품등록");
 		bt_list = new JButton("상품목록");
 				
@@ -95,21 +92,28 @@ public class ProductRegist extends Page{
 		Dimension d = new Dimension(280, 35);
 		la_top.setPreferredSize(d);
 		b_top.setPreferredSize(d);
+		
 		la_sub.setPreferredSize(d);
 		b_sub.setPreferredSize(d);
+		
 		la_product_name.setPreferredSize(d);
 		t_product_name.setPreferredSize(d);
+		
 		la_price.setPreferredSize(d);
 		t_price.setPreferredSize(d);
+		
 		la_brand.setPreferredSize(d);
 		t_brand.setPreferredSize(d);
+		
 		la_image.setPreferredSize(d);
 		t_url.setPreferredSize(new Dimension(220, 35));
+		
 		la_download.setPreferredSize(d);
-		bar.setPreferredSize(d);	
-		bar.setStringPainted(true);
-		bar.setBackground(Color.gray);
-		bar.setForeground(Color.DARK_GRAY);
+		bar.setPreferredSize(d);
+		bar.setStringPainted(true); // 바에 글씨 표현 가능
+		bar.setBackground(Color.YELLOW);
+		bar.setForeground(Color.ORANGE);
+		
 		la_preview.setPreferredSize(d);
 		p_preview.setPreferredSize(new Dimension(280, 280));
 		
@@ -133,16 +137,19 @@ public class ProductRegist extends Page{
 		container.add(p_preview);
 		container.add(bt_regist);
 		container.add(bt_list);
+		
 		add(container);
 		
-		getTopCategory(); // 카테고리 데이터 불러오기
+		getTopCategory();//최상위 카테고리 데이터 불러오기
 		
 		// 상위 카테고리 콤보박스에 리스너 연결
 		b_top.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
+			public void itemStateChanged(ItemEvent e) { // html의 onChage 와 동일
 				if(e.getStateChange() == ItemEvent.SELECTED) { // 중복 이벤트 방지
-					int index = b_top.getSelectedIndex(); // 선택된 콤보박스의 index 받아오기
-					if(index > 0) {
+					int index=b_top.getSelectedIndex(); // 선택된 콤보박스의 index 받아오기
+					// 원칙은 get() 을 통해 얻어진 객체가 Integer 이지만, 개발자가 int 형으로 
+					// 대입이 가능한 현상을 unBoxing 이라 한다..이것 또한 편의성때문에 지원한다..
+					if(index > 0) { // 0번째는 이미 안내 문구가 들어있으므로, 0번째보다 큰 애들만 반응을 보이자 
 						int topcategory_idx = topIdxList.get(index-1); // unboxing
 						getSubCategory(topcategory_idx);
 					}
@@ -158,8 +165,8 @@ public class ProductRegist extends Page{
 					// 첫번째 칸은 안내문구이므로 ArrayList를 가져오지 말 것
 					int index = b_sub.getSelectedIndex();
 					if(index > 0) {
-						subcategory_idx = subIdxList.get(index-1);
-						// getProduct(subcategory_idx);
+						subcategory_idx = subIdxList.get(index-1);	
+						System.out.println("당신이 선택한 하위 카테고리의 pk는 "+subcategory_idx);
 					}
 				}
 			}
@@ -184,18 +191,56 @@ public class ProductRegist extends Page{
 				regist();
 			}
 		});
+		
+		// 상품목록버튼에 리스너 연결
+		bt_list.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				shopMain.showHide(ShopMain.PRODUCT_LIST);
+				// ProductList productList = (ProductList)shopMain.pages[ShopMain.PRODUCT_LIST];
+				// productList.getProductList();
+				shopMain.getProductList();
+				// ((ProductList)shopMain.pages[ShopMain.PRODUCT_LIST]).getProductList(); // 상품 갱신
+				// ((ProductList)shopMain.pages[ShopMain.PRODUCT_LIST]).table.updateUI();
+			}
+		});
 	}
 	
 	public void regist() {
-		String product_name = t_product_name.getText();
-		int price = Integer.parseInt(t_price.getText());
-		String brand = t_brand.getText();
-		String filename =  myName;
+		String product_name = t_product_name.getText(); // 상품명
+		int price = Integer.parseInt(t_price.getText()); // 가격  
+		String brand=t_brand.getText(); // 브랜드 
+		String filename=myName; // 새롭게 다운로드에 의해 생성된 파일명
 		// idx값은 멤버변수
 		
 		String sql = "insert into product(product_idx, product_name, price, brand, filename, subcategory_idx)";
-		sql += "values(seq_product.nextval, '"+product_name+"', "+price+", '"+brand+"', '"+filename+"', "+subcategory_idx+")";
-		System.out.println(sql);
+		sql += " values(seq_product.nextval, '"+product_name+"', "+price+", '"+brand+"','"+filename+"', "+subcategory_idx+")";
+		// System.out.println(sql);
+		
+		// 준비된 쿼리 실행: DML: executeUpdate() 수행 후 DML에 의해 영향을 받은 record 수 반환
+		// insert: 1; update, delete: 조건에 맞는 수;
+		// 0이 나오면 수행이 실패했다는 뜻
+		// select : executeQuery(): ResultSet
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = shopMain.con.prepareStatement(sql);
+			int result;
+			result = pstmt.executeUpdate();
+			if(result<1)
+				JOptionPane.showMessageDialog(this, "등록 실패");
+			else
+				JOptionPane.showMessageDialog(this, "등록 성공");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+		
 	}
 	
 	// 인터넷상의 이미지 주소를 이용하여 하드디스크에 이미지를 수집하자
@@ -301,12 +346,14 @@ public class ProductRegist extends Page{
 		try {
 			pstmt = shopMain.con.prepareStatement("select * from subcategory where topcategory_idx="+top_idx);
 			rs = pstmt.executeQuery();
-			b_sub.removeAllItems(); // 누적되는 현상 제거
+			b_sub.removeAllItems(); // 누적되는 현상 제거, 화면에서만 지우기
 			b_sub.addItem("카테고리 선택");
+			subIdxList.removeAll(subIdxList); // 메모리에서 제거
 			while(rs.next()) {
 				b_sub.addItem(rs.getString("subname"));
 				subIdxList.add(rs.getInt("subcategory_idx")); // 콤보박스와 쌍을 이루는 ArrayList 생성
 			}
+			// System.out.println("현재까지 쌓인 subcategory: "+subIdxList.size()); // subIdxList는 멤버변수라 계속 쌓임. b_sub만 지우는중
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -36,4 +36,21 @@ SELECT * FROM SUBCATEGORY;
 
 SELECT * FROM PRODUCT;
 insert into product(product_idx, product_name, price, brand, filename, subcategory_idx)values(seq_product.nextval, 'test', 30000, 'test', '1710405218371.jpg', 4);
-SELECT * FROM PRODUCT;
+DELETE product; -- DBeaver는 오토커밋. (JBDC가 오토커밋, DBeaver는 JBDC 기반)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- 공지 게시판 DDL
+CREATE TABLE notice(
+	notice_idx NUMBER PRIMARY KEY
+	, title varchar2(100)
+	, writer varchar2(20)
+	, content clob
+	, regdate DATE DEFAULT sysdate
+	, hit NUMBER DEFAULT 0
+);
+
+CREATE SEQUENCE seq_notice
+INCREMENT BY 1
+START WITH 1;
+
+SELECT * FROM notice;

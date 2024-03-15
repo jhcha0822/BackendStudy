@@ -51,7 +51,13 @@ public class ShopMain extends JFrame{
 //	AdminRegist adminRegist;
 //	AdminList adminList;
 //	Login login;
-	Page[] pages;
+	public Page[] pages = new Page[5];
+	
+	public static final int PRODUCT_REGIST=0; // 상수 활용해 의미 부여
+	public static final int PRODUCT_LIST=1;
+	public static final int ADMIN_REGIST=2;
+	public static final int ADMIN_LIST=3;
+	public static final int LOGIN=4;
 	
 	public boolean loginflag = false;
 	
@@ -81,11 +87,11 @@ public class ShopMain extends JFrame{
 		
 		// 5개의 페이지 생성
 		pages = new Page[5];
-		pages[0] = new ProductRegist(this);
-		pages[1] = new ProductList(this);
-		pages[2] = new AdminRegist(this);
-		pages[3] = new AdminList(this);
-		pages[4] = new Login(this);
+		pages[PRODUCT_REGIST] = new ProductRegist(this);
+		pages[PRODUCT_LIST] = new ProductList(this);
+		pages[ADMIN_REGIST] = new AdminRegist(this);
+		pages[ADMIN_LIST] = new AdminList(this);
+		pages[LOGIN] = new Login(this);
 		
 		// 로그인 페이지부터 보여주기
 		showHide(pages.length-1);
@@ -103,6 +109,9 @@ public class ShopMain extends JFrame{
 			btn.get(i).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					showHide(btn.indexOf(e.getSource()));
+					// 상품 목록 버튼이라면 갱신 메서드 호출
+					if(btn.indexOf(e.getSource()) == PRODUCT_LIST)
+						getProductList();
 				}
 			});
 		}
@@ -160,6 +169,12 @@ public class ShopMain extends JFrame{
 			else
 				pages[i].setVisible(false);
 		}	
+	}
+	
+	// 상품 목록 버튼 누를때 처리
+	public void getProductList() {
+		((ProductList)pages[ShopMain.PRODUCT_LIST]).getProductList(); // 상품 갱신
+		((ProductList)pages[ShopMain.PRODUCT_LIST]).table.updateUI();
 	}
 	
 	// 지정한 경로의 icon을 반환해 주는 메서드
