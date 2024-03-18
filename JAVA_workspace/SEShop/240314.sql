@@ -54,3 +54,22 @@ INCREMENT BY 1
 START WITH 1;
 
 SELECT * FROM notice;
+
+-- 24.03.18
+CREATE TABLE gallery(
+	gallery_idx NUMBER PRIMARY KEY
+	, title varchar2(100)
+	, writer varchar2(40)
+	, content clob
+	, regdate DATE DEFAULT sysdate
+	, hit NUMBER DEFAULT 0
+	, filename varchar2(17)
+);
+
+CREATE SEQUENCE seq_gallery
+INCREMENT BY 1
+START WITH 1;
+
+SELECT * FROM gallery;
+
+DELETE gallery;
