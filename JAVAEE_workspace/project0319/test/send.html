@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+  	function send() {
+		// 폼에 작성된 내용을 서버로 전송(요청하여 파라미터 전송)
+		let frm = document.querySelector("form");
+		frm.action = "/servlet/test";
+		frm.method = "post";
+		frm.submit(); // 전송
+	}
+  </script>
+ </head>
+ <body>
+ <!-- 비록 form 태그를 사용하더라도 개발자가 아무것도 명시하지 않으면 default는 GET 방식이 됨 -->
+ 	<form>
+		<input type="text" placeholder="전송 제목 입력">
+		<button onClick="send()">전송</button>
+	</form>
+ </body>
+</html>
