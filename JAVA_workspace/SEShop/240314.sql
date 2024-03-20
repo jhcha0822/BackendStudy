@@ -73,3 +73,55 @@ START WITH 1;
 SELECT * FROM gallery;
 
 DELETE gallery;
+
+-- 24.03.20
+CREATE TABLE member(
+	member_idx NUMBER PRIMARY KEY
+	, id varchar2(20)
+	, pass varchar2(64)
+	, name varchar2(30)
+	, email varchar2(50)
+	, receive NUMBER
+	, regdate DATE DEFAULT sysdate
+);
+
+CREATE SEQUENCE seq_member
+INCREMENT BY 1
+START WITH 1;
+
+CREATE TABLE skill(
+	skill_idx NUMBER PRIMARY KEY
+	, skill_name varchar2(20)
+	, member_idx NUMBER
+	, CONSTRAINT fk_member_skill FOREIGN KEY(member_idx)
+	REFERENCES member(member_idx)
+);
+
+CREATE SEQUENCE seq_skill
+INCREMENT BY 1
+START WITH 1;
+
+SELECT * FROM MEMBER;
+
+DROP TABLE skill;
+DROP TABLE MEMBER;
+
+create table member(
+member_idx number primary key
+ , id varchar2(20)
+ , pass varchar2(64)
+ , name varchar2(30)
+ , email varchar2(50)
+ , receive number
+ , regdate  date  default sysdate
+);
+
+create  table  skill(
+   skill_idx  number  primary key 
+ , skill_name varchar2(20) 
+ , member_idx  number 
+ , constraint  fk_member_skill foreign key(member_idx)
+   references  member(member_idx)
+);
+
+SELECT * FROM MEMBER;
