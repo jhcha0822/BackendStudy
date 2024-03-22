@@ -125,3 +125,80 @@ create  table  skill(
 );
 
 SELECT * FROM MEMBER;
+
+-- 24.03.21
+
+CREATE TABLE news(
+	news_idx NUMBER PRIMARY KEY
+	, title varchar2(100)
+	, writer varchar2(30)
+	, content clob
+	, regdate DATE DEFAULT sysdate
+	, hit NUMBER DEFAULT 0
+);
+
+CREATE TABLE comments(
+	comments_idx NUMBER PRIMARY KEY
+	, msg varchar2(1000)
+	, cwriter varchar2(30)
+	, cregdate DATE DEFAULT sysdate
+	, news_idx NUMBER
+	, CONSTRAINT fk_news_comments FOREIGN KEY (news_idx)
+	  REFERENCES news(news_idx) 
+);
+
+CREATE SEQUENCE seq_news
+INCREMENT BY 1
+START WITH 1;
+
+CREATE SEQUENCE seq_comments
+INCREMENT BY 1
+START WITH 1;
+
+-- 바인드 변수란?
+
+SET linesize 200;
+
+SELECT id, name FROM MEMBER;
+
+-- 쿼리문의 변경시마다 DB는 컴파일이 발생함
+-- 동일한 쿼리문 요청시 컴파일이 아닌 기존 코드 재사용
+-- 값이 달리지는 경우에는 새 쿼리로 생각하는 것이 아닌, 기존의 쿼리로 생각하게 해야 함
+-- 즉 바인드 변수라는 기술로 재컴파일을 방지해 DB의 성능을 향상시킴
+-- Java의 기술이 아닌, 데이터베이스 기술임
+-- PLSQL: 오라클의 절차지향 문법을 이용하여 바인드변수를 경험해보자
+
+variable id varchar2(20);
+variable pass varchar2(20);
+
+-- 변수에 값 할당
+
+EXEC :id :='batman';
+EXEC :pass :='1234';
+
+INSERT INTO member(member_idx, id, pass)
+values(seq_member.nextval, :id, :pass);
+
+SELECT * FROM news;
+
+SELECT * FROM comments;
+
+select n.news_idx, title, writer, regdate, hit, 
+count(c.comments_idx) 
+from news n left outer join comments c 
+on n.news_idx = c.news_idx 
+group by n.news_idx, title, writer, regdate, hit;
+
+-- googlemap 맛집
+CREATE TABLE store(
+	store_idx NUMBER PRIMARY KEY
+	, name varchar2(30)
+	, lati NUMBER
+	, longi NUMBER
+);
+
+CREATE SEQUENCE seq_store
+INCREMENT BY 1
+START WITH 1;
+
+SELECT * FROM store;

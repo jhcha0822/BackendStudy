@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript">
+	function send(){
+		// 비동기방식으로 요청 시도
+		// 비동기방식은 XMLHttpRequest 객체로 지원되고
+		// 이 객체는 background로 요청을 시도하기에 통신 수행 여부를 사용자가 알기 어렵다
+		// 즉, 새로고침이 없는 어플리케이션을 구축할 수 있다
+		// Ajax를 이용하면 게시판 구축시 오직 하나의 html 문서로 모든 것이 구현 가능하다
+		// 이렇게 하나의 페이지로 구축된 페이지를 SPA(Single Page Application)이라 한다
+		
+		let xhttp = new XMLHttpRequest(); // 비동기 통신 객체 생성. 일종의 쓰레드와 비슷한 역할 수행
+		xhttp.onreadystatechange = function() {
+			// 비동기 통신 객체의 요청 처리 단계 중 4단계에 도달: 응답이 클라이언트에게 전달
+			if(xhttp.readyState==4 && this.status==200){ // 이벤트 발생 객체가 xhttp이므로 this로 대체도 가능
+				document.getElementById("msg").value = this.responseText;
+			}
+		}
+		xhttp.open("GET", "/async/test.jsp");
+		xhttp.send(); // 백그라운드로 요청
+		
+		
+		
+	}
+</script>
+<body>
+	<button onClick="send()">비동기요청</button>
+	<input type="text" id="msg">
+</body>
+</html>

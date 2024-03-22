@@ -74,8 +74,14 @@ public class NewsDAO {
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, user, pw);
-			String sql = "select * from news order by news_idx desc";
-			pstmt = con.prepareStatement(sql);
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("select n.news_idx as news_idx, title, writer, regdate, hit, count(c.comments_idx) as cnt ");
+			sb.append(" from news n left outer join comments c");
+			sb.append(" on n.news_idx = c.news_idx");
+			sb.append(" group by n.news_idx, title, writer, regdate, hit"); //뉴스 기사를 중심으로 그룹화시킨다..
+			
+			pstmt = con.prepareStatement(sb.toString());
 			rs = pstmt.executeQuery();
 			// rs를 닫게 되면, rs를 받아간 객체에서 사용할 수 없다
 			// rs를 대신할 수 있는 자바의 자료형 생성이 필요하다
@@ -85,9 +91,10 @@ public class NewsDAO {
 				news.setNews_idx(rs.getInt("news_idx"));
 				news.setTitle(rs.getString("title"));
 				news.setWriter(rs.getString("writer"));
-				news.setContent(rs.getString("content"));
+				// news.setContent(rs.getString("content"));
 				news.setRegdate(rs.getString("regdate"));
 				news.setHit(rs.getInt("hit"));
+				news.setCnt(rs.getInt("cnt")); //alias 준 컬럼명
 				list.add(news);
 			}
 		} catch (ClassNotFoundException e) {
