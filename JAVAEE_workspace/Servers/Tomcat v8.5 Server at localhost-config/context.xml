@@ -25,4 +25,10 @@
     <!--
     <Manager pathname="" />
     -->
+    
+    <ResourceLink 
+    	global="jndi/oracle" 
+		name="jndi/oracle"
+		type="javax.sql.DataSource" />
+    
 </Context>
