@@ -19,4 +19,13 @@
   	<servlet-name>listServlet</servlet-name>
   	<url-pattern>/medic/list</url-pattern>
   </servlet-mapping>
+  <!-- 맛집 목록 요청 서블릿 매핑 -->
+  <servlet>
+  	<servlet-name>storeList</servlet-name>
+  	<servlet-class>com.sds.openapp.store.ListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>storeList</servlet-name>
+  	<url-pattern>/store/list</url-pattern>
+  </servlet-mapping>
 </web-app>
