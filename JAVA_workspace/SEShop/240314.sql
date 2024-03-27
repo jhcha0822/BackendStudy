@@ -204,3 +204,7 @@ START WITH 1;
 SELECT * FROM store;
 
 SELECT * FROM notice;
+
+SELECT * FROM BOARD;
+
+DELETE FROM board;

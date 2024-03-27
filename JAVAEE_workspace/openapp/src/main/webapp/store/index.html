@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	#content{
+		background: aliceblue;
+		height: 800px;
+	}
+</style>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<script type="text/javascript">
+	
+	let map;
+	
+	// 마커와 정보 추가하기: 매개변수 위도, 경도
+	function createMarker(lati, longi, name){
+		let marker = new google.maps.Marker({
+		  position:new google.maps.LatLng(lati, longi),
+		  animation:google.maps.Animation.BOUNCE
+		});
+
+		marker.setMap(map);
+		
+		let infowindow = new google.maps.InfoWindow({
+		  content:name
+		});
+
+		infowindow.open(map,marker);
+	}
+	
+	function initMap() {
+		let mapProp= {
+		  center:new google.maps.LatLng(37.5684083, 126.96775),
+		  zoom:12,
+		};
+		map = new google.maps.Map(document.getElementById("content"), mapProp);
+	}
+	
+	function loadAsync(){
+		let xhttp = new XMLHttpRequest(); // 비동기 방식의 백그라운드 요청 객체
+		
+		xhttp.onreadystatechange = function(){ // readyState 속성이 변결될 때 마다 감지
+			if(this.readyState==4 && this.status==200) {
+				// console.log("서버로부터 응답 도착", this.responseText);
+				$("#spin").toggleClass("spinner-border spinner-border-sm");
+				// 서버로부터 응답 받은 데이터 자체는 문자열이기에 객체화 필요
+				let json = JSON.parse(this.responseText); // 문자열 객체로 변환
+				console.log(json.body);
+				
+				for(let i=0; i<json.body.length; i++) {
+					let store = json.body[i];
+					createMarker(store.LA, store.LO, store.CMPNM);
+				}
+				
+			}
+				
+		}
+		
+		xhttp.open("GET", "/store/list?perPage="+$("#perPage").val());
+		xhttp.send(); // 요청
+	}
+	
+	$(function(){
+		$("button").click(function(){
+			loadAsync(); // 비동기 방식 호출
+			
+			// jquery를 이용한 class의 동적 추가
+			$("#spin").toggleClass("spinner-border spinner-border-sm");
+		});
+	});
+	
+</script>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3" id="aside">
+				<!-- input type="text" id="code" placeholder="원하는 지역코드 입력(선택)" -->
+				<p>
+				<select id="code">
+					<option value="">충청도 지역 맛집</option>
+				</select>
+				</p>
+				<p>
+					<input type="text" id="perPage" placeholder="조회할 맛집 수"> <!-- 한 페이지 결과 수 -->
+				</p>
+				<p>
+					<button class="btn btn-primary">
+						<span id="spin"></span>
+						API 호출
+					</button>
+				</p>
+			</div>
+			<div class="col-sm-9" id="content">
+				지도
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGl4v22xE7sU94Z5rC4WzkUsxZZCCaEnM&callback=initMap"></script>
