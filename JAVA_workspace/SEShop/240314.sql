@@ -208,3 +208,21 @@ SELECT * FROM notice;
 SELECT * FROM BOARD;
 
 DELETE FROM board;
+
+-- 240328
+
+CREATE TABLE dataroom(
+	dataroom_idx NUMBER PRIMARY KEY
+	, title varchar2(100)
+	, writer varchar2(30)
+	, content clob
+	, regdate DATE DEFAULT sysdate
+	, hit NUMBER DEFAULT 0
+	, filename varchar2(17)
+);
+
+CREATE SEQUENCE seq_dataroom
+INCREMENT BY 1
+START WITH 1;
+
+SELECT * FROM dataroom;

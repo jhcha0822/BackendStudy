@@ -12,7 +12,8 @@ import com.sds.asyncboard.common.PoolManager;
 // CRUD를 위한 DAO
 public class BoardDAO {
 	
-	PoolManager pool = new PoolManager(); // Pool 관리 객체 생성
+	// PoolManager pool = new PoolManager(); // Pool 관리 객체 생성
+	PoolManager pool = PoolManager.getInstance(); // 싱글턴
 	
 	// insert
 	public int insert(Board board) {
