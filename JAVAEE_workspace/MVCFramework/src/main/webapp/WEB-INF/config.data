@@ -1,0 +1,12 @@
+{
+	"controller": [
+		{
+			"uri": "/blood.do",
+			"class": "com.sds.mvcframework.blood.controller.BloodController"
+		},
+		{
+			"uri": "/movie.do",
+			"class": "com.sds.mvcframework.movie.controller.MovieController"
+		},
+	]
+}

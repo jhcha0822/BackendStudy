@@ -1,0 +1,11 @@
+MVC Framework: 대형 어플리케이션을 만들때 코드를 분리시키자
+
+Model(로직, 데이터) View(디자인) Controller
+
+ex) DAO: model, JTable: view
+
+
+
+여러 명이서 개발 or 웹->Swing 등 의 상황: 분리가 필요
+
+view: 재사용성이 없음
