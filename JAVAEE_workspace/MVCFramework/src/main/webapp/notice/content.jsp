@@ -1,12 +1,12 @@
-<%@page import="com.sds.mvcframework.notice.model.Notice"%>
-<%@page import="com.sds.mvcframework.notice.model.NoticeDAO"%>
+<%@page import="com.sds.mvcproject.notice.model.Notice"%>
+<%@page import="com.sds.mvcproject.notice.model.NoticeDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%!
-	NoticeDAO noticeDAO = new NoticeDAO(); 
+	// NoticeDAO noticeDAO = new NoticeDAO(); 
 %>
 <%
-	String notice_idx = request.getParameter("notice_idx");
-	Notice notice = noticeDAO.select(Integer.parseInt(notice_idx));
+	// String notice_idx = request.getParameter("notice_idx");
+	// Notice notice = noticeDAO.select(Integer.parseInt(notice_idx));
 %>
 <!DOCTYPE html>
 <html>

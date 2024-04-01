@@ -36,25 +36,8 @@
     <!-- Editable user database that can also be used by
          UserDatabaseRealm to authenticate users
     -->
-    <Resource auth="Container" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" name="UserDatabase" pathname="conf/tomcat-users.xml" type="org.apache.catalina.UserDatabase"/>
-  
-  <!-- 이 톰캣에서 실행되는 모든 웹사이트가 이 영역을 공통으로 참조 가능하다
-  	클라이언트인 웹 브라우저가 요청을 시도할때마다 오라클이나 기타 DB에 대한 접속을 시도하는 방식은
-  	다수의 클라이언트가 몰려 요청할 경우 시간 지연으로 인한 부하가 발생한다
-  	또한 힘들게 취득한 Connection을 각 클라이언트마다 1회성 작업을 완료하고 끊어버린다면 효율이 떨어진다.
-  	따라서 접속자가 현재 없더라도, 나중을 위해 특정 DBMS와의 연결 객체인 Connection을 확보해 둔 것을 커넥션 풀 이라고 한다
-  	접속자가 들어오면 이 커넥션 풀로부터 하나씩 꺼내어 접속자에게 할당하고, 원하는 작업이 끝난 뒤 이 커넥션 객체를 다시 풀로 돌려보낸다(해제 X)
-  	이 기법을 Conncetion Pooling이라 한다.
-  	접속자가 예상보다 많다면 Connection 객체를 더 많이 확보하는 로직이 포함되어 알아서 관리해준다 -->
-  	
-  <!-- 개발자가 직접 커넥션풀링을 작성해도 되지만, Tomcat, Weblogic, Jboss등에서 자체적으로 기능을 지원함
-  	Tomcat: 커넥션풀을 구현한 객체를 DataSource형으로 지원함
-  	JNDI:Java Naming Directory Interface 기술로 지원
-  	즉 자바 코드 안이 아니라 server.xml에서 설정을 통해 커넥션풀링 지원: 유지보수성이 높음
-  	 -->
-  <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" initialSize="0" maxIdle="20" maxTotal="20" maxWaitMillis="5000" minIdle="5" name="jndi/oracle" password="1234" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:XE" username="seshop"/>
-  
-  
+    <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" initialSize="0" maxIdle="20" maxTotal="20" maxWaitMillis="5000" minIdle="5" name="jndi/oracle" password="1234" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:XE" username="seshop"/>
+
   </GlobalNamingResources>
 
   <!-- A "Service" is a collection of one or more "Connectors" that share
@@ -178,7 +161,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="sessionapp" path="/sessionapp" reloadable="true" source="org.eclipse.jst.jee.server:sessionapp"/><Context docBase="PoolApp" path="/PoolApp" reloadable="true" source="org.eclipse.jst.jee.server:PoolApp"/><Context docBase="openapp" path="/openapp" reloadable="true" source="org.eclipse.jst.jee.server:openapp"/><Context docBase="AsyncBoard" path="/AsyncBoard" reloadable="true" source="org.eclipse.jst.jee.server:AsyncBoard"/><Context docBase="Dataroom" path="/Dataroom" reloadable="true" source="org.eclipse.jst.jee.server:Dataroom"/><Context docBase="MVCFramework" path="/" reloadable="true" source="org.eclipse.jst.jee.server:MVCFramework"/></Host>
+      <Context docBase="MVCProject" path="/" reloadable="true" source="org.eclipse.jst.jee.server:MVCProject"/></Host>
     </Engine>
   </Service>
 </Server>

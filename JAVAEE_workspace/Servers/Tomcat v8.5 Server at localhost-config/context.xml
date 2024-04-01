@@ -20,15 +20,14 @@
     <!-- web application will be reloaded.                                   -->
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
-
+	
+	 <ResourceLink 
+    	global="jndi/oracle" 
+		name="jndi/oracle"
+		type="javax.sql.DataSource" />
+	
     <!-- Uncomment this to disable session persistence across Tomcat restarts -->
     <!--
     <Manager pathname="" />
     -->
-    
-    <ResourceLink 
-    	global="jndi/oracle" 
-		name="jndi/oracle"
-		type="javax.sql.DataSource" />
-    
 </Context>

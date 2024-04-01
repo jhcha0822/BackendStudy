@@ -1,0 +1,9 @@
+# key-value 쌍으로 요청을 처리하는 컨트롤러 매핑
+
+# 요청을 처리할 컨트롤러 매핑
+/test.do=com.sds.mvcproject.controller.TestController
+/board/list.do=com.sds.mvcproject.controller.ListController
+/board/regist.do=com.sds.mvcproject.controller.RegistController
+/board/detail.do=com.sds.mvcproject.controller.DetailController
+/board/delete.do=com.sds.mvcproject.controller.DeleteController
+/board/edit.do=com.sds.mvcproject.controller.EditController
