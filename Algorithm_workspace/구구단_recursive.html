@@ -1,0 +1,13 @@
+<script>
+
+    function gugudan(n) {
+        if(n>9)
+            return;
+        for(let i=1; i<=9; i++)
+            console.log(n+"*"+i+"="+n*i);
+        gugudan(n+1);
+    }
+
+    gugudan(2);
+
+</script>

@@ -1,0 +1,12 @@
+<script>
+
+    function test(n) {
+        if(n>=10)
+            return;
+        console.log("호출", n);
+        test(n+1);
+    }
+
+    test(0);
+
+</script>

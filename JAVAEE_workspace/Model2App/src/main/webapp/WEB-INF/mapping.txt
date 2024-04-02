@@ -1,0 +1,20 @@
+
+# Controller 매핑
+/test.do=com.sds.model2app.controller.TestController
+/board/list.do=com.sds.model2app.controller.ListController
+/board/regist.do=com.sds.model2app.controller.RegistController
+/board/detail.do=com.sds.model2app.controller.DetailController
+/board/edit.do=com.sds.model2app.controller.EditController
+/board/delete.do=com.sds.model2app.controller.DeleteController
+
+# View 매핑
+/view/test=/board/result.jsp
+# 글을 쓴 후 새 목록을 보여야 하기에 하위컨트롤러를 거쳐야 함(요청을 끊고 새로 접속: redirect)
+/view/board/regist=/board/list.do
+/view/board/list=/board/list.jsp
+/view/board/detail=/board/content.jsp
+/view/board/update=/board/content.jsp
+/view/board/delete=/board/list.do
+
+# error page
+/view/board/error=/board/error.jsp

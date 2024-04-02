@@ -1,0 +1,42 @@
+<script>
+
+    let arr = [
+        [1, 2, 3, 4, 5, 6],
+        [1, 2, 3, 4, 5, 6],
+        [1, 2, 3, 4, 5, 6]
+    ];
+
+    document.write("이중 for문<br>");
+
+    // 실행 성능 측정 시작
+    //console.time("doubleLoop");
+
+    for(let i=0; i<arr.length; i++) {
+        for(let j=0; j<arr[0].length; j++)
+            document.write(arr[i][j]);
+        document.write("<br>");
+    }
+
+    // 실행 성능 측정 시작
+    //console.timeEnd("doubleLoop");
+
+    document.write("외부 for문 재귀로 대체<br>");
+
+    // 실행 성능 측정 시작
+    // console.time("recursive");
+
+    function test(i) {
+        if(i>=arr.length)
+            return;
+        for(let j=0; j<arr[0].length; j++)
+            document.write(arr[i][j]);
+        document.write("<br>");
+        test(i+1);
+    }
+
+    test(0);
+
+    // 성능 측정 종료
+    // console.timeEnd("recursive");
+
+</script>
