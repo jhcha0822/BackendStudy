@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- 메모리에 올려져서 스프링에 의해 관리될 객체 등록 -->
+	<bean class="com.sds.springapp.di.FriPan" id="friPan"/> <!-- new FriPan()과 동일한 효과 -->
+	<bean class="com.sds.springapp.di.Induction" id="induction"/>
+	<!-- 주입 -->
+	<bean class="com.sds.springapp.di.Cook" id="cook">
+		<!-- Cook이 보유한 멤버변수인 pan에 FriPan에 주입 -->
+		<!-- Spring은 주입 시 setter나 생성자 메서드 이용. 변수 직접 접근 X -->
+		<!-- property name="pan ref="friPan" : setPan() setter 호출-->
+		<!-- 
+			<property name="pan" ref="friPan"></property> Weaving
+		-->
+		<property name="pan" ref="induction"/>
+	</bean>
+	
+	<!-- 이 XML은 파싱되어야 하기에 기능을 수행하는 Container 만들기-->
+	
+	<!-- ##################################################################################### -->
+
+	<bean class="com.sds.springapp.aop.Bell" id="bell"/>
+	
+	<bean class="com.sds.springapp.aop.Student" id="student">
+		<!-- <property name="bell" ref="bell"></property>  -->
+		<!-- 더 이상 bell을 포함하지 않음 -->
+	</bean>
+	
+	<!-- 
+		AOP: Aspect Oriented Programming, 관점 지향 프로그래밍
+		어플리케이션 전반적, 공통적으로 사용되는 로직을 has-a 관계로 묶지 않고
+		하나의 관점으로 정의한 후, 공통 로직이 필요한 시점에 자동으로 작동하게끔 처리
+		
+		공통 로직을 (어플리케이션의) 횡단적 관점 이라고 한다
+		
+		Namespaces에 가서 GUI로 aop 포함		
+	-->
+	
+	<aop:config>	
+		<!-- Bell 객체를 하나의 관점으로 정의한다 -->
+		<aop:aspect ref="bell">
+			<!--  AspectJ의 expression 사용            제한자   반환형     패키지.객체.모든 메서드*()        .. 매개변수 관심 없음           -->
+			<aop:pointcut expression="execution(public * com.sds.springapp.aop.Student.*(..))" id="bellPointCut"/> <!-- 어느 지점에 관여할 지 -->
+			<!--  (관점인)bell의 어느 메소드                       어느 지점             -->
+			<aop:before method="sound" pointcut-ref="bellPointCut"/>
+		</aop:aspect>
+	</aop:config>
+	
+</beans>

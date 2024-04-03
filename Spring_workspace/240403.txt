@@ -1,0 +1,27 @@
+기존 이클립스는 더이상 Spring MVC 지원 X
+- 한국 전자정부프레임워크(Spring 기반)
+- 한국 EGov에 맞게 이클립스 커스터마이징
+
+EGov 프레임웍 내부의 Eclipse 사용
+
+Spring은 다양한 분야의 개발이 가능(웹용이 아님)
+
+수업진행:
+Spring의 개발 원리 2가지
+1) DI (Dependency Injection: 의존성 주입X, 의존성 있는 객체를 외부에서 주입하여 결합도를 낮춘다)
+	has-a 관계에서 유지보수 문제가 발생 가능: 
+
+
+2) AOP(Aspect Oriented Programming: )
+-> Spring MVC
+	공통코드를 어플리케이션 밖으로 빼서 관점(Aspect)화 한다
+	코드가 특정 동작을 수행할 때 이를 관찰하고 관점이 동작
+
+
+
+
+
+프로젝트 생성 후 Maven으로 전환
+pom에 spring core 추가
+https://mvnrepository.com/artifact/org.springframework/spring-core/4.3.30.RELEASE
+

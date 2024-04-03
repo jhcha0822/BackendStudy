@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "https://mybatis.org/dtd/mybatis-3-config.dtd"-->
+
+<!-- DB정보 작성 -->
+
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "mybatis-3-config.dtd">
+<configuration>
+  
+  <typeAliases>
+  	<!-- typeAlias type="어떤자료형을" alias="줄여쓰기"></typeAlias -->
+  	<typeAlias type="com.sds.springmvc.domain.Board" alias="Board"/>
+  </typeAliases>
+  
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      
+      <!-- tomcat이 JNDI에서 지원하는 커넥션풀로 mybatis 사용 -->
+      <dataSource type="JNDI">
+        <property name="data_source" value="java:comp/env/jndi/mysql" />
+      </dataSource>
+      
+<!-- 
+      <dataSource type="POOLED">
+        <property name="driver" value="com.mysql.jdbc.Driver" />
+			<property name="url" value="jdbc:mysql://localhost:3306/javaee?characterEncoding=utf-8" />
+			<property name="username" value="root" />
+			<property name="password" value="" />
+      </dataSource>
+-->
+    </environment>
+  </environments>
+  
+  <!-- SQL문이 작성된 xml 경로 작성 -->
+  <mappers>
+    <mapper resource="com/sds/springmvc/mybatis/BoardMapper.xml" />
+  </mappers>
+</configuration>

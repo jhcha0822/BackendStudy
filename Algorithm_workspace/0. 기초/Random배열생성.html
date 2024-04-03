@@ -1,0 +1,18 @@
+<script src="../js/lib.js"></script>
+<script>
+    let arr=[]; // 크기 조절 가능
+
+    // from부터 to사이 n개의 랜덤한 값으로 데이터를 채우되, 중복되지 않은 값
+    // getRandomByRange(from, to);
+    
+    while(true){
+        if(arr.length>=7)
+            break;
+        let n = getRandomByRange(1, 12);
+        if(arr.indexOf(n)==-1)
+            arr.push(n);
+    }
+
+    console.log(arr);
+
+</script>

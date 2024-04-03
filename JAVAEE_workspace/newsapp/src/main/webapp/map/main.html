@@ -41,11 +41,11 @@
 	}
 	
 	function renderMap(){ // 지도에 표시
-		var marker = new google.maps.Marker({
+		var marker = new google.maps.Marker.AdvancedMarkerElement({
 		  position:new google.maps.LatLng($("#lati").val(), $("#longi").val()),
 		  animation:google.maps.Animation.BOUNCE
 		});
-		marker.setMap(map);
+		marker.AdvancedMarkerElement.setMap(map);
 		
 		// 정보창 띄우기
 		var infowindow = new google.maps.InfoWindow({

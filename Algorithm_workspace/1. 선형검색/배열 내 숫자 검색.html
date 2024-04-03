@@ -1,0 +1,19 @@
+<script src="../js/lib.js"></script>
+<script>
+    // 배열이 정렬되어 있다면 다양한 검색 알고리즘으로 시간 복잡도를 줄일 수 있음
+    // 정렬되어 있지 않은 데이터 집합을 대상으로는 선형(순차)검색을 사용 [O(n)]
+    let arr = createArray(1, 12, 6);
+
+    function getIndexOfTarget(arr, target) {    
+        let index = -1;
+
+        for(let i=0; i<arr.length; i++) {
+            if(arr[i] == target)
+                index = i;
+        }
+        
+        return index;
+    }
+
+    console.log(arr);
+</script>
