@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 
+		이 매핑 파일은 DispatcherServlet이 보유한 ApplicationContext가 읽어
+		이 xml에 명시된 bean들을 인스턴스화 하여 관리한다.
+		이때 ApplicationContext를 Spring Container라 한다.		
+	-->
+	
+	<!-- View 매핑: 접두어와 접미어를 조합해 URL을 생성: InternalResourceViewResolver -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- MybatisManager -->
+	<bean class="com.sds.springproject.mybatis.MybatisManager" id="mybatisManager"/>
+	
+	<!-- MybatisMemberDAO -->
+		<!-- MybatisManager를 주입: Weaving -->
+	<bean class="com.sds.springproject.model.member.MybatisMemberDAO" id="mybatisMemberDAO">
+		<!-- <property name="manager" ref="mybatisManager"/> -->
+	</bean>
+	
+	<!-- MybatisBioDAO -->
+	<bean class="com.sds.springproject.model.bio.MybatisBioDAO" id="mybatisBioDAO">
+		<!-- <property name="manager" ref="mybatisManager"/>  -->
+	</bean>
+	
+	<!-- 서비스 등록 -->
+	<bean class="com.sds.springproject.model.member.MemberServieImpl" id="memberServieImpl">
+		<property name="manager" ref="mybatisManager"/>
+		<property name="memberDAO" ref="mybatisMemberDAO"/>
+		<property name="bioDAO" ref="mybatisBioDAO"/>
+	</bean>
+	
+	<!-- 하위 컨트롤러 등록 -->
+	<bean class="com.sds.springproject.controller.RegistController" id="registController">
+		<!-- <property name="memberDAO" ref="mybatisMemberDAO"/> -->
+		<!-- <property name="bioDAO" ref="mybatisBioDAO"/> -->
+		<!-- <property name="manager" ref="mybatisManager"/> -->
+		<property name="memberService" ref="memberServieImpl"></property>
+	</bean>	
+	
+	<bean class="com.sds.springproject.controller.ListController" id="listController"/>
+	
+	<!--
+		Spring이 지원하는 매핑 방식은 여러가지가 존재
+		ex) BeanNameUrlHandlerMapping, SimpleURLHandlerMapping(옛 방식), DefaultAnnotationHandlerMapping(표준 방식) 등
+		SimpleURLHandlerMapping: key값이 uri 결정, value는 해당 하위 컨트롤러를 결정
+								  즉, key-value로 이루어진 핸들러 매핑
+	-->
+	
+	<!-- SimpleURLHandlerMapping로 하위 컨트롤러 매핑 -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/member/regist">registController</prop>
+				<prop key="/member/list">listController</prop>
+			</props>
+		</property>
+	</bean>	
+	
+
+
+</beans>

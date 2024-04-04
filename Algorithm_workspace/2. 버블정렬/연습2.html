@@ -1,0 +1,38 @@
+<script src="../js/lib.js"></script>
+<script>
+
+    // 길이가 10인 1~16까지의 임의의 배열
+    let arr = createArray(1, 16, 10);
+
+    console.log("정렬 전", arr);
+
+    /*
+    for(let n=0; n<arr.length-1; n++) {
+        for(let i=0; i<arr.length-n; i++) {
+            if(arr[i] > arr[i+1]) {
+                let temp = arr[i];
+                arr[i] = arr[i+1];
+                arr[i+1] = temp;
+            }
+        }
+    }
+    */
+
+    function bubbleSort(n) {
+        if(n > arr.length-1)
+            return;
+        for(let i=0; i<arr.length-n; i++) {
+            if(arr[i] > arr[i+1]) {
+                let temp = arr[i];
+                arr[i] = arr[i+1];
+                arr[i+1] = temp;
+            }
+        }
+        bubbleSort(n+1);
+    }
+
+    bubbleSort(0);
+
+    console.log("정렬 후", arr);
+
+</script>

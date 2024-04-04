@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- DTO alias 정의 -->
+		<typeAlias type="com.sds.springproject.domain.Member" alias="Member"/>
+		<typeAlias type="com.sds.springproject.domain.Bio" alias="Bio"/>
+	</typeAliases>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="JNDI">
+				<!-- Tomcat의 설정 파일 이용 -->
+				<property name="data_source" value="java:comp/env/jndi/mysql" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<!-- CRUD를 수행하는 Mapper를 Table과 1:1 대응하게 설계 -->
+		<!-- 자바가 아니기에 경로는 패키지가 아닌 디렉토리 취급 -->
+		<mapper resource="com/sds/springproject/mybatis/MemberMapper.xml" />
+		<mapper resource="com/sds/springproject/mybatis/BioMapper.xml" />
+	</mappers>
+</configuration>

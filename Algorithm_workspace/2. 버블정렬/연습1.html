@@ -1,0 +1,98 @@
+<script>
+
+    let arr = [8, 2, 7, 3];
+
+    console.log("정렬 전", arr);
+
+    /*
+
+    // 1회 수행
+    if(arr[0] > arr[0+1]) { // 다음 수가 더 작다면
+        // 자리 변경
+        let temp = arr[0];
+        arr[0] = arr[0+1];
+        arr[0+1] = temp;
+    }
+
+    console.log("1-1회 정렬", arr);
+
+    // 2회 수행
+    if(arr[1] > arr[1+1]) { // 다음 수가 더 작다면
+        // 자리 변경
+        let temp = arr[1];
+        arr[1] = arr[1+1];
+        arr[1+1] = temp;
+    }
+
+    console.log("1-2회 정렬", arr);
+
+    // 3회 수행
+    if(arr[2] > arr[2+1]) { // 다음 수가 더 작다면
+        // 자리 변경
+        let temp = arr[2];
+        arr[2] = arr[2+1];
+        arr[2+1] = temp;
+    }
+
+    console.log("1-3회 정렬", arr);
+    
+    */
+
+    /*
+    for(let i=0; i<arr.length-1; i++) {
+        if(arr[i] > arr[i+1]) {
+            let temp = arr[i];
+            arr[i] = arr[i+1];
+            arr[i+1] = temp;
+        }
+    }
+    console.log("1회 정렬", arr);
+    */
+
+    /*
+    for(let i=arr.length-1; i>0; i--) {
+        for(let j=0; j<i; j++) {
+            if(arr[j] > arr[j+1]) {
+                let temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+        console.log("정렬", arr);
+    }
+    */
+
+    /*
+
+    // 이중 for문
+    for(let a=0; a<arr.length; a++) {
+        for(let i=0; i<arr.length-a; i++) {
+            if(arr[i] > arr[i+1]) {
+                let temp = arr[i];
+                arr[i] = arr[i+1];
+                arr[i+1] = temp;
+            }
+        }
+        console.log(a, "정렬 결과", arr);
+    }
+
+    */
+
+    // 재귀 호출
+    function bubbleSort(n) {
+        if(n == arr.length-1)
+            return;
+        for(let i=0; i<arr.length-n; i++) {
+            if(arr[i] > arr[i+1]) {
+                let temp = arr[i];
+                arr[i] = arr[i+1];
+                arr[i+1] = temp;
+            }
+        }
+        console.log(n, "정렬 결과", arr);
+        bubbleSort(n+1);
+    }
+
+    bubbleSort(0);
+
+</script>
