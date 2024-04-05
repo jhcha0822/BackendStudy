@@ -1,0 +1,37 @@
+<script src="../js/lib.js"></script>
+<script>
+
+    // 선택정렬: 최대값이나 최솟값이 올 자리를 선택하고
+    // 선택된 자리와 나머지 정렬되지 않은 요소들 간 비교를 통하여
+    // (오름차순)더 작은 값이 선택된 자리를 차지하게 하는 업무를 반복
+
+    let arr = createArray(1, 16, 7);
+    console.log("정렬 전", arr);
+
+    /*
+    for(let i=0; i<arr.length; i++) {
+        if(arr[i] < arr[0]) { // 선택된 자리 0의 값보다 다른 요소들이 더 작다면
+            // swap
+            let temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+        }
+    }
+
+    console.log("정렬 후", arr);
+    */
+
+    for(let n=0; n<arr.length-1; n++) {
+        for(let i=n+1; i<arr.length; i++) {
+            if(arr[i] < arr[n]) { // 선택된 자리 0의 값보다 다른 요소들이 더 작다면
+                // swap
+                let temp = arr[n];
+                arr[n] = arr[i];
+                arr[i] = temp;
+            }
+        }
+    }
+
+    console.log("정렬 후", arr);
+    
+</script>

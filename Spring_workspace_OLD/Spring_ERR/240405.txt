@@ -1,0 +1,15 @@
+Mybatis: SQLMapper
+쿼리문과 자바의 DTO 객체의 자동 매핑이 목적
+DTO에 데이터를 담아 쿼리를 날리기 위함
+
+Hibernate: ORM(Object/Relational Mapping)
+객체와 관계형데이터베이스의 테이블을 자동으로 매핑
+쿼리문이 들어가지 않고, 단순히 DTO를 채워 명령하면 ORM이 알아서 쿼리함
+개발자는 객체만 만지게 된다
+
+Hibernate는 사설 표준
+Java의 ORM 표준은 JPA(Java Persistant API)
+거의 비슷하다
+
+이제 jsp는 WEB-INF 보안 폴더에 위치
+컨트롤러를 통해 접근 가능

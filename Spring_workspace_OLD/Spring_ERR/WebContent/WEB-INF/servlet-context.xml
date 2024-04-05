@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 
+		Sping의 설정 xml은 개발 규모가 커질수록 복잡해진다
+		java5 버전부터 등장한 @ 어노테이션(Annotation)을 섞어 파일을 간소화시키자
+		
+		Spring3.X대 부터 하위 컨트롤러의 매핑 방식은 개발자가 따로 지정하지 않을시 디폴트로 DefaultAnnotationHandlerMapping이 사용됨
+	-->
+
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+	
+	<!-- View 객체를 이용하여 실제 jsp의 경로를 조합하는 InternalResourceViewResolver -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	
+	<!-- 메모리에 올리고 싶은 대상 객체가 어디에 있는지 패키지를 명시 -->
+	<!-- Namespaces탭에서 context 추가 -->
+	<!-- component-scan: 클래스패스를 스캔하여 어노테이션을 찾음 -->
+	
+	<!-- 컨트롤러를 찾아 @Controller 어노테이션이 붙은 클래스들을 메모리에 생성 -->
+	<context:component-scan base-package="com.sds.spring.controller"/>
+	
+	<!-- 모델들이 모여있는 패키지를 대상으로 스캔을 시도하고, 그 패키지내의 객체들에 스프링이 이해하는 어노테이션이 있을 경우
+		해당 객체를 스프링이 자동으로 인스턴스화하여 컨테이너(ApplicationContext 객체)에서 관리 -->
+	<context:component-scan base-package="com.sds.spring.model"/>
+	
+	<!-- Singleton을 메모리에 올리기 -->
+	<bean class="com.sds.spring.hibernate.HibernateManager" 	factory-method="getInstance"/>
+	<bean class="com.sds.spring.mybatis.MybatisManager" 		factory-method="getInstance"/>
+
+</beans>

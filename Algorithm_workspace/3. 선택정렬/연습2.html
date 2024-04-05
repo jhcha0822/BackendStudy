@@ -1,0 +1,41 @@
+<script src="../js/lib.js"></script>
+<script>
+
+    // 재귀함수
+
+    let arr = createArray(1, 16, 7);
+
+    console.log("정렬 전", arr);
+
+    function selectionSort(n) {
+        if(n >= arr.length-1)
+            return;
+        for(let i=n+1; i<arr.length; i++) {
+            if(arr[i] < arr[n]) { // 선택된 자리 0의 값보다 다른 요소들이 더 작다면
+                // swap
+                let temp = arr[n];
+                arr[n] = arr[i];
+                arr[i] = temp;
+            }
+        }
+        selectionSort(n+1);
+    }
+    
+    selectionSort(0);
+
+    console.log("정렬 후", arr);
+
+    /*
+    for(let n=0; n<arr.length-1; n++) {
+        for(let i=n+1; i<arr.length; i++) {
+            if(arr[i] < arr[n]) { // 선택된 자리 0의 값보다 다른 요소들이 더 작다면
+                // swap
+                let temp = arr[n];
+                arr[n] = arr[i];
+                arr[i] = temp;
+            }
+        }
+    }
+    */
+
+</script>
