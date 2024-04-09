@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Product"> <!-- 매핑할 DTO -->
+
+	<insert id="insert" parameterType="Product">
+		insert into product(product_name, brand, price, filename, detail, subcategory_idx)
+		values(#{product_name}, #{brand}, #{price}, #{filename}, #{detail}, #{subCategory.subcategory_idx})
+		
+		<!-- 위 insert 직후, 이 insert에 의해 발생된 pk 값 얻어오기 -->
+		<selectKey keyColumn="product_idx" resultType="int" keyProperty="product_idx" order="AFTER">
+			select last_insert_id() as product_idx
+		</selectKey>
+		
+	</insert>
+
+</mapper>

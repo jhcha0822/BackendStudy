@@ -6,6 +6,9 @@
 	<typeAliases>
 		<typeAlias type="com.sds.mall.domain.TopCategory" alias="TopCategory"/>
 		<typeAlias type="com.sds.mall.domain.SubCategory" alias="SubCategory"/>
+		<typeAlias type="com.sds.mall.domain.Product" alias="Product"/>
+		<typeAlias type="com.sds.mall.domain.Color" alias="Color"/>
+		<typeAlias type="com.sds.mall.domain.Color" alias="Psize"/>
 	</typeAliases>
 	
 	<!-- Spring에 의존적으로 DB연동을 해보자
@@ -22,6 +25,9 @@
 	<mappers>
 		<mapper resource="com/sds/mall/mybatis/TopCategoryMapper.xml" />
 		<mapper resource="com/sds/mall/mybatis/SubCategoryMapper.xml" />
+		<mapper resource="com/sds/mall/mybatis/ProductMapper.xml" />
+		<mapper resource="com/sds/mall/mybatis/ColorMapper.xml" />
+		<mapper resource="com/sds/mall/mybatis/PsizeMapper.xml" />
 	</mappers>
 	
 </configuration>

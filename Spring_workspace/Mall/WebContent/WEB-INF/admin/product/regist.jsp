@@ -69,108 +69,119 @@
 				</div>
 			
 				<!-- 카드의 body 영역 begin -->
-				<div class="card-body" style="display: block;">
-					
-					<!-- 카드안의 행 begin -->
-					<div class="row">
-						<!-- 카드안의 열 begin -->	
-						<div class="col-md-6" data-select2-id="30">
-							<div class="form-group" data-select2-id="29">
+				<form>
+					<div class="card-body" style="display: block;">
+						
+						<!-- 카드안의 행 begin -->
+						<div class="row">
+							<!-- 카드안의 열 begin -->	
+							<div class="col-md-6" data-select2-id="30">
+								<div class="form-group" data-select2-id="29">
+									
+									<select name="top" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+										<option value="0">상위 카테고리 선택 ▼</option>
+										<%for(TopCategory topCategory : topList){ %>
+										<option value="<%=topCategory.getTopcategory_idx()%>"><%=topCategory.getTopname() %></option>
+										<%} %>
+									</select>
 								
-								<select name="top" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-									<%for(TopCategory topCategory : topList){ %>
-									<option value="<%=topCategory.getTopcategory_idx()%>"><%=topCategory.getTopname() %></option>
-									<%} %>
-								</select>
+								</div>
 							</div>
-						</div>
-						<!-- 카드안의 열 end -->
-						<!-- 카드안의 열 begin -->	
-						<div class="col-md-6" data-select2-id="30">
-							<div class="form-group" data-select2-id="29">
-								
-								<select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-									<option selected="selected" data-select2-id="3">Alabama</option>
-									<option data-select2-id="35">Alaska</option>
-									<option data-select2-id="36">California</option>
-								</select>
+							<!-- 카드안의 열 end -->
+							<!-- 카드안의 열 begin -->	
+							<div class="col-md-6" data-select2-id="30">
+								<div class="form-group" data-select2-id="29">
+									
+									<select id="sub" name="subCategory.subcategory_idx" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+									</select>
+									
+								</div>
 							</div>
+							<!-- 카드안의 열 end -->
+							
 						</div>
-						<!-- 카드안의 열 end -->
+						
+						<!-- 카드안의 행 end -->
+						
+						<!-- 입력 폼이 나올 row 시작  -->
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="상품명" name="product_name">
+								</div>
+							</div>
+							
+							<div class="col-md-12">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="브랜드" name="brand">
+								</div>
+							</div>
+							
+							<div class="col-md-12">
+								<div class="form-group">
+									<input type="number" class="form-control" placeholder="가격" name="price">
+								</div>
+							</div>
+							
+							<div class="col-md-6">
+								<div class="form-group">
+									<select name="color_name" multiple class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+										<option value="Black">Black</option>
+										<option value="White">White</option>
+										<option value="Gray">Gray</option>
+										<option value="Ivory">Ivory</option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="col-md-6">
+								<div class="form-group">
+									<select name="size_name" multiple class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+										<option value="95">95</option>
+										<option value="100">100</option>
+										<option value="105">105</option>
+										<option value="110">110</option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="col-md-12">
+								<div class="form-group">
+									<input name="photo" type="file" class="form-control"> 
+								</div>
+							</div>
+							
+							<div class="col-md-12">
+								<div class="form-group">
+									<textarea id="content" class="form-control" name="detail"></textarea>
+								</div>
+							</div>
+							
+							<div class="col-md-6">
+								<div class="form-group">
+									<button type="button" class="btn btn-primary" id="bt_regist">등록</button>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<button type="button" class="btn btn-primary" id="bt_list">목록</button>
+								</div>
+							</div>
+							
+						</div>	
+						<!-- 입력 폼이 나올 row 끝  -->
+						
+						
+						<!-- 카드의 푸터 영역 begin -->
+						<div class="card-footer" style="display: block;"></div>
+						<!-- 카드의 푸터 영역 end -->
 						
 					</div>
-					
-					<!-- 카드안의 행 end -->
-					
-					<!-- 입력 폼이 나올 row 시작  -->
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="상품명">
-							</div>
-						</div>
-						
-						<div class="col-md-12">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="브랜드">
-							</div>
-						</div>
-						
-						<div class="col-md-12">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="가격">
-							</div>
-						</div>
-						
-						<div class="col-md-6">
-							<div class="form-group">
-								<select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-									<option selected="selected" data-select2-id="3">Alabama</option>
-									<option data-select2-id="35">Alaska</option>
-									<option data-select2-id="36">California</option>
-								</select>
-							</div>
-						</div>
-						
-						<div class="col-md-6">
-							<div class="form-group">
-								<select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-									<option selected="selected" data-select2-id="3">Alabama</option>
-									<option data-select2-id="35">Alaska</option>
-									<option data-select2-id="36">California</option>
-								</select>
-							</div>
-						</div>
-						
-						<div class="col-md-12">
-							<div class="form-group">
-								파일 선택기 나올 곳
-							</div>
-						</div>
-						
-						<div class="col-md-12">
-							<div class="form-group">
-								<textarea id="content" class="form-control"></textarea>
-							</div>
-						</div>
-						
-					</div>	
-					<!-- 입력 폼이 나올 row 끝  -->
-					
-					
-					<!-- 카드의 푸터 영역 begin -->
-					<div class="card-footer" style="display: block;"></div>
-					<!-- 카드의 푸터 영역 end -->
-					
-				</div>
+				</form>
 				<!-- 카드의 body 영역 end -->			      		
         	</div>
         	<!-- 카드 영역 end -->
-        	
-        	
-        	
-      
-      
+        
       <!-- /.container-fluid -->
       
     </section>
@@ -190,7 +201,6 @@
 	
 <%@ include file="../inc/footer_link.jsp" %>	
 
-
 </body>
 </html>
 <script type="text/javascript">
@@ -202,10 +212,29 @@
 			type:"GET", 
 			success:function(result, status, xhr) {
 				console.log("서버의 응답 정보는 ",  result);
+				// 하위카테고리 컨트롤러 selectbox에 채우기
+				// $("#sub").html("<option></option>"); 				// innerHtml로 옵션 채우기: 1쌍만 채워짐
+				let op = "<option value=\"0\">하위 카테고리 선택▼</option>"; 	// 변수로 설정
+				for(let i=0; i<result.length; i++) {
+					let json = result[i];
+					op += "<option value=\""+json.subcategory_idx+"\">"+json.subname+"</option>";
+				}
+				$("#sub").html(op);
 			}			
 		});	
 	}
 	
+	function regist() { // 상품 입력 정보 전송
+		$("form").attr({
+			action:"/admin/product/regist",
+			method:"POST",
+			// 텍스트 데이터와 바이너리 데이터가 섞여 있는 복합 데이터 전송: enctype multipart/form-data
+			enctype:"multipart/form-data"
+		});
+		$("form").submit();
+	}
+	
+	// onload
 	$(function(){
 		$("#content").summernote({
 			height:200, 
@@ -217,5 +246,14 @@
 			console.log($(this).val());
 			getSubCategoryList($(this).val());
 		});
+		
+		$("#bt_regist").click(function(){
+			regist();
+		});
+		
+		$("#bt_list").click(function(){
+			list();
+		});
+		
 	});
 </script>

@@ -25,7 +25,7 @@
 
 	<!-- 지정한 패키지를 검색하여 스프링이 이해하는 컴포넌트 어노테이션이 붙은 클래스들을 인스턴스화 시킴 -->
 	<!-- @Controller(하위 컨트롤러), @Repository(DAO), @Service(서비스) -->
-	<!-- @Content: 비정형 객체 등록 -->
+	<!-- @Component: 비정형 객체 등록 -->
 	<context:component-scan base-package="com.sds.mall.client.controller"/>
 	<context:component-scan base-package="com.sds.mall.admin.controller"/>
 
@@ -88,6 +88,13 @@
 		<constructor-arg ref="sqlSessionFactoryBean"/>
 	</bean>
 	
+	<!-- 파일 업로드를 위한 bean 설정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:maxUploadSize="1048576"/>
 	
+	<!-- String도 클래스이기에 bean 등록 가능 -->
+	<bean id="savePath" class="java.lang.String">
+		<constructor-arg value="/resources/product_img/"/>
+	</bean>
 	
 </beans>

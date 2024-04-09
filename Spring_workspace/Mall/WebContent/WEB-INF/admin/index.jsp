@@ -16,7 +16,7 @@
   <%@ include file="./inc/preloader.jsp" %>
   
   <!-- Navbar -->
-  <%@ include file="./inc/nav.jsp" %>
+  <%@ include file="./inc/navi.jsp" %>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
