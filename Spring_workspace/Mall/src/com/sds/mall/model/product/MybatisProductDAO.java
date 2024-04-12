@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sds.mall.domain.Product;
+import com.sds.mall.exception.ProductException;
 
 @Repository
 public class MybatisProductDAO implements ProductDAO {
@@ -17,7 +18,7 @@ public class MybatisProductDAO implements ProductDAO {
 	@Override
 	public List selectAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSessionTemplate.selectList("Product.selectAll");
 	}
 
 	@Override
@@ -27,9 +28,13 @@ public class MybatisProductDAO implements ProductDAO {
 	}
 
 	@Override
-	public void insert(Product product) {
+	public void insert(Product product) throws ProductException{
 		// TODO Auto-generated method stub
-		sqlSessionTemplate.insert("Product.insert", product);
+		int result = sqlSessionTemplate.insert("Product.insert", product);
+		
+		if(result < 1)
+			throw new ProductException("상품 등록 실패");
+		
 	}
 
 	@Override

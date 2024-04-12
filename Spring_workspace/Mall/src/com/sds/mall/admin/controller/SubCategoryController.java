@@ -25,7 +25,7 @@ public class SubCategoryController {
 	// 현재 이 메서드의 반환값이 데이터라는 표시를 해주어야 함 @ResponseBody
 	// return 에 명시된 문자열을 전송
 	@ResponseBody
-	@GetMapping("/admin/subcategory/list")
+	@GetMapping("/subcategory/list")
 	public List getSubListByTopIdx(int topcategory_idx) {
 		List subList = subCategoryService.selectAllByTopIdx(topcategory_idx);
 		

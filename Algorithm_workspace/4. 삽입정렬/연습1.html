@@ -1,0 +1,26 @@
+<script src="../js/lib.js"></script>
+<script>
+    let arr = createArray(1, 18, 7);
+
+    console.log("정렬 전", arr);
+
+    // 배열내의 요소들을 대상으로 원하는 카드와 그 이전 카드들과의 비교를 통해
+    // 뽑은 카드보다 값이 더 큰 카드의 경우 우측으로 한 칸 이동시키고
+    // 뽑은 카드보다 작은 카드를 만나면 뽑은 카드를 작은 카드의 우측에 배치
+
+    // 바깥 루프는 카드를 뽑는 역할
+    for(let i=1; i<arr.length; i++) {
+        let temp = arr[i]; // 뽑은 카드 보관
+        for(let j=i; j>0; j--) {
+            // 뽑은 카드와 좌측의 카드를 비교하여
+            if(temp < arr[j-1])
+                arr[j] = arr[j-1];
+            else
+                
+        }
+    }
+
+
+    console.log("정렬 후", arr);
+
+</script>

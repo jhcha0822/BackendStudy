@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sds.mall.domain.Product;
+import com.sds.mall.exception.UploadException;
 
 // FileManager가 Spring의 bean으로 등록되어 있다면
 // ServletContext를 자동 주입받을 수 있다
@@ -26,7 +27,7 @@ public class FileManager {
 	private String savePath;
 	
 	// 서버의 지정된 경로에 파일로 저장하는 메서드
-	public void save(Product product) {
+	public void save(Product product) {// throws UploadException { // throws: 메서드 호출자에게 예외 처리를 전가
 
 		// product 안의 photo를 꺼내기
 		MultipartFile photo = product.getPhoto();
@@ -51,6 +52,12 @@ public class FileManager {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			// catch문을 작성하면서 로그 출력만 했다면
+			// 외부 계층에서는 에러 발생 여부를 알 수 없다.
+			// 따라서 에러의 정보를 외부로 전달한다.
+			// 전달을 위해 개발자 정의 에러를 생성한다.
+			// throw new UploadException("업로드 실패\n문제 지속 발생시 업로드할 파일의 크기 확인", e);
+			// catch 하거나 외부로 throws 해야됨
 		}	
 	}
 	

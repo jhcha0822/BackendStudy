@@ -157,13 +157,11 @@
 								</div>
 							</div>
 							
-							<div class="col-md-6">
-								<div class="form-group">
+							<div class="row">
+								<div class="col-sm-6">
 									<button type="button" class="btn btn-primary" id="bt_regist">등록</button>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
+								<div class="col-sm-6">
 									<button type="button" class="btn btn-primary" id="bt_list">목록</button>
 								</div>
 							</div>

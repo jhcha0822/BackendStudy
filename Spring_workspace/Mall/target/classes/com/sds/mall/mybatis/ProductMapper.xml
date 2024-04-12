@@ -10,7 +10,28 @@
 		<selectKey keyColumn="product_idx" resultType="int" keyProperty="product_idx" order="AFTER">
 			select last_insert_id() as product_idx
 		</selectKey>
-		
 	</insert>
+	
+	<!-- 모든 상품을 가져오되 부모 테이블 subcategory와 join하여 가져오기 -->
+	<!-- Mybatis는 SQL mapper. 쿼리문과 자바객체간의 매핑을 자동으로 처리. 태그의 resultType에 명시된 DTO와 컬럼명이 일치해야 자동 매핑 -->
+	<!-- 부모의 이름은 매핑될수 없기에 개발자가 수동으로 매핑을 진행해야 함 -->
+	<!-- resultMap은 레코드 수만큼 호출됨 -->
+	<resultMap type="Product" id="ProductMap">
+		<id 			column="product_idx" 		property="product_idx"/> <!-- pk 컬럼만 id 태그로 감 -->
+		<result 		column="product_name" 		property="product_name"/>
+		<result 		column="brand" 				property="brand"/>
+		<result 		column="price" 				property="price"/>
+		<result 		column="filename" 			property="filename"/>
+		<!-- product 레코드 한 건 저장시 subcategory 테이블로부터 해당 부모 여기서 조회 -->
+		<!-- 자식은 product 테이블 기준으로 부모와 1:1관계. 이때를 mybatis association이라 함 -->
+		<association column="subcategory_idx" property="subCategory" 
+			javaType="SubCategory" 
+			select="SubCategory.select"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="ProductMap">
+		select  product_idx, product_name, brand, price,  filename, subcategory_idx 
+		from product		
+	</select>
 
 </mapper>

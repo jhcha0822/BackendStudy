@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class MybatisSubCategoryDAO implements SubCategoryDAO {
 
 	@Autowired
-	private SqlSessionTemplate sqlSessionTemplete;
+	private SqlSessionTemplate sqlSessionTemplate;
 	
 	public List selectAll() {
 		
@@ -19,7 +19,7 @@ public class MybatisSubCategoryDAO implements SubCategoryDAO {
 
 	public List selectAllByTopIdx(int topcategory_idx) {
 		
-		return sqlSessionTemplete.selectList("SubCategory.selectAllByTopIdx", topcategory_idx);
+		return sqlSessionTemplate.selectList("SubCategory.selectAllByTopIdx", topcategory_idx);
 	}
 
 }

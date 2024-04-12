@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sds.mall.domain.Psize;
+import com.sds.mall.exception.PsizeException;
 
 @Repository
 public class MybatisPsizeDAO implements PsizeDAO{
@@ -13,9 +14,15 @@ public class MybatisPsizeDAO implements PsizeDAO{
 	private SqlSessionTemplate sqlSessionTemplate; 
 	
 	@Override
-	public void insert(Psize psize) {
+	public void insert(Psize psize) throws PsizeException {
 		// TODO Auto-generated method stub
-		sqlSessionTemplate.insert("Psize.insert", psize);
+		int result = sqlSessionTemplate.insert("Psize.insert", psize);
+		
+		// result = 0; // 예외 테스트
+		
+		if(result < 1)
+			throw new PsizeException("상품 사이즈 등록 실패");
+		
 	}
 
 }

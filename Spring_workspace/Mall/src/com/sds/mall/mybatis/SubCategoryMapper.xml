@@ -7,6 +7,10 @@
 		select * from subcategory where topcategory_idx=#{topcategory_idx}
 	</select>
 	
+	<!-- 하위 카테고리 한 건 가져오기 -->	
+	<select id="select" parameterType="int" resultType="SubCategory">
+		select * from subcategory where subcategory_idx=#{subcategory_idx}
+	</select>
 	
-
+	
 </mapper>

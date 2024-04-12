@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 정적 자원(WEB-INF 이외의 영역)에 접근하기 위해서는 namespace:mvc 추가 필요 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- 하위 컨트롤러가 View 이름을 DispatcherServlet에게 반환하면 반환된 이름을 이용하여 완전한 JSP 경로를 만들어주는 ViewResolver 객체 등록 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/"
+		p:suffix=".jsp"/>
+	
+	<!-- 
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	 -->
+
+	<!-- 지정한 패키지를 검색하여 스프링이 이해하는 컴포넌트 어노테이션이 붙은 클래스들을 인스턴스화 시킴 -->
+	<!-- @Controller(하위 컨트롤러), @Repository(DAO), @Service(서비스) -->
+	<!-- @Component: 비정형 객체 등록 -->
+	<context:component-scan base-package="com.sds.mall.admin.controller"/>
+
+	<!-- 아래의 태그를 먼저 등록해야 mbc 기반의 기능들을 사용할 수 있다 -->
+	<mvc:annotation-driven/>
+
+	<!-- SpringMVC에서는 모든 요청을 하나의 진입점인 DispatcherServlet이 받기 때문에, 이 서블릿이 정적 자원들의 위치를 알기 위해서는 아래의 resources 태그가 등록되어야 한다 -->	
+	<mvc:resources location="/resources/" mapping="/static/**"/>
+	
+	
+	
+	
+	<!-- DB(Model)과 공통 파트 root-context.xml로 옮김 -->
+	
+</beans>

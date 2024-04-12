@@ -67,20 +67,20 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                            상품관리 <i class="right fas fa-angle-left"></i>
+                           회원관리 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="./index.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>상품목록</p>
+                  <p>회원목록</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="./index.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>상품등록</p>
+                  <p>회원등록</p>
                 </a>
               </li>
             </ul>
@@ -92,20 +92,20 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                            상품관리 <i class="right fas fa-angle-left"></i>
+                            주문관리 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="./index.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>상품목록</p>
+                  <p>주문목록</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="./index.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>상품등록</p>
+                  <p>주문등록</p>
                 </a>
               </li>
             </ul>
