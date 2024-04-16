@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.sds.mall.model.product.TopCategoryService;
 
@@ -20,14 +21,23 @@ public class MainController {
 //		return "shop/index";
 //	}
 	
-	@Autowired
-	private TopCategoryService topCategoryService;
+// AOP로 처리
+//	@Autowired
+//	private TopCategoryService topCategoryService; 
+	
+//	// 고객이 보게 될 쇼핑몰 요청 처리
+//	@RequestMapping(value="/shop", method=RequestMethod.GET)
+//	public String getMain(Model model) {
+////		AOP로 처리
+////		List topList = topCategoryService.selectAll();
+////		model.addAttribute("topList", topList);
+//		return "shop/index";
+//	}
 	
 	// 고객이 보게 될 쇼핑몰 요청 처리
 	@RequestMapping(value="/shop", method=RequestMethod.GET)
-	public String getMain(Model model) {
-		List topList = topCategoryService.selectAll();
-		model.addAttribute("topList", topList);
-		return "shop/index";
+	public ModelAndView getMain(Model model) {
+		ModelAndView mav = new ModelAndView("shop/index");
+		return mav;
 	}
 }

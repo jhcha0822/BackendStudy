@@ -2,9 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="TopCategory">
 
+	<!-- 수동으로 매핑 진행: resultMap -->
+	<!-- TopCategory에 subList가 존재하나, 이 매핑은 자동으로 불가 -->
+	<!-- ex) association, colletion 등의 join을 대체한 기술, 컬럼명이 자바 객체의 property와 일치하지 않을 때 -->
+	<!-- 개발자가 주도하여 수동으로 매핑 진행 -->
+	<resultMap type="TopCategory" id="TopCategoryMap">
+		
+		<!-- 컬럼을 property에 매핑 -->
+		<id column="topcategory_idx" property="topcategory_idx"/>
+		<id column="topname" property="topname"/> 
+		
+		<!-- select * from subcategory where topcategory_idx=? -->
+		<collection 
+			column="topcategory_idx" 
+			property="subList" 
+			javaType="java.util.List"
+			ofType="SubCategory"
+			select="SubCategory.selectAllByTopIdx" />
+		
+	</resultMap>
+
 	<!-- 모든 카테고리 가져오기 -->
-	<select id="selectAll" resultType="TopCategory">
-		select * from topcategory
+	<!-- 위 Resultmap 이용 -->
+	<select id="selectAll" resultMap="TopCategoryMap">
+		select topcategory_idx, topname from topcategory
 	</select>
 
 	

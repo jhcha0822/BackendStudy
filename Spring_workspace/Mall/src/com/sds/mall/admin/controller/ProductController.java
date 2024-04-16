@@ -88,6 +88,7 @@ public class ProductController {
 	public String getList(Model model) {
 		//3단계: 목록 가져오기
 		List productList = productService.selectAll();
+		// 		상품 목록 가져오기
 		
 		//4단계: 결과 저장
 		model.addAttribute("productList", productList);

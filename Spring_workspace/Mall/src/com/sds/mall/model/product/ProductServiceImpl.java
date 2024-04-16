@@ -66,15 +66,21 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public List selectAllByTopIdx(int topcategory_idx) {
+		// TODO Auto-generated method stub
+		return productDAO.selectAllByTopIdx(topcategory_idx);
+	}
+	
+	@Override
 	public List selectAllBySubIdx(int subcategory_idx) {
 		// TODO Auto-generated method stub
-		return null;
+		return productDAO.selectAllBySubIdx(subcategory_idx);
 	}
 
 	@Override
 	public Product select(int product_idx) {
 		// TODO Auto-generated method stub
-		return null;
+		return productDAO.select(product_idx);
 	}
 
 	@Override
