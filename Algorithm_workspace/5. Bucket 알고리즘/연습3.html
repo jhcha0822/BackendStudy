@@ -1,0 +1,33 @@
+<script src="../js/lib.js"></script>
+<script>
+
+    // 1~15 사이 10개 배열
+    let arr = createArray(1, 15, 10);
+
+    console.log("정렬 전", arr);
+
+    // bucket을 준비
+    let bucket = [];
+    for(let i=0; i<16; i++) {
+        bucket.push(0);
+    }
+    console.log(bucket);
+
+    // 카운트를 세서 채운다
+    for(let i=0; i<arr.length; i++) {
+        bucket[arr[i]]++;
+    }
+
+    console.log("카운트 결과 bucket", bucket); 
+
+    let idx = 0;
+
+    for(let i=1; i<bucket.length; i++) {
+        for(let j=0; j<bucket[i]; j++) {
+            arr[idx++] = i;
+        }
+    }
+
+    console.log("정렬 후", arr);
+
+</script>

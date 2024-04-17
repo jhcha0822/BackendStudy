@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Member">
+
+	<!-- 회원가입 -->
+	<insert id="insert" parameterType="Member">
+		insert into member(uid, nickname, email, sns_idx) 
+		values(#{uid}, #{nickname}, #{email}, #{sns.sns_idx})
+		
+		<!-- keyColumn: 아래 쿼리의 컬럼, Property: 위 쿼리중 입력할 프로퍼티 -->
+		<selectKey keyColumn="member_idx" keyProperty="member_idx" order="AFTER" resultType="int">
+			select last_insert_id()	 as member_idx	
+		</selectKey>
+	</insert>
+	
+	<!-- 로그인 -->
+	
+	<resultMap type="Member" id="MemberMap">
+		<id column="member_idx" property="member_idx"/>
+		<result column="uid" property="uid"/>
+		<result column="nickname" property="nickname"/>
+		<result column="email" property="email"/>
+		<!-- SnS 1건을 매핑할 땐 Association -->
+		<association column="sns_idx" property="sns"
+			javaType="Sns" select="SnS.select"/>
+		<!-- MemberDetail Association -->
+		<association column="member_idx" property="memberDetail"
+			javaType="MemberDetail" select="MemberDetail.select"/>
+		
+	</resultMap>
+	
+	<!-- Mybatis는 SQL mapper: SQL문과 자바 객체를 매핑 -->
+	<!-- 아래 쿼리문은 두 테이블을 조인한 컬럼명과 MemberDTO의 멤버변수명 간 이름이 틀리기에 자동매핑 불가 -->
+	<select id="login" parameterType="Member" resultMap="MemberMap">
+		select m.member_idx as member_idx, uid, nickname, email, sns_idx
+		from member m, member_detail d
+		where m.member_idx = d.member_idx and  uid=#{uid} and password=#{memberDetail.password}
+	</select>
+	
+</mapper>
