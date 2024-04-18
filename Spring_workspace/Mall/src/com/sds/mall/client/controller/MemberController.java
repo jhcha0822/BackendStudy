@@ -1,5 +1,7 @@
 package com.sds.mall.client.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -48,8 +50,10 @@ public class MemberController {
 	
 	@PostMapping("/member/login")
 	@ResponseBody
-	public String login(Member member) {
-		memberService.login(member);
+	public String login(Member member, HttpSession session) {
+		Member dto = memberService.login(member); // 로그인 정보 저장
+		// 세션에 정보를 담아두면 세션이 끝나기 전까지 계속 사용 가능
+		session.setAttribute("member", dto);
 		return "OK";
 	}
 	

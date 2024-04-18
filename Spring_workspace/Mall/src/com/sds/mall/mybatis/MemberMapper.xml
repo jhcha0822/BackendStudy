@@ -37,4 +37,9 @@
 		where m.member_idx = d.member_idx and  uid=#{uid} and password=#{memberDetail.password}
 	</select>
 	
+	<!-- 회원 1명의 정보 반환 -->
+	<select id="select" parameterType="int"  resultMap="MemberMap">
+		select * from member where member_idx=#{member_idx}
+	</select>
+	
 </mapper>

@@ -12,6 +12,7 @@
 		<typeAlias type="com.sds.mall.domain.Member" alias="Member"/>
 		<typeAlias type="com.sds.mall.domain.MemberDetail" alias="MemberDetail"/>
 		<typeAlias type="com.sds.mall.domain.SnS" alias="SnS"/>
+		<typeAlias type="com.sds.mall.domain.Cart" alias="Cart"/>
 	</typeAliases>
 	
 	<!-- Spring에 의존적으로 DB연동을 해보자
@@ -34,6 +35,7 @@
 		<mapper resource="com/sds/mall/mybatis/MemberMapper.xml" />
 		<mapper resource="com/sds/mall/mybatis/MemberDetailMapper.xml" />
 		<mapper resource="com/sds/mall/mybatis/SnSMapper.xml" />
+		<mapper resource="com/sds/mall/mybatis/CartMapper.xml" />
 	</mappers>
 	
 </configuration>

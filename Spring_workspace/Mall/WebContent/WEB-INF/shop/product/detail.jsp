@@ -77,88 +77,90 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="product__details__text">
-                        <h3> <%=product.getProduct_name()%> <span>Brand: <%=product.getBrand()%></span></h3>
-                        <div class="rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <span>( 138 reviews )</span>
-                        </div>
-                        <div class="product__details__price"><%=product.getPrice()%><span><%=product.getPrice()%></span></div>
-                        <p><%=product.getDetail()%></p>
-                        <div class="product__details__button">
-                            <div class="quantity">
-                                <span>Quantity:</span>
-                                <div class="pro-qty">
-                                    <input type="text" value="1">
-                                </div>
-                            </div>
-                            <a href="#" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</a>
-                            <ul>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__details__widget">
-                            <ul>
-                                <li>
-                                    <span>Availability:</span>
-                                    <div class="stock__checkbox">
-                                        <label for="stockin">
-                                            In Stock
-                                            <input type="checkbox" id="stockin">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Available color:</span>
-                                    <div class="color__checkbox">
-                                        <label for="red">
-                                            <input type="radio" name="color__radio" id="red" checked>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label for="black">
-                                            <input type="radio" name="color__radio" id="black">
-                                            <span class="checkmark black-bg"></span>
-                                        </label>
-                                        <label for="grey">
-                                            <input type="radio" name="color__radio" id="grey">
-                                            <span class="checkmark grey-bg"></span>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Available size:</span>
-                                    <div class="size__btn">
-                                        <label for="xs-btn" class="active">
-                                            <input type="radio" id="xs-btn">
-                                            xs
-                                        </label>
-                                        <label for="s-btn">
-                                            <input type="radio" id="s-btn">
-                                            s
-                                        </label>
-                                        <label for="m-btn">
-                                            <input type="radio" id="m-btn">
-                                            m
-                                        </label>
-                                        <label for="l-btn">
-                                            <input type="radio" id="l-btn">
-                                            l
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Promotions:</span>
-                                    <p>Free shipping</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                	<form id="form1">
+	                    <div class="product__details__text">
+	                        <h3> <%=product.getProduct_name()%> <span>Brand: <%=product.getBrand()%></span></h3>
+	                        <div class="rating">
+	                            <i class="fa fa-star"></i>
+	                            <i class="fa fa-star"></i>
+	                            <i class="fa fa-star"></i>
+	                            <i class="fa fa-star"></i>
+	                            <i class="fa fa-star"></i>
+	                            <span>( 138 reviews )</span>
+	                        </div>
+	                        <div class="product__details__price"><%=product.getPrice()%><span><%=product.getPrice()%></span></div>
+	                        <p><%=product.getDetail()%></p>
+	                        <div class="product__details__button">
+	                            <div class="quantity">
+	                                <span>Quantity:</span>
+	                                <div class="pro-qty">
+	                                    <input type="text" name="ea" value="1">
+	                                </div>
+	                            </div>
+	                            <a href="javascript:addCart(<%=product.getProduct_idx()%>)" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</a>
+	                            <ul>
+	                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+	                                <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
+	                            </ul>
+	                        </div>
+	                        <div class="product__details__widget">
+	                            <ul>
+	                                <li>
+	                                    <span>Availability:</span>
+	                                    <div class="stock__checkbox">
+	                                        <label for="stockin">
+	                                            In Stock
+	                                            <input type="checkbox" id="stockin">
+	                                            <span class="checkmark"></span>
+	                                        </label>
+	                                    </div>
+	                                </li>
+	                                <li>
+	                                    <span>Available color:</span>
+	                                    <div class="color__checkbox">
+	                                        <label for="red">
+	                                            <input type="radio" name="color__radio" id="red" checked>
+	                                            <span class="checkmark"></span>
+	                                        </label>
+	                                        <label for="black">
+	                                            <input type="radio" name="color__radio" id="black">
+	                                            <span class="checkmark black-bg"></span>
+	                                        </label>
+	                                        <label for="grey">
+	                                            <input type="radio" name="color__radio" id="grey">
+	                                            <span class="checkmark grey-bg"></span>
+	                                        </label>
+	                                    </div>
+	                                </li>
+	                                <li>
+	                                    <span>Available size:</span>
+	                                    <div class="size__btn">
+	                                        <label for="xs-btn" class="active">
+	                                            <input type="radio" id="xs-btn">
+	                                            xs
+	                                        </label>
+	                                        <label for="s-btn">
+	                                            <input type="radio" id="s-btn">
+	                                            s
+	                                        </label>
+	                                        <label for="m-btn">
+	                                            <input type="radio" id="m-btn">
+	                                            m
+	                                        </label>
+	                                        <label for="l-btn">
+	                                            <input type="radio" id="l-btn">
+	                                            l
+	                                        </label>
+	                                    </div>
+	                                </li>
+	                                <li>
+	                                    <span>Promotions:</span>
+	                                    <p>Free shipping</p>
+	                                </li>
+	                            </ul>
+	                        </div>
+	                    </div>
+	                </form>
                 </div>
                 <div class="col-lg-12">
                     <div class="product__details__tab">
@@ -333,5 +335,28 @@
 	<!-- Js Plugins -->
 	<%@ include file="../inc/footer_link.jsp" %>
 </body>
-
+<script type="text/javascript">
+	function regist(product_idx) {
+		$.ajax({
+			url:"/order/cart/regist",
+			type:"post",
+			data:{
+				"product.product_idx":product_idx,
+				"ea":$("input[name='ea']").val()
+			},
+			success:function(result, status, xhr){ // 서버에서 요청 처리를 성공했을때 호출되는 익명함수
+				alert("장바구니에 담았습니다.");
+			},
+			error:function(xhr, status, err){ // 서버에서 요청 처리를 실패했을때 호출되는 익명 함수
+				alert("장바구니에 담지 못했습니다.");
+			}
+		});
+	}
+	
+	function addCart(product_idx) {
+		if(confirm(product_idx+" 상품을 장바구니에 담으시겠습니까?")){
+			regist(product_idx);
+		}
+	}
+</script>
 </html>

@@ -1,0 +1,12 @@
+로그인 정보 세션
+장바구니
+
+
+create table cart(
+	cart_idx int primary key auto_increment
+	, ea int default 0
+	, member_idx int
+	, product_idx int
+	, constraint fk_member_cart foreign key(member_idx) references member(member_idx)
+	, constraint fk_product_cart foreign key(product_idx) references product(product_idx)
+);

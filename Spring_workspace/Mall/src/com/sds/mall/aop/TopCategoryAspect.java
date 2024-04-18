@@ -43,7 +43,7 @@ public class TopCategoryAspect {
 		
 		if(
 			// 회원 가입 요청은 비동기
-			uri.equals("/member/regist") || uri.equals("/member/login")
+			uri.equals("/member/regist") || uri.equals("/member/login") || uri.equals("/order/cart/regist")
 		) { // topCategory가 필요 없다
 			returnObj = joinPoint.proceed(); // 원래 호출하려던 하위 컨트롤러 메서드 호출
 		} else { // topCategory가 필요한 경우
@@ -57,7 +57,10 @@ public class TopCategoryAspect {
 			if(returnObj instanceof ModelAndView) {
 				mav = (ModelAndView)returnObj;
 				mav.addObject("topList", topList);
-			}			
+			} else {
+				// ModelAndView를 사용하지 않고 저장
+				request.setAttribute("topList", topList);
+			}
 		}
 		
 		// 리턴값은 하위 컨트롤러가 반환한 값을 존중해야 한다

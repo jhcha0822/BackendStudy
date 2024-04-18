@@ -113,7 +113,13 @@
 				"memberDetail.password":$("input[name='password']").val()
 			},
 			success:function(result, status, xhr){
-				console.log(result);
+				// console.log(result);
+				if(result=="OK"){
+					alert("로그인 성공");
+					location.href="/shop";
+				} else {
+					alert("로그인 실패");
+				}
 			}
 		});
 	}
