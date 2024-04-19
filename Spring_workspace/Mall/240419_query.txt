@@ -1,0 +1,45 @@
+create table receiver(
+	receiver_idx int primary key auto_increment
+	, addr varchar(100)
+	, member_idx int
+	, constraint fk_member_receiver foreign key(member_idx)
+	references member(member_idx)
+) default character set utf8;
+
+create table paymethod(
+	paymethod_idx int primary key auto_increment
+	, payname varchar(15)
+) default character set utf8;
+
+insert into paymethod(payname) values('카드');
+insert into paymethod(payname) values('계좌이체');
+insert into paymethod(payname) values('휴대폰 소액 결제');
+
+create table ordersummary(
+	ordersummary_idx int primary key auto_increment
+	, orderdate timestamp default now()
+	, total_buy int default 0
+	, total_pay int default 0
+	, member_idx int
+	, paymethod_idx int
+	, receiver_idx int
+	, constraint fk_member_ordersummary foreign key(member_idx)
+	references member(member_idx)
+	, constraint fk_paymethod_ordersummary foreign key(paymethod_idx)
+	references paymethod(paymethod_idx)
+	, constraint fk_receiver_ordersummary foreign key(receiver_idx)
+	references receiver(receiver_idx)
+) default character set utf8;
+
+// 상품 정보가 변경되어도 주문 당시 정보를 기억할 수 있게
+create table orderdetail(
+	orderdetail_idx int primary key auto_increment
+	, product_name varchar(30)
+	, price int default 0
+	, product_idx int
+	, ordersummary_idx int
+	, constraint fk_product_orderdetail foreign key(product_idx)
+	references product(product_idx)
+	, constraint fk_ordersummary_orderdetail foreign key(ordersummary_idx)
+	references ordersummary(ordersummary_idx)
+) default character set utf8;

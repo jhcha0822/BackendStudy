@@ -48,4 +48,25 @@
 		</aop:aspect>
 	</aop:config>
 	
+	<!-- 로그인 인증과 관련된 AOP -->
+	<bean id="loginAspect" class="com.sds.mall.aop.LoginAspect" />
+	<aop:config>
+		<aop:aspect ref="loginAspect">
+			<aop:pointcut expression="execution(public * com.sds.mall.client.controller..*(..))" id="loginPontCut"/>
+			<aop:around method="sessionCheck" pointcut-ref="loginPontCut"/>			
+		</aop:aspect>		
+	</aop:config>
+	
+	<bean class="com.sds.mall.aop.GlobalExceptionHandler" id="globalExceptionHandler"/>
+	
+	<!-- 구글 로그인 관련 정보 -->
+	<bean class="com.sds.mall.domain.GoogleLogin">
+		<property name="endpoint" value="https://accounts.google.com/o/oauth2/v2/auth"/>
+	</bean>
+	
+	<!-- 네이버 로그인 관련 정보 -->
+	
+	
+	<!-- 카카오 로그인 관련 정보 -->
+	
 </beans>

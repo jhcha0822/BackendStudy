@@ -1,0 +1,24 @@
+상품 주문, 로그인 여부 AOP, OAuth
+
+OAuth: 나의 정보를 외부 어플리케이션이 접근할 수 있게 해주는 표준
+
+1. 구글 개발자 콘솔에 개발한 사이트/앱 등록
+    - client ID, secret 발급
+    - 동의 화면 등록: 가져갈 정보 등록
+    - callback 주소 등록
+
+2. 고객이 방문하여 로그인화면을 봄
+    - client ID도 포함하여 전송
+    - 고객이 방문하여 IDP를 이용한 로그인 선택
+    - 동의 화면을 보고 수락
+
+3. IDP가 code를 callback으로 전송
+    - callback은 secret를 사용하여 인증
+    - 정보가 맞다면 인증의 결과물로 token 전송
+    - token: 회원의 정보를 담고 있음
+
+
+
+구글까지 OAuth 이후 Boot에서
+월요일: SpringBoot 게시판
+RestAPI

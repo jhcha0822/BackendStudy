@@ -68,9 +68,9 @@
 					            </div>
 					            <div class="form-group row">
 					                <div class="offset-sm-2 col-sm-10">
-					                    <button>Goole</button>
-					                    <button>Naver</button>
-					                    <button>Kakao</button>
+					                    <button type="button" id="bt_google">Google</button>
+					                    <button type="button" id="bt_naver">Naver</button>
+					                    <button type="button" id="bt_kakao">Kakao</button>
 					                </div>
 					            </div>
 					        </div>
@@ -124,9 +124,34 @@
 		});
 	}
 	
+	// 인증 화면
+	function gotoAuthForm(sns) {
+		// 비동기 방식으로 sns마다 지정된 url 정보 얻어오기
+		$.ajax({
+			url:"/rest/member/authform/"+sns,
+			type:"get",
+			success:function(result, status, xhr){
+				console.log(result);
+				// location.href="result";
+			}
+		});
+	}
+	
 	$(function(){
 		$("#bt_login").click(function(){
 			login();
+		});
+		
+		$("#bt_google").click(function(){
+			gotoAuthForm("google");	
+		});
+		
+		$("#bt_naver").click(function(){
+			gotoAuthForm("naver");		
+		});
+				
+		$("#bt_kakao").click(function(){
+			gotoAuthForm("kakao");
 		});
 	});
 </script>

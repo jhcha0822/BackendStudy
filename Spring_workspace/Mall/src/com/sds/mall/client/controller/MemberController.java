@@ -62,4 +62,11 @@ public class MemberController {
 	public String handle(MemberException e) {
 		return "fail";
 	}
+	
+	@GetMapping("/member/logout")
+	public String logout(HttpSession session) {
+		// 세션을 더이상 사용하지 못하게
+		session.invalidate();
+		return "redirect:/shop";
+	}
 }
