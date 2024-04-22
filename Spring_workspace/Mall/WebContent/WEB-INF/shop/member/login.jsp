@@ -131,8 +131,8 @@
 			url:"/rest/member/authform/"+sns,
 			type:"get",
 			success:function(result, status, xhr){
-				console.log(result);
-				// location.href="result";
+				alert(result);
+				location.href=result;
 			}
 		});
 	}

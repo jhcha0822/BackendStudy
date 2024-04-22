@@ -35,7 +35,7 @@ public class MainController {
 //	}
 	
 	// 고객이 보게 될 쇼핑몰 요청 처리
-	@RequestMapping(value="/shop", method=RequestMethod.GET)
+	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView getMain(Model model) {
 		ModelAndView mav = new ModelAndView("shop/index");
 		return mav;

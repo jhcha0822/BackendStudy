@@ -20,7 +20,8 @@ public class LoginAspect {
 		String[] secureURI = {
 			"/order/cart/list",	
 			"/member/mypage/main",	
-			"/order/cart/regist",
+			"/order/cart/regist"
+			
 		};
 		
 		int count = 0;

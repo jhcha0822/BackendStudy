@@ -66,5 +66,11 @@ public class MybatisMemberDAO implements MemberDAO {
 		
 	}
 
+	@Override
+	public Member isSnSMember(Member member) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("Member.isSnSMember", member);
+	}
+
 
 }

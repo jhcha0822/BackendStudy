@@ -42,4 +42,10 @@
 		select * from member where member_idx=#{member_idx}
 	</select>
 	
+	<!-- SNS를 이용한 회원 로그인 시, 이전 가입 여부 확인 -->
+	<select id="isSnSMember" parameterType="Member" resultMap="MemberMap">
+		select * from member
+		where uid=#{uid} and email=#{email}
+	</select>
+	
 </mapper>

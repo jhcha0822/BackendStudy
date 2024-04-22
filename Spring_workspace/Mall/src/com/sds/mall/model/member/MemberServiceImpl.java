@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sds.mall.domain.Member;
 import com.sds.mall.domain.MemberDetail;
+import com.sds.mall.domain.SnS;
 import com.sds.mall.exception.MemberException;
 
 @Service
@@ -18,6 +19,8 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO memberDAO;
 	@Autowired
 	private MemberDetailDAO memberDetailDAO;
+	@Autowired
+	private SnSDAO snsDAO;
 	
 	// 두 DAO에게 일을 시키고 하나라도 RuntimeException 발생 시 rollback 자동 처리
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -30,11 +33,13 @@ public class MemberServiceImpl implements MemberService {
 		MemberDetail memberDetail = member.getMemberDetail();
 		
 		// memberDetail이 보유한 member에 member_idx값을 넣기
-		Member dto = new Member();
-		dto.setMember_idx(member.getMember_idx());
-		memberDetail.setMember(dto); // 상세정보에 생성된 dto 주입		
-		
-		memberDetailDAO.insert(member.getMemberDetail());
+		if(memberDetail != null) { // OAuth 회원이 아니라면
+			Member dto = new Member();
+			dto.setMember_idx(member.getMember_idx());
+			memberDetail.setMember(dto); // 상세정보에 생성된 dto 주입		
+			
+			memberDetailDAO.insert(member.getMemberDetail());
+		}
 	}
 
 	@Override
@@ -71,6 +76,18 @@ public class MemberServiceImpl implements MemberService {
 	public void remove(Member member) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Member isSnSMember(Member member) {
+		// TODO Auto-generated method stub
+		return memberDAO.isSnSMember(member);
+	}
+
+	@Override
+	public SnS selectByName(String name) {
+		// TODO Auto-generated method stub
+		return snsDAO.selectByName(name);
 	}
 
 

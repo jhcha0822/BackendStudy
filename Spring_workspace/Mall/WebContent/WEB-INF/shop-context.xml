@@ -21,6 +21,7 @@
 	<!-- @Controller(하위 컨트롤러), @Repository(DAO), @Service(서비스) -->
 	<!-- @Component: 비정형 객체 등록 -->
 	<context:component-scan base-package="com.sds.mall.client.controller"/>
+	<context:component-scan base-package="com.sds.mall.sns"/>
 
 	<!-- 아래의 태그를 먼저 등록해야 mbc 기반의 기능들을 사용할 수 있다 -->
 	<mvc:annotation-driven/>
@@ -59,9 +60,19 @@
 	
 	<bean class="com.sds.mall.aop.GlobalExceptionHandler" id="globalExceptionHandler"/>
 	
-	<!-- 구글 로그인 관련 정보 -->
-	<bean class="com.sds.mall.domain.GoogleLogin">
+	<!-- 구글 로그인 관련 정보 -->	
+	<bean id="googleLogin" class="com.sds.mall.sns.GoogleLogin">
 		<property name="endpoint" value="https://accounts.google.com/o/oauth2/v2/auth"/>
+		<property name="client_id" value="851098030444-3kb8j2mk8tc0dhlfhocou5sirdb890vn.apps.googleusercontent.com"/>
+		<property name="client_secret" value=""/>
+		<property name="redirect_uri" value="http://localhost:7777/member/sns/google/callback"/>
+		<property name="response_type" value="code"/>
+		<property name="scope" value="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"/>    
+		<!-- 토큰 발급 요청 관련  -->
+		<property name="token_request_url" value="https://oauth2.googleapis.com/token"/>
+		<property name="grant_type" value="authorization_code"/>
+		<!-- 수시로 회원 정보를 조회 시 요청 url -->				
+		<property name="userinfo_url" value="https://www.googleapis.com/oauth2/v1/userinfo"/>
 	</bean>
 	
 	<!-- 네이버 로그인 관련 정보 -->

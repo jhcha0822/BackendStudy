@@ -43,7 +43,7 @@ public class TopCategoryAspect {
 		
 		if(
 			// 회원 가입 요청은 비동기
-			uri.equals("/member/regist") || uri.equals("/member/login") || uri.equals("/order/cart/regist")
+			uri.equals("/member/regist") || uri.equals("/member/login") || uri.equals("/order/cart/regist") || uri.equals("/member/sns/google/callback") 
 		) { // topCategory가 필요 없다
 			returnObj = joinPoint.proceed(); // 원래 호출하려던 하위 컨트롤러 메서드 호출
 		} else { // topCategory가 필요한 경우
