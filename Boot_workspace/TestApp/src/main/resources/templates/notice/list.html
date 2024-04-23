@@ -27,16 +27,25 @@
 	      </tr>
 	    </thead>
 	    <tbody>
-	      <tr th:each=" i :${#numbers.sequence(1, 10)} ">
-	        <td>John</td>
-	        <td>John</td>
-	        <td>John</td>
-	        <td>John</td>
-	        <td>John</td>
+	      <tr th:each=" notice, i :${noticeList} ">
+	        <td th:text="${pager.num - i.index}"></td>
+	        <td>
+	        	<a th:text="${notice.title}" th:href="@{/notice/detail(notice_idx=${notice.notice_idx})}"></a>
+	        </td>
+	        <td th:text="${notice.writer}"></td>
+	        <td th:text="${notice.regdate}"></td>
+	        <td th:text="${notice.hit}"></td>
 	      </tr>
 	      <tr>
 	      	<td colspan="5">
-	      		<button classs="btn btn-primary" onClick="location.href='/board/writeform';">글등록</button>
+	      		<button classs="btn btn-primary" onClick="location.href='/notice/writeform';">글등록</button>
+	      		<ul class="pagination float-right">
+				  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+				  <li th:each="i : ${#numbers.sequence(pager.firstPage, pager.lastPage)}" th:class="${pager.currentPage==i} ? 'page-item active' : 'page-item'">
+				  	<a th:text="${i}" class="page-link" th:href="@{/notice/list(currentPage=${i})}"> </a>
+				  </li>
+				  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+				</ul>
 	      	</td>
 	      </tr>
 	    </tbody>

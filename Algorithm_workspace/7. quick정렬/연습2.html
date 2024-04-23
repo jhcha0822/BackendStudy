@@ -1,0 +1,44 @@
+<script>
+
+    let arr = [7, 3, 8, 6, 5, 4, 9];
+
+    console.log("최초", arr);
+
+    function quickSort(start, end) {
+        
+        // 인덱스
+        let leftIndex = start;
+        let rightIndex = end;
+        let mid = Math.floor((leftIndex+rightIndex)/2);
+    
+        // 중간 값
+        let pivot = arr[mid];
+    
+        while(leftIndex<=rightIndex) {
+            while(arr[leftIndex] < pivot)
+                leftIndex++;
+            while(pivot < arr[rightIndex])
+            rightIndex--;
+    
+            if(leftIndex <= rightIndex) {
+                let temp = arr[leftIndex];
+                arr[leftIndex] = arr[rightIndex];
+                arr[rightIndex] = temp;
+                leftIndex++;
+                rightIndex--;
+            }
+        }
+
+        if(start < rightIndex)
+            quickSort(start, rightIndex);
+        if(leftIndex < end)
+            quickSort(leftIndex, end);
+        
+    }
+
+    // 최초 호출
+    quickSort(0, arr.length-1);
+
+    console.log("최종", arr);
+
+</script>

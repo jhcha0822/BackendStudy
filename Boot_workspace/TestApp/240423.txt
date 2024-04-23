@@ -1,0 +1,10 @@
+Boot 게시판, DB연동, 페이징 처리
+
+REST: 표현적 상태 전송
+Representational State Transfer
+
+서버와 클라이언트간 데이터를 주고 받을때 URL에 대한 설계 기법(아키텍쳐)
+
+명사 method=동사
+위 형식이 충족되면 RESTFUL하다고 한다
+
