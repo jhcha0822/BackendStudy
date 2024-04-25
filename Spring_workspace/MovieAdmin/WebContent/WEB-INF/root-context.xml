@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 공통 코드: servlet-context에서 제외됨 -->
+	<!-- ViewResolver -->
+	<bean id="viewResolver"	class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/" 
+		p:suffix=".jsp"/>
+	
+	<!-- 컴포넌트 스캔 -->
+	<context:component-scan base-package="com.sds.movieadmin.model"/>
+	<!-- 암호화 객체는  따로 bean으로 등록 -->
+	<bean id="encryptionManager" class="com.sds.movieadmin.common.EncryptionManager"/>
+	<!-- 공통 코드: servlet-context에서 제외됨 -->
+	
+	<!-- 데이터 소스: DB 선택 -->
+	<jee:jndi-lookup 
+		id="dataSource"
+		jndi-name="jndi/movie" 
+		resource-ref="true"/>
+	
+	<!-- Transaction Manager: DB에 따라 결정 -->
+	<!-- DB연동 기술은 Spring JDBC 필요 -->
+	<!-- JDBC: DataSourceTransactionManager -->
+	<!-- Mybatis: DataSourceTransactionManager -->
+	<bean 
+		id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource"/>
+	<!-- Hibernate: HibernateTransactionManager -->
+	
+	<!-- Mybatis의 SqlSessionTemplate을 모아 관리하는 객체: SqlSessionFactoryBean 등록 -->
+	<!-- Mybatis + Mybatis Spring 2개 필요 -->
+	<bean 
+		id="sqlSessionFactoryBean" 
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:configLocation="classpath:com/sds/movieadmin/mybatis/mybatis-config.xml"/>
+	
+	<!-- 필요로 하는 DAO에게 주입하기 위해 SqlSessionTemplate 를 Bean 으로 등록 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactoryBean"/>
+	</bean>
+
+</beans>

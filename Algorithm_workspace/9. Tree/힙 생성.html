@@ -1,0 +1,38 @@
+<script>
+
+    // 힙은 비선형 구조이므로, 힙의 개념을 프로그램으로 표현하려면 배열을 이용
+
+    let arr = new Array(10);
+    let index = 0;
+
+    function setOrder(childIndex){
+        // 방금 들어간 나와 부모의 값을 비교
+        // 부모의 index를 추측
+        let parentIndex = Math.floor((childIndex-1)/2);
+
+        // 음수가 아닐때만 부모와 자식을 비교
+        if(parentIndex >= 0 && arr[parentIndex] < arr[childIndex]) {
+            // 부모와 자식 위치 변경
+            let temp = arr[parentIndex];
+            arr[parentIndex] = arr[childIndex];
+            arr[childIndex] = temp;
+
+            setOrder(parentIndex);
+        }
+    }   
+
+    function addNode(value) {
+        arr[index] = value;
+        setOrder(index);
+        index++;
+    }
+
+    // max heap
+    addNode(7);
+    addNode(8);
+    addNode(13);
+    addNode(6);
+
+    console.log(arr);
+
+</script>

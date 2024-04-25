@@ -38,7 +38,9 @@
     -->
     <Resource auth="Container" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" name="UserDatabase" pathname="conf/tomcat-users.xml" type="org.apache.catalina.UserDatabase"/>
 	
+	<!-- JNDI는 여러개 등록 가능. name만 다르면 된다 -->
 	<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" initialSize="0" maxIdle="20" maxTotal="20" maxWaitMillis="5000" minIdle="5" name="jndi/mysql" password="" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/mall?characterEncoding=utf-8" username="root"/>
+	<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" initialSize="0" maxIdle="20" maxTotal="20" maxWaitMillis="5000" minIdle="5" name="jndi/movie" password="" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/movie?characterEncoding=utf-8" username="root"/>
   
   
   </GlobalNamingResources>
@@ -164,7 +166,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="Mall" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Mall"/></Host>
+      <Context docBase="MovieAdmin" path="/" reloadable="true" source="org.eclipse.jst.jee.server:MovieAdmin"/></Host>
     </Engine>
   </Service>
 </Server>

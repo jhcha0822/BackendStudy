@@ -1,0 +1,10 @@
+create database movie;
+
+use movie;
+
+create table admin(
+	admin_idx int primary key auto_increment
+	, admin_id varchar(20)
+	, admin_pw varchar(64)
+	, admin_name varchar(20)	
+) default character set utf8;

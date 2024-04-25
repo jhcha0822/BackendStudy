@@ -21,9 +21,15 @@
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
 
+	<!-- 등록 후 root-context에 전달 -->
     <ResourceLink 
     	global="jndi/mysql" 
 		name="jndi/mysql"
+		type="javax.sql.DataSource" />
+		
+	<ResourceLink 
+    	global="jndi/movie" 
+		name="jndi/movie"
 		type="javax.sql.DataSource" />
 
     <!-- Uncomment this to disable session persistence across Tomcat restarts -->
