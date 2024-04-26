@@ -22,9 +22,12 @@ public class MybatisAdminDAO implements AdminDAO {
 	}
 
 	@Override
-	public Admin loginCheck(Admin admin) {
+	public Admin loginCheck(Admin admin) throws AdminException {
 		// TODO Auto-generated method stub
-		return null;
+		Admin dto = sqlSessionTemplate.selectOne("Admin.loginCheck", admin);
+		if(dto == null)
+			throw new AdminException("로그인 정보가 올바르지 않습니다");
+		return dto;
 	}
 
 }

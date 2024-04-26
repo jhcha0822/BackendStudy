@@ -1,4 +1,22 @@
 <%@ page contentType="text/html;charset=utf-8"%>
+<%
+	// 세션이 존재하지 않는 경우 이 페이지로의 접근을 막는다(뒤로가기)
+//	if(session.getAttribute("admin")==null) {
+//		out.print("<script>");
+//		out.print("alert('로그인이 필요한 서비스입니다');");
+//		out.print("history.back();");
+//		out.print("</script>");
+//	}
+
+	// 직접 브라우저에 주소 입력 시 get으로 요청
+	// view - dispatcher - aop - MainController
+	
+	// aop로 잘못된 접근을 막자
+	// aspectj weaver 설치 https://mvnrepository.com/artifact/org.aspectj/aspectjweaver/1.9.5
+	
+	
+	
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>

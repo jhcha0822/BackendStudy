@@ -32,12 +32,6 @@
 	            <input type="password" class="form-control" name="admin_pw" placeholder="Password">
 	          </div>
 	        </div>
-	        <div class="form-group row">
-	          <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
-	          <div class="col-sm-10">
-	            <input type="text" class="form-control" name="admin_name" placeholder="Username">
-	          </div>
-	        </div>
 	      </div>
 	      <!-- /.card-body -->
 	      <div class="card-footer">
@@ -52,7 +46,25 @@
 </html>
 <script type="text/javascript">
 	
+	function login(){
+		$.ajax({
+			url:"/auth/admin",
+			type:"post",
+			data:$("form").serialize(),
+			success:function(result, status, xhr){
+				alert("인증 성공");
+				location.href="/";
+			},
+			error:function(xhr, status, err){
+				alert("인증 실패");
+			}
+		});
+	}
+	
 	$(function(){
+		$("#bt_login").click(function(){
+			login();
+		});
 		$("#bt_regist").click(function(){
 			location.href="/admin/registform";
 		});

@@ -3,9 +3,15 @@
 <!-- namespace는 유일한 값으로 설정: DTO로 설정 -->
 <mapper namespace="Admin">
 
+	<!-- 관리자 등록 -->
 	<insert id="insert" parameterType="Admin">
 		insert into admin(admin_id, admin_pw, admin_name)
 		values(#{admin_id}, #{admin_pw}, #{admin_name})
 	</insert>
+	
+	<!-- 로그인 인증 -->
+	<select id="loginCheck" parameterType="Admin" resultType="Admin">
+		select * from admin where admin_id=#{admin_id} and admin_pw=#{admin_pw}
+	</select>
 
 </mapper>

@@ -4,9 +4,11 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<!-- HandlerMapping -->
 	<!-- 기본으로 DefaultAnnotationHandlerMapping 적용 -->
@@ -14,11 +16,34 @@
 	<!-- 자동으로 인스턴스를 생성할 검색 대상 패키지 -->
 	<context:component-scan base-package="com.sds.movieadmin.controller"/>
 	
+	<!-- GlobalExceptionHandler 등록 -->
+	<bean id="globalExceptionHandler" class="com.sds.movieadmin.aop.GlobalExceptionHandler"/>
+	
+	<!-- Aspect 등록 -->
+	<!--<bean id="loginAspect" class="com.sds.movieadmin.aop.LoginAspect"/>-->
+	
+	<!-- AOP 설정 -->
+	<!--<aop:config>
+		<aop:aspect ref="loginAspect">
+			<aop:pointcut id="loginPointCut" expression="execution(public * com.sds.movieadmin.controller..*(..))"/>
+			<aop:around pointcut-ref="loginPointCut" method="loginCheck"/>
+		</aop:aspect>
+	</aop:config>-->
+	
 	<!-- SpringMVC의 기능 지원 -->
 	<mvc:annotation-driven/>
 	<mvc:resources location="/resources/" mapping="/static/**"/>
 	
 	<!-- 정적 자원의 매핑 -->
 	<!-- WebContent에 공개되어 있기에 필요 없음 -->
+	
+	<!-- 영화진흥위원회 API key -->
+	<bean id="key" class="java.lang.String">
+		<constructor-arg value="30f984da944ad5a0b9051f9c46d04d27"/>
+	</bean>
+	
+	<bean id="kobisOpenAPIRestService" class="kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService">
+		<constructor-arg ref="key"/>
+	</bean>
 
 </beans>

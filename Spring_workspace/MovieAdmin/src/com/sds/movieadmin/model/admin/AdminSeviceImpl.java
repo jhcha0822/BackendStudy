@@ -24,9 +24,11 @@ public class AdminSeviceImpl implements AdminService {
 	}
 
 	@Override
-	public Admin loginCheck(Admin admin) {
+	public Admin loginCheck(Admin admin) throws AdminException {
 		// TODO Auto-generated method stub
-		return null;
+		admin.setAdmin_pw(encryptionManager.getConvertedData(admin.getAdmin_pw()));
+		Admin dto = adminDAO.loginCheck(admin);
+		return dto;
 	}
 	
 }

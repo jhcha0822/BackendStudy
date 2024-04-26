@@ -20,10 +20,12 @@
   -->
   <typeAliases>
   	<typeAlias type="com.sds.movieadmin.domain.Admin" alias="Admin"/>
+  	<typeAlias type="com.sds.movieadmin.domain.Movie" alias="Movie"/>
   </typeAliases>
   
   <mappers>
     <!-- <mapper resource="org/mybatis/example/BlogMapper.xml"/> -->
     <mapper resource="com/sds/movieadmin/mybatis/AdminMapper.xml"/>
+    <mapper resource="com/sds/movieadmin/mybatis/MovieMapper.xml"/>
   </mappers>
 </configuration>

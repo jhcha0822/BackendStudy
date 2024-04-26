@@ -42,20 +42,26 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                            상품관리 <i class="right fas fa-angle-left"></i>
+                           영화 관리 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link">
+                <a href="/movie/api/list" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>상품목록</p>
+                  <p>API 조회</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/product/registform" class="nav-link">
+                <a href="/movie/site/list" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>상품등록</p>
+                  <p>영화 목록</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/movie/registform" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>영화 등록</p>
                 </a>
               </li>
             </ul>

@@ -10,7 +10,7 @@ public class MainController {
 	@GetMapping("/")
 	public String getMain() {
 		System.out.println("Main 요청");
-		return null;
+		return "admin/index";
 	}
 	
 }

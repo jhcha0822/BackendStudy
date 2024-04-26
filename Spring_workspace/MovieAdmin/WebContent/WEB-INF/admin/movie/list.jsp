@@ -1,9 +1,9 @@
-<%@page import="com.sds.mall.domain.Product"%>
+<%@page import="com.sds.movieadmin.domain.Movie"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%
 	// 리스트 꺼내기
-	List<Product> productList = (List)request.getAttribute("productList");
+	List<Movie> movieList = (List)request.getAttribute("movieList");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,24 +79,24 @@
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>하위카테고리명</th>
-                      <th>이미지</th>
-                      <th>상품명</th>
-                      <th>브랜드</th>
-                      <th>가격</th>
+                      <th>영화코드</th>
+                      <th>영화명</th>
+                      <th>영화유형</th>
+                      <th>국가명</th>
+                      <th>제작년도</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                    <%for(int i=0;i<productList.size();i++) {%>
-                   	<%Product product = productList.get(i); %>
+                    <% for(int i=0;i<10;i++) {%>
+                   	<% Movie movie = movieList.get(i); %>
                         <tr>
                             <td><%=i%></td>
-                            <td><%=product.getSubCategory().getSubname() %></td>
-                            <td><img src="/static/product_img/<%=product.getFilename()%>" width="45px"></td>
-                            <td><%=product.getProduct_name() %></td>
-                            <td><%=product.getBrand() %></td>
-                            <td><%=product.getPrice()%></td>
+                            <td><%=movie.getMovieCd() %></td>
+                            <td><%=movie.getMovieNm() %></td>
+                            <td><%=movie.getTypeNm() %></td>
+                            <td><%=movie.getNationAlt() %></td>
+                            <td><%=movie.getPrdtYear() %></td>
                         </tr>
                     <% } %>
                     
@@ -155,7 +155,7 @@
 	
 	function regist() { // 상품 입력 정보 전송
 		$("form").attr({
-			action:"/admin/product/regist",
+			action:"/admin/movie/regist",
 			method:"POST",
 			// 텍스트 데이터와 바이너리 데이터가 섞여 있는 복합 데이터 전송: enctype multipart/form-data
 			enctype:"multipart/form-data"

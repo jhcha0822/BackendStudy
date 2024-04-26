@@ -10,8 +10,10 @@
 	<h3>에러 발생</h3>
 	<p>
 		<%
-			RuntimeException e = (RuntimeException)request.getAttribute("e");
-			out.print(e.getMessage()); // error의 e 객체가 아닌 msg 만을 꺼내기
+			if(request.getAttribute("e") != null) {
+				RuntimeException e = (RuntimeException)request.getAttribute("e");
+				out.print(e.getMessage()); // error의 e 객체가 아닌 msg 만을 꺼내기
+			}
 		%>
 	</p>
 	<a href="/admin">관리자 메인 페이지</a>

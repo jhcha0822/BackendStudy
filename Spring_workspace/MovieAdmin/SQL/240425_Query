@@ -1,3 +1,7 @@
+#################################################
+24.04.25
+#################################################
+
 create database movie;
 
 use movie;
@@ -8,3 +12,13 @@ create table admin(
 	, admin_pw varchar(64)
 	, admin_name varchar(20)	
 ) default character set utf8;
+
+#################################################
+24.04.26
+#################################################
+
+create table movie(
+	movie_idx int primary key auto_increment
+	, moviecd varchar(8)
+	, url varchar(200)
+);
