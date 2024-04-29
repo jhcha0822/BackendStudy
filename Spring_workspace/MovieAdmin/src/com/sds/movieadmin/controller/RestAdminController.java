@@ -37,7 +37,7 @@ public class RestAdminController {
 	
 		
 	@ExceptionHandler(AdminException.class)
-	public ResponseEntity handel(AdminException e) {
+	public ResponseEntity handle(AdminException e) {
 		ResponseEntity entity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		return entity;
 	}

@@ -18,8 +18,9 @@
 	
 	<!-- 컴포넌트 스캔 -->
 	<context:component-scan base-package="com.sds.movieadmin.model"/>
+	<context:component-scan base-package="com.sds.movieadmin.common"/>
 	<!-- 암호화 객체는  따로 bean으로 등록 -->
-	<bean id="encryptionManager" class="com.sds.movieadmin.common.EncryptionManager"/>
+	<!-- @bean id="encryptionManager" class="com.sds.movieadmin.common.EncryptionManager"/-->
 	<!-- 공통 코드: servlet-context에서 제외됨 -->
 	
 	<!-- 데이터 소스: DB 선택 -->
@@ -52,7 +53,6 @@
 	</bean>
 	
 	
-	
 	<!-- 영화진흥위원회 API key -->
 	<bean id="key" class="java.lang.String">
 		<constructor-arg value="30f984da944ad5a0b9051f9c46d04d27"/>
@@ -60,6 +60,12 @@
 	
 	<bean id="kobisOpenAPIRestService" class="kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService">
 		<constructor-arg ref="key"/>
+	</bean>
+	
+	
+	<!-- Tomcat 가동 시작과 동시에 경로를 일어옴 -->
+	<bean id="savePath" class="java.lang.String">
+		<constructor-arg value="/resources/upload/excel/"/>
 	</bean>
 
 </beans>

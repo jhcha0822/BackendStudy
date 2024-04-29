@@ -2,6 +2,8 @@ package com.sds.movieadmin.domain;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 // OpenAPI에서 받아온 영화 1건을 담는 DTO
@@ -45,5 +47,9 @@ public class Movie {
 	// JSON 내 또 다른 객체배열 존재 -> DTO 선언하여 포함
 	private List<Director> directors;
 	private List<Company> companys;	
+	
+	////////////////////////////////////////////////////////////////////
+	
+	MultipartFile file; // html 컴포넌트와 일치되어야 자동 매핑: bean이 자동으로 처리
 	
 }

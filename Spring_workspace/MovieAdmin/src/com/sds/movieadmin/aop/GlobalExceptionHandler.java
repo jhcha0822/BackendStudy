@@ -1,5 +1,8 @@
 package com.sds.movieadmin.aop;
 
+import org.apache.commons.fileupload.FileUploadBase;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -15,6 +18,15 @@ public class GlobalExceptionHandler {
 	public String handle(UnAuthorizedException e) {
 		
 		return "admin/error/result";
+	}
+	
+	@ExceptionHandler(FileUploadBase.SizeLimitExceededException.class)
+	public ResponseEntity handle(FileUploadBase.SizeLimitExceededException e) {
+		
+		// 응답코드 생성
+		ResponseEntity entity = ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).build(); // 413: 너무 큰 파일용량
+		
+		return entity;
 	}
 	
 }

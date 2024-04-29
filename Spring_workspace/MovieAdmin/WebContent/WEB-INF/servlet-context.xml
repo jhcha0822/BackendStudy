@@ -46,4 +46,8 @@
 		<constructor-arg ref="key"/>
 	</bean>
 
+	<!-- Spring File upload -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:maxUploadSize="1048576"/>
+		
 </beans>

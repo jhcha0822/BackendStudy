@@ -57,6 +57,7 @@
       <div class="container-fluid">
 			
 			<!-- 카드 영역 begin -->
+			<form>
 			<div class="card card-default">
 				<div class="card-header">
 					<h3 class="card-title">Select2 (Default Theme)</h3>
@@ -71,97 +72,132 @@
 				</div>
 			
 				<!-- 카드의 body 영역 begin -->
-				<form>
-					<div class="card-body" style="display: block;">
-						
-						<!-- 카드안의 행 begin -->
-						<div class="row">
-							<!-- 카드안의 열 begin -->	
-							<div class="col-md-5" data-select2-id="30">
-								<div class="form-group" data-select2-id="29">
-									
-									<select name="repNationCd" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-										<option value="0">국가 선택 ▼</option>
-										<%for(Nation nation : nationList){%>
-										<option value="<%=nation.getFullCd()%>"><%=nation.getKorNm()%></option>
-										<%}%>
-									</select>
+				
+				<div class="card-body" style="display: block;">
+					
+					<!-- 카드안의 행 begin -->
+					<div class="row">
+						<!-- 카드안의 열 begin -->	
+						<div class="col-md-3" data-select2-id="30">
+							<div class="form-group" data-select2-id="29">
 								
-								</div>
+								<select name="repNationCd" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+									<option value="">국가 선택 ▼</option>
+									<%for(Nation nation : nationList){ %>
+									<option value="<%=nation.getFullCd()%>"><%=nation.getKorNm() %></option>
+									<%}%>
+								</select>
 							</div>
-							<!-- 카드안의 열 end -->
-							<!-- 카드안의 열 begin -->	
-							<div class="col-md-5" data-select2-id="30">
-								<div class="form-group" data-select2-id="29">
-									
-									<select name="movieTypeCdArr" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-										<option value="0">영화 유형 선택 ▼</option>
-										<%for(MovieType movieType : movieTypeList){%>
-										<option value="<%=movieType.getFullCd()%>"><%=movieType.getKorNm()%></option>
-										<%}%>
-									</select>
-								
-								</div>
-							</div>
-							<!-- 카드안의 열 end -->
-							<!-- 카드안의 열 begin -->	
-							<div class="col-md-2" data-select2-id="30">
-								<div class="form-group" data-select2-id="29">
-									
-									<button type="button" id="bt_search" class="btn btn-primary">
-										<span></span>검색
-									</button>
-									
-								</div>
-							</div>
-							<!-- 카드안의 열 end -->
 						</div>
-						<!-- 카드안의 행 end -->
-						
-						<!-- 입력 폼이 나올 row 시작  -->
-						<div class="row">
-							<div class="col-md-12" data-select2-id="30">
-								<div class="form-group" data-select2-id="29">
-									
-									<select id="movie_name" name="movieCd" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-										<option value="0">영화 선택 ▼</option>
-									</select>
+						<!-- 카드안의 열 end -->
+						<!-- 카드안의 열 begin -->	
+						<div class="col-md-3" data-select2-id="30">
+							<div class="form-group" data-select2-id="29">
 								
-								</div>
+								<select name="movieTypeCdArr" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+									<option value="">영화 유형 선택 ▼</option>
+									<%for(MovieType movieType : movieTypeList){ %>
+									<option value="<%=movieType.getFullCd()%>"><%=movieType.getKorNm() %></option>
+									<%} %>
+								</select>
 							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="이미지 URL" name="url">
-								</div>
+						</div>
+						<!-- 카드안의 열 end -->
+						<!-- 카드안의 열 begin -->	
+						<div class="col-md-4" data-select2-id="30">
+							<div class="form-group" data-select2-id="29">
+								
+								<input type="text" class="form-control" placeholder="영화명" name="movieNm">
+																
 							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<input name="photo" type="file" class="form-control"> 
-								</div>
+						</div>
+						<!-- 카드안의 열 end -->
+						<!-- 카드안의 열 begin -->	
+						<div class="col-md-2" data-select2-id="30">
+							<div class="form-group" data-select2-id="29">
+								
+								<button type="button" class="btn btn-primary" id="bt_search">
+									<span></span>검색
+								</button>
+																
 							</div>
-							<div class="row">
-								<div class="col-sm-6">
-									<button type="button" class="btn btn-primary" id="bt_regist">등록</button>
-								</div>
-								<div class="col-sm-6">
-									<button type="button" class="btn btn-primary" id="bt_list">목록</button>
-								</div>
-							</div>
-							
-						</div>	
-						<!-- 입력 폼이 나올 row 끝  -->
-						
-						
-						<!-- 카드의 푸터 영역 begin -->
-						<div class="card-footer" style="display: block;"></div>
-						<!-- 카드의 푸터 영역 end -->
+						</div>
+						<!-- 카드안의 열 end -->
 						
 					</div>
-				</form>
+					
+					<!-- 카드안의 행 end -->
+					
+					<!-- 입력 폼이 나올 row 시작  -->
+					<div class="row">
+						
+						<div class="col-md-8">
+							<div class="form-group">
+							
+								<select id="movie_name" name="movieCd"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+								</select>
+								
+							</div>
+						</div>
+						
+						<div class="col-md-2">
+							<div class="form-group">
+							
+								<input type="text" class="form-control" id="movieCd" placeholder="영화코드">
+								
+							</div>
+						</div>
+						
+						<div class="col-md-2">
+							<div class="form-group">
+							
+								<input type="text" class="form-control" id="movieNm" placeholder="영화명">
+								
+							</div>
+						</div>
+					
+						<div class="col-md-12">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="이미지 URL" name="url">
+							</div>
+						</div>
+						
+						<div class="col-md-12">
+							<div class="form-group">
+								<input type="file" class="form-control" name="photo">
+							</div>
+						</div>
+						
+					</div>
+						
+					<div class="row">						
+						<div class="col-sm-4">
+							<button type="button" class="btn btn-primary form-control" id="bt_regist">등록</button>
+						</div>
+						<div class="col-sm-4">
+							<button type="button" class="btn btn-primary form-control" id="bt_list">목록</button>
+						</div>
+						<div class="col-sm-4">
+							<button type="button" class="btn btn-primary form-control" id="bt_excel">일괄 등록</button>
+						</div>
+					</div>
+					<!-- 입력 폼이 나올 row 끝  -->
+					
+					
+					<!-- 카드의 푸터 영역 begin -->
+					<div class="card-footer" style="display: block;"></div>
+					<!-- 카드의 푸터 영역 end -->
+					
+				</div>
+				
 				<!-- 카드의 body 영역 end -->			      		
         	</div>
         	<!-- 카드 영역 end -->
-        
+        	</form>
+        	
+        	
+      
+      
       <!-- /.container-fluid -->
       
     </section>
@@ -181,30 +217,33 @@
 	
 <%@ include file="../inc/footer_link.jsp" %>	
 
+
 </body>
 </html>
 <script type="text/javascript">
 
+	let win;
+
 	function movieRender(movieList){
-		let tag = "<option value='0'>영화 선택 ▼</option>";
+		let tag = "<option>영화 선택 ▼</option>";
 		for(let i=0; i<movieList.length; i++){
 			let movie = movieList[i];
-			tag += "<option value=='"+movie.movieCd+"'>"+movie.movieNm+"</option>"
+			tag += "<option value='"+movie.movieCd+"'>"+movie.movieNm+"</option>";
 		}
-		$("#bt_search span").toggleClass("spinner-border spinner-border-sm");
+		$("#bt_search span").toggleClass("spinner-border spinner-border-sm"); //제거
 		$("#movie_name").prop("disabled", false);
 		$("#movie_name").html(tag);
 	}
 
 	// 비동기 검색 요청
-	function searchMovie() {
+	function searchMovie(){
 		$.ajax({
 			url:"/search/movie",
 			type:"get",
-			data:$("form").serialize(),
-			success:function(result, status, xhr){
-				movieRender(result);
-				
+			data:$("form").serialize() ,
+			success: function(result, status, xhr){
+				//영화 select 박스에 동적으로 채우기 
+				movieRender(result);			
 			},
 			error:function(xhr, status, err){
 				alert("검색된 영화가 없습니다");
@@ -213,23 +252,41 @@
 	}
 
 	// 비동기 등록 요청
-	function regist() {
+	function regist(){
 		$.ajax({
 			url:"/movie",
 			type:"post",
-			data:$("#form").serialize(),
+			data:$("form").serialize(),
 			success:function(result, status, xhr){
 				alert("등록 성공");
+				win.close();
 			},
-			error:function(xhr, status, result){
+			error:function(xhr, status, err){
 				alert("등록 실패");
 			}
-		});
+		});			
+	}
+	
+	// 팝업창 띄우기
+	function openWin() {
+		// 자바스크립트 객체 중 최상위 객체인 window 이용
+		// 팝업의 이름이 있으면 중복 새창이 뜨지 않음
+		win = window.open("/movie/excel/registform", "pop", "width=700, height=200")
 	}
 	
 	// onload
 	$(function(){
 		$("#movie_name").prop("disabled", true); // 비활성화
+		
+		// 영화 정보가 출력되는 select box에 onchange 이벤트 걸기
+		$("#movie_name").change(function(){
+			// select 박스의 값을 변경할 때 영화명, 영화코드가 text 박스에 노출
+			$("#movieCd").val($(this).val()); // 현재 select 박스(이벤트를 일으킨 주체)의 값
+			
+			// select박스의 선택된 option의 text 구하기
+			let text = $(this).find("option:selected").text();
+			$("#movieNm").val(text);
+		});
 		
 		$("#bt_regist").click(function(){
 			regist();
@@ -239,8 +296,13 @@
 			list();
 		});
 		
+		$("#bt_excel").click(function(){
+			openWin();
+		});
+		
 		$("#bt_search").click(function(){
 			$("#bt_search span").toggleClass("spinner-border spinner-border-sm");
+			$("#movie_name").prop("disabled", true); //비활성화
 			searchMovie();
 		});
 	});
