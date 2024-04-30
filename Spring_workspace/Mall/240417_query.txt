@@ -27,3 +27,8 @@ create table member_detail (
  , constraint fk_member_member_detail foreign key (member_idx)
 	references member(member_idx)
 ) default character set utf8;
+
+insert into sns(sns_name) values('google');
+insert into sns(sns_name) values('naver');
+insert into sns(sns_name) values('kakao');
+insert into sns(sns_name) values('homepage');

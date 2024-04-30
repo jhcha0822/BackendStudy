@@ -1,6 +1,7 @@
 package com.sds.movieadmin.model.movie;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.sds.movieadmin.domain.Director;
 import com.sds.movieadmin.domain.Movie;
 import com.sds.movieadmin.domain.MovieType;
 import com.sds.movieadmin.domain.Nation;
@@ -103,19 +105,32 @@ public class MovieApiService {
 	}
 	
 	// 영화 1건 조회
-	public Movie getMovie(Movie movie) {
+	// API에서 DTO에 정보를 더 채워 반환
+	public Movie getMovie(Movie movie) { // DAO가 list 반환: movieCd와 url만 보유
 		
 		MovieInfoResult movieInfoResult = null;
 		
 		try {
 			movieInfoResult = new MovieAPIServiceImplService().getMovieAPIServiceImplPort().searchMovieInfo(key, movie.getMovieCd());
-			movieInfoResult.getMovieInfo().getMovieNm();
+			movie.setMovieNm(movieInfoResult.getMovieInfo().getMovieNm());   // 영화이름
+			movie.setOpenDt(movieInfoResult.getMovieInfo().getOpenDt()); 	 // 개봉일
+			movie.setPrdtYear(movieInfoResult.getMovieInfo().getPrdtYear()); // 제작년도
+
+			List<Director> directorList = new ArrayList<Director>(); // 감독을 채워넣을 List
+			for(int i=0; i<movieInfoResult.getMovieInfo().getDirectors().getDirector().size(); i++) {
+				String dname = movieInfoResult.getMovieInfo().getDirectors().getDirector().get(i).getPeopleNm();
+				Director director = new Director();
+				director.setPeopleNm(dname);
+				directorList.add(director);
+			}
+			movie.setDirectors(directorList);
+			
 		} catch (OpenAPIFault e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return null;
+		return movie;
 	}
 	
 }

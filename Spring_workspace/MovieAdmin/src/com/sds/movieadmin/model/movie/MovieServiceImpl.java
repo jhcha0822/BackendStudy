@@ -38,10 +38,13 @@ public class MovieServiceImpl implements MovieService {
 	@Override
 	public List selectAll(Map map) {
 		// TODO Auto-generated method stub
-		List siteMovieList = movieDAO.selectAll(map);
+		List<Movie> siteMovieList = movieDAO.selectAll(map);
 		// 영화코드 이용하여 API 조회 -> 빈 정보를 DTO에 넣기
-		
-		return movieDAO.selectAll(map);
+		for(Movie movie : siteMovieList) {
+			// OpenAPI 호출 객체에게 Movie DTO를 맡겨 정보를 더 받자
+			movieApiService.getMovie(movie);
+		}
+		return siteMovieList;
 	}
 	
 	// 1건
