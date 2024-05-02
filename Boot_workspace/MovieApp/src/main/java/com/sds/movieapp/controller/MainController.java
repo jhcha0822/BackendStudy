@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,13 @@ public class MainController {
 		// 카테고리 설정을 위해 타입 받아오기
 		List<MovieType> movieTypeList = movieService.getMovieTypeList();
 		model.addAttribute("movieTypeList", movieTypeList);
+		
+		// Spring Security를 통해 로그인한 사용자의 이름 가져오기
+		String nickname=SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		model.addAttribute("movieList", movieList);
+		model.addAttribute("movieTypeList", movieTypeList);//4단계: 뷰에 보여줄 결과 저장
+		model.addAttribute("nickname", nickname);
 		
 		return "main/index";
 	}

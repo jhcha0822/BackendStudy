@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Anime Template">
@@ -7,20 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Anime | Template</title>
-	
-	<!-- 헤더링크 -->
-	<th:block th:replace="~{fragments/header_link :: header_link}"/>
-	
+
+    <!-- header_link -->
+    <th:block th:replace="~{fragments/header_link :: header_link}"/>
+    
 </head>
 
 <body>
     <!-- Page Preloder -->
 	<th:block th:replace="~{fragments/preloader :: preloader}"/>
-	
+
     <!-- Header Section Begin -->
     <th:block th:replace="~{fragments/header :: header}"/>
     <!-- Header End -->
-
 
     <!-- Normal Breadcrumb Begin -->
     <section class="normal-breadcrumb set-bg" data-setbg="/site/img/normal-breadcrumb.jpg">
@@ -43,42 +43,8 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="login__form">
-                        <h3>Login</h3>
-                        <form id="form1">
-                            <div class="input__item">
-                                <input type="text" name="uid" placeholder="Your ID">
-                                <span class="icon_mail"></span>
-                            </div>
-                            <div class="input__item">
-                                <input type="text" name="password" placeholder="Password">
-                                <span class="icon_lock"></span>
-                            </div>
-                            <button type="button" class="site-btn" id="bt_login">Login Now</button>
-                        </form>
-                        <a href="#" class="forget_pass">Forgot Your Password?</a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="login__register">
-                        <h3>Dont’t Have An Account?</h3>
-                        <a href="#" class="primary-btn">Register Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="login__social">
-                <div class="row d-flex justify-content-center">
-                    <div class="col-lg-6">
-                        <div class="login__social__links">
-                            <span>or</span>
-                            <ul>
-                                <li><a href="javascript:getAuthForm('naver')" class="facebook">
-                                	<i class="fa fa-facebook"></i> Sign in With Naver</a>
-                                </li>
-                                <li><a href="javascript:getAuthForm('google')" class="google"><i class="fa fa-google"></i> Sign in With Google</a></li>
-                                <li><a href="javascript:getAuthForm('kakao')" class="twitter"><i class="fa fa-twitter"></i> Sign in With KaKao</a>
-                                </li>
-                            </ul>
-                        </div>
+                        <h1>Error</h1>
+                        
                     </div>
                 </div>
             </div>
@@ -86,23 +52,22 @@
     </section>
     <!-- Login Section End -->
 
-	
-
-
-
 	<!-- Footer Section Begin -->
 	<th:block th:replace="~{fragments/footer :: footer}"/>
 	<!-- Footer Section End -->
-
+	
 	<!-- Search model Begin -->
 	<th:block th:replace="~{fragments/search :: search}"/>
 	<!-- Search model end -->
 
 	<!-- Js Plugins -->
 	<th:block th:replace="~{fragments/footer_link :: footer_link}"/>
-	
+
+
 </body>
+
 </html>
+
 <script type="text/javascript">
 
 	// 사용자 로그인 시도 시, IDP 쪽으로 가져갈 링크 생성
@@ -119,18 +84,5 @@
 			}
 		});
 	}
-	
-	function loginCheck(){
-		$("#form1").attr({
-			action:"/member/login", //spring security가 낚아 챔
-			method:"post"
-		});	
-		$("#form1").submit();
-	}
-	
-	$(function(){
-		$("#bt_login").click(function(){
-			loginCheck();
-		});		
-	});
+
 </script>
