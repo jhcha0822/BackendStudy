@@ -31,8 +31,19 @@ public class SecurityConfig {
 					(auth) -> auth
 					.requestMatchers("/site/**","/").permitAll()
 					.requestMatchers("/member/loginform", "/member/login","/member/joinform","/member/join").permitAll() // 로그인이 필요없는 url
-					.requestMatchers("/cs/notice/list").hasRole("user") // 권한이 있는 사용자만이 접근 가능: 회원가입시 지정
-					.anyRequest().authenticated() // 위에 명시된 항목 외에는 로그인 요구
+					// role은 권한의 집합을 의미하며, hasRole() 메서드는 role을 사용하게 되고, 내부적으로 ROLE_ 접두어가 붙음
+					// .requestMatchers("/cs/notice/list").hasRole("user") // 권한이 있는 사용자만이 접근 가능: 회원가입시 지정
+					// .requestMatchers("/cs/notice/list", "/cs/notice/writeform").hasAuthority("user") // 접두어가 없는 권한을 이용
+
+					// .requestMatchers("/cs/notice/**").hasAuthority("user")
+					.requestMatchers("/cs/notice/**").permitAll()
+					
+					.requestMatchers("/member/sns/naver/callback").permitAll()
+					.requestMatchers("/member/sns/kakao/callback").permitAll()
+					.requestMatchers("/rest/member/authform/**").permitAll()
+					
+					//.anyRequest().authenticated() // 위에 명시된 항목 외에는 로그인 요구
+					.anyRequest().permitAll()
 			);
 			
 		httpSecurity

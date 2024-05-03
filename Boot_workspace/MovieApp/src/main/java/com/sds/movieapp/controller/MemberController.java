@@ -24,6 +24,8 @@ import com.sds.movieapp.domain.Member;
 import com.sds.movieapp.domain.Role;
 import com.sds.movieapp.exception.MemberException;
 import com.sds.movieapp.model.member.MemberService;
+import com.sds.movieapp.sns.KaKaoLogin;
+import com.sds.movieapp.sns.KaKaoOAuthToken;
 import com.sds.movieapp.sns.NaverLogin;
 import com.sds.movieapp.sns.NaverOAuthToken;
 
@@ -36,6 +38,9 @@ public class MemberController {
 	
 	@Autowired	
 	private NaverLogin naverLogin;
+	
+	@Autowired
+	private KaKaoLogin kakaoLogin;
 	
 	@Autowired
 	private MemberService memberService;
@@ -173,6 +178,65 @@ public class MemberController {
 		
 		return null;
 	}
+	
+	// kakao callback 요청 처리
+	@GetMapping("/member/sns/kakao/callback")
+	public ModelAndView kakaoCallback(HttpServletRequest request) {
+		
+		String code = request.getParameter("code");
+		// log.info("카카오가 보낸 임시 코드: "+code);
+		
+		// token 요청을 위한 header-body 구성 후 post 요청
+		
+		// body 구성
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		params.add("code", code);
+		params.add("client_id", kakaoLogin.getClient_id());
+		params.add("redirect_uri", kakaoLogin.getRedirect_uri());
+		params.add("grant_type", kakaoLogin.getGrant_type());
+		
+		// header 구성
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/x-www-form-urlencoded"); // form태그를 post 방식으로 보내는 효과
+		
+		// headers+body
+		HttpEntity entity = new HttpEntity(params, headers);
+		
+		// 비동기 객체 생성
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> responseEntity = restTemplate.exchange(kakaoLogin.getToken_request_url(), HttpMethod.POST, entity, String.class);
+		
+		String body = responseEntity.getBody();
+		// log.info("카카오가 보낸 토큰을 포함한 응답 정보: "+body);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		KaKaoOAuthToken oAuthToken = null;		
+		try {
+			oAuthToken = objectMapper.readValue(body, KaKaoOAuthToken.class); // google simple + gson의 능력: 알아서 객체에 담아줌(String -> Object)
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// token으로 사용자 정보 비동기 get 방식으로 요청
+		HttpHeaders headers2 = new HttpHeaders();
+		headers2.add("Authorization", "Bearer "+oAuthToken.getAccess_token());
+		
+		HttpEntity entity2 = new HttpEntity(headers2); // header만 넣음: body가 없기에
+		
+		// 비동기 요청 전송
+		RestTemplate restTemplate2 = new RestTemplate();
+		ResponseEntity<String> responseEntity2 = restTemplate2.exchange(kakaoLogin.getUserinfo_url(), HttpMethod.GET, entity2, String.class);
+		String body2 = responseEntity2.getBody();
+		
+		log.info("카카오가 보낸 사용자 정보: "+body2);
+		
+		return null;
+	}
+	
 	
 	@ExceptionHandler(MemberException.class)
 	public ModelAndView handle(MemberException e) {

@@ -67,8 +67,14 @@ dependencies {
 	implementation 'com.sun.xml.messaging.saaj:saaj-impl:1.5.3'
 	implementation 'com.sun.xml.bind:jaxb-impl:2.3.3'
 	
+	// Spring Security
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
 	implementation 'org.springframework.boot:spring-boot-starter-security:3.2.5'
+	
+	// MongoDB
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:3.2.5'
+	
 	
 }
 

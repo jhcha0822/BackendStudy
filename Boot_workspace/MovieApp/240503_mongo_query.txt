@@ -1,0 +1,23 @@
+movie > db.collection
+
+use movie;
+
+switched to db movie
+
+show users;
+
+[]
+
+db.createUser({
+	user:"movie",
+	pwd:"1234",
+	roles:[
+    {role:"readWrite", db:"movie"}
+	]
+});
+
+{ ok: 1 }
+
+show users;
+
+connection String: mongodb://movie:1234@localhost:27017/?authSource=movie
