@@ -12,6 +12,7 @@ import com.sds.movieapp.domain.Movie;
 import com.sds.movieapp.exception.MovieException;
 import com.sds.movieapp.exception.UploadException;
 
+
 @Service
 public class MovieServiceImpl implements MovieService {
 

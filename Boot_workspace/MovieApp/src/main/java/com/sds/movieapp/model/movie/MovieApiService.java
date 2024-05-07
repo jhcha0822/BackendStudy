@@ -8,12 +8,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.sds.movieapp.domain.Actor;
 import com.sds.movieapp.domain.Director;
+import com.sds.movieapp.domain.Genre;
 import com.sds.movieapp.domain.Movie;
 import com.sds.movieapp.domain.MovieType;
 import com.sds.movieapp.domain.Nation;
@@ -112,27 +113,64 @@ public class MovieApiService {
 	
 	// 영화 1건 조회
 	// API에서 DTO에 정보를 더 채워 반환
-	public Movie getMovie(Movie movie) { // DAO가 list 반환: movieCd와 url만 보유
-		
+	public Movie getMovie(Movie movie) { // DAO가 반환한 List 안에 부족한 영화정보를 가진 Movie DTO(movieCd,url)
 		MovieInfoResult movieInfoResult = null;
 		
 		try {
 			movieInfoResult = new MovieAPIServiceImplService().getMovieAPIServiceImplPort().searchMovieInfo(key, movie.getMovieCd());
-			movie.setMovieNm(movieInfoResult.getMovieInfo().getMovieNm());   // 영화이름
-			movie.setOpenDt(movieInfoResult.getMovieInfo().getOpenDt()); 	 // 개봉일
-			movie.setPrdtYear(movieInfoResult.getMovieInfo().getPrdtYear()); // 제작년도
+			
+			
+			movie.setMovieNm(movieInfoResult.getMovieInfo().getMovieNm());//영화이름
+			movie.setPrdtYear(movieInfoResult.getMovieInfo().getPrdtYear());//제작일
+			movie.setOpenDt(movieInfoResult.getMovieInfo().getOpenDt());//개봉일
+			
+			//장르
+			List<Genre> genreList = new ArrayList<Genre>();
+			for(int i=0;i< movieInfoResult.getMovieInfo().getGenres().getGenre().size();i++) {
+				String genreNm=movieInfoResult.getMovieInfo().getGenres().getGenre().get(i).getGenreNm();
+				Genre genre = new Genre(); //empty status
+				genre.setGenreNm(genreNm); //장르명 넣기
+				genreList.add(genre); //장르 수집
+			}
+			movie.setGenres(genreList); //DTO 에 장르 목록 추가
+			
+			
+			//영화배우 
+			List<Actor> actorList = new ArrayList<Actor>();
+			for(int i=0;i< movieInfoResult.getMovieInfo().getActors().getActor().size();i++) {
+				if(i>2)break;
+				String actorNm=movieInfoResult.getMovieInfo().getActors().getActor().get(i).getPeopleNm();
+				String actorNmEn=movieInfoResult.getMovieInfo().getActors().getActor().get(i).getPeopleNmEn();
+				Actor actor = new Actor(); //empty status
+				actor.setPeopleNm(actorNm);
+				actor.setPeopleNmEn(actorNmEn);
+				actorList.add(actor); 
+			}
+			movie.setActors(actorList); //DTO 에 배우 목록 추가
+			
+			
+			//제작 국가
+			List<Nation> nationList = new ArrayList<Nation>();
+			for(int i=0;i< movieInfoResult.getMovieInfo().getNations().getNation().size();i++) {
+				String nationNm=movieInfoResult.getMovieInfo().getNations().getNation().get(i).getNationNm();
+				
+				Nation nation = new Nation(); //empty status
+				nation.setNationNm(nationNm); 
+				nationList.add(nation); 
+			}
+			movie.setNations(nationList); //DTO에 국가 목록 추가
 
-			List<Director> directorList = new ArrayList<Director>(); // 감독을 채워넣을 List
-			for(int i=0; i<movieInfoResult.getMovieInfo().getDirectors().getDirector().size(); i++) {
-				String dname = movieInfoResult.getMovieInfo().getDirectors().getDirector().get(i).getPeopleNm();
-				Director director = new Director();
+			
+			List<Director> directorList=new ArrayList<Director>();//감독을 채워넣을 List
+			for(int i=0;i<movieInfoResult.getMovieInfo().getDirectors().getDirector().size();i++) {
+				String dname=movieInfoResult.getMovieInfo().getDirectors().getDirector().get(i).getPeopleNm();
+				Director director = new Director();//감독 객체 생성 
 				director.setPeopleNm(dname);
 				directorList.add(director);
 			}
-			movie.setDirectors(directorList);
+			movie.setDirectors(directorList);//Movie DTO에 감독 List을 대입 
 			
 		} catch (OpenAPIFault e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -4,6 +4,12 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sds.movieapp.domain.Actor;
+import com.sds.movieapp.domain.Company;
+import com.sds.movieapp.domain.Director;
+import com.sds.movieapp.domain.Genre;
+import com.sds.movieapp.domain.Nation;
+
 import lombok.Data;
 
 // OpenAPI에서 받아온 영화 1건을 담는 DTO
@@ -46,7 +52,11 @@ public class Movie {
 	
 	// JSON 내 또 다른 객체배열 존재 -> DTO 선언하여 포함
 	private List<Director> directors;
-	private List<Company> companys;	
+	private List<Company> companys;
+	
+	private List<Genre> genres;
+	private List<Actor> actors;
+	private List<Nation> nations;
 	
 	////////////////////////////////////////////////////////////////////
 	
