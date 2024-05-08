@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sds.movieapp.common.Pager;
-import com.sds.movieapp.document.Movie;
-import com.sds.movieapp.domain.MovieType;
+import com.sds.movieapp.domain.MovieDoc;
 import com.sds.movieapp.model.movie.MovieService;
 
 @Controller
@@ -35,7 +34,7 @@ public class MainController {
 		map.put("startIndex", pager.getStartIndex()); 			// n번째부터
 //		map.put("rowCount", pager.getPageSize()); 	  			// n건
 		map.put("rowCount", 3);
-		List<Movie> movieList = movieService.selectAll(map);	// 가져오기
+		List<MovieDoc> movieList = movieService.selectAll(map);	// 가져오기
 		model.addAttribute("movieList", movieList);
 
 		// AOP에서 처리함

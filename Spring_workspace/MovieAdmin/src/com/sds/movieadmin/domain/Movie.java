@@ -46,7 +46,11 @@ public class Movie {
 	
 	// JSON 내 또 다른 객체배열 존재 -> DTO 선언하여 포함
 	private List<Director> directors;
-	private List<Company> companys;	
+	private List<Company> companys;
+	
+	private List<Genre> genres;
+	private List<Actor> actors;
+	private List<Nation> nations;
 	
 	////////////////////////////////////////////////////////////////////
 	

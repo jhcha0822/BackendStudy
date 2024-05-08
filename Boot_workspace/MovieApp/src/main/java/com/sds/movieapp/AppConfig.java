@@ -1,8 +1,12 @@
 package com.sds.movieapp;
 
+import java.io.IOException;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
+import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService;
 
 // Spring 3.0부터 이미 Spring 설정 xml을 대신할 어노테이션을 지원하였음
@@ -30,4 +34,17 @@ public class AppConfig {
 		return new KobisOpenAPIRestService(key);
 	}
 	
+	// Komoran
+	@Bean
+	public Komoran komoran() {
+		// 설정 파일 위치
+		String modelPath = null;
+		try {
+			modelPath = new ClassPathResource("model_light").getFile().getAbsolutePath();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new Komoran(modelPath);
+	}
 }

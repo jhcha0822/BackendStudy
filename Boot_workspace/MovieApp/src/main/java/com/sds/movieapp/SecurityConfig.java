@@ -42,8 +42,11 @@ public class SecurityConfig {
 					.requestMatchers("/member/sns/kakao/callback").permitAll()
 					.requestMatchers("/rest/member/authform/**").permitAll()
 					
-					//.anyRequest().authenticated() // 위에 명시된 항목 외에는 로그인 요구
-					.anyRequest().permitAll()
+					// .requestMatchers("/movie/comments").hasAnyAuthority("user")
+					.requestMatchers("/movie/comments").permitAll()
+					
+					.anyRequest().authenticated() // 위에 명시된 항목 외에는 로그인 요구
+					
 			);
 			
 		httpSecurity

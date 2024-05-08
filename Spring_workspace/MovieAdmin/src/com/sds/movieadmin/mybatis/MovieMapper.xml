@@ -13,6 +13,10 @@
 	
 	<insert id="insert" parameterType="Movie">
 		insert into movie(movieCd, url) values(#{movieCd}, #{url})
+		<!-- 생성된 pk 가져오기 -->
+		<selectKey keyColumn="movie_idx" keyProperty="movie_idx" resultType="int" order="AFTER">
+			select last_insert_id() as movie_idx
+		</selectKey>
 	</insert>
 
 	<delete id="deleteAll">
