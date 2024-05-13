@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 // Spring 3.0부터 Spring bean xml 대신 어노테이션 기반 설정 지원
 
@@ -42,8 +43,8 @@ public class SecurityConfig {
 					.requestMatchers("/member/sns/kakao/callback").permitAll()
 					.requestMatchers("/rest/member/authform/**").permitAll()
 					
-					// .requestMatchers("/movie/comments").hasAnyAuthority("user")
-					.requestMatchers("/movie/comments").permitAll()
+					.requestMatchers("/movie/comments").hasAnyAuthority("user")
+					.requestMatchers("/movie/recommend/list").hasAnyAuthority("user")
 					
 					.anyRequest().authenticated() // 위에 명시된 항목 외에는 로그인 요구
 					
@@ -51,7 +52,10 @@ public class SecurityConfig {
 			
 		httpSecurity
 		.formLogin((auth)->
-			auth.loginPage("/member/loginform").loginProcessingUrl("/member/login")
+			auth.loginPage("/member/loginform")
+				// 개발자가 정의한 핸들러 등록
+				.successHandler(loginEventHandler())
+				.loginProcessingUrl("/member/login")
 				.usernameParameter("uid")
 				.passwordParameter("password")
 		);
@@ -60,6 +64,14 @@ public class SecurityConfig {
 		httpSecurity.csrf((auth->auth.disable()));
 		
 		return httpSecurity.build();
+	}
+	
+	// OAuth user와 security를 이용한 홈페이지 로그인 유저가 session에 공통의 memberDTO를 갖고 있게 한다면
+	// 회원 정보를 꺼내올 때 member로 통일 가능하다
+	// 따라서 security에 모든것을 맡기지 않고, 로그인하는 시점을 낚아채서 session에 memberDTO를 심어놓자
+	@Bean 
+	public AuthenticationSuccessHandler loginEventHandler() {
+		return new LoginEventHandler();
 	}
 	
 }

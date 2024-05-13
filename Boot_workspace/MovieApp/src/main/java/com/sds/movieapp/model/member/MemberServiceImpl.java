@@ -60,4 +60,10 @@ public class MemberServiceImpl implements MemberService {
 		}
 	
 	}
+
+	@Override
+	public Member selectByUid(String uid) {
+		// TODO Auto-generated method stub
+		return memberDAO.selectByUid(uid);
+	}
 }

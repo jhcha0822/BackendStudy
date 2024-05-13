@@ -24,12 +24,15 @@ import com.sds.movieapp.domain.Member;
 import com.sds.movieapp.domain.Role;
 import com.sds.movieapp.exception.MemberException;
 import com.sds.movieapp.model.member.MemberService;
+import com.sds.movieapp.model.member.RoleService;
+import com.sds.movieapp.model.member.SnsService;
 import com.sds.movieapp.sns.KaKaoLogin;
 import com.sds.movieapp.sns.KaKaoOAuthToken;
 import com.sds.movieapp.sns.NaverLogin;
 import com.sds.movieapp.sns.NaverOAuthToken;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -44,6 +47,16 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private SnsService snsService;
+	
+	@Autowired
+	private RoleService roleService;
+	
+	// 주입받아 사용 가능
+	@Autowired
+	private HttpSession session;
 	
 	// 로그인 폼 요청 처리
 	@GetMapping("/member/loginform")
@@ -171,12 +184,28 @@ public class MemberController {
 		String id = (String)response.get("id");
 		String email = (String)response.get("email");
 		String name = (String)response.get("name");
+				
+		// 신규 회원 가입자인 경우 회원 정보에 sns유형, 권한 정보도 함께 구성
+		Member member = new Member();
+		member.setUid(id);
+		member.setNickname(name);
+		member.setEmail(email);
+		member.setSns(snsService.selectByName("naver"));
+		member.setRole(roleService.selectByName("user")); // 일반 회원 가입
 		
-		log.info(id);
-		log.info(email);
-		log.info(name);
+		// 중복된 회원이 없으면 가입 진행
+		Member dto = memberService.selectByUid(id);
+		if(dto == null) {
+			memberService.regist(member);
+		}
 		
-		return null;
+		// session을 할당하여 main에 전달
+		session.setAttribute("member", dto);
+		
+		// 로그인 성공 후 추천 영화 페이지로 이동(가볍기 때문에 테스트용)
+		ModelAndView mav = new ModelAndView("redirect:/movie/recommend/list");
+		
+		return mav;
 	}
 	
 	// kakao callback 요청 처리

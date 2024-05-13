@@ -5,5 +5,6 @@ import com.sds.movieapp.domain.Member;
 public interface MemberService {
 
 	public void regist(Member member);
+	public Member selectByUid(String uid);
 	
 }
