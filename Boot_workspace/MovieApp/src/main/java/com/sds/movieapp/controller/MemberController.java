@@ -1,5 +1,6 @@
 package com.sds.movieapp.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -39,7 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class MemberController {
 	
-	@Autowired	
+	@Autowired
 	private NaverLogin naverLogin;
 	
 	@Autowired
@@ -49,14 +54,14 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@Autowired
-	private SnsService snsService;
-	
-	@Autowired
 	private RoleService roleService;
 	
-	// 주입받아 사용 가능
 	@Autowired
-	private HttpSession session;
+	private SnsService snsService;
+	
+	// 주입받아 사용 가능
+	// @Autowired
+	// private HttpSession session;
 	
 	// 로그인 폼 요청 처리
 	@GetMapping("/member/loginform")
@@ -90,10 +95,10 @@ public class MemberController {
 		
 		//일반유저가 홈페이지 가입 시엔 USER 권한을 부여하자 
 		Role role = new Role();
-		role.setRole_name("user");
+		role.setRole_name("USER");
 		member.setRole(role);
 		
-		memberService.regist(member);//3단계: 일 시키기 (가입)
+		memberService.regist(member); //3단계: 일 시키기 (가입)
 		
 		return null;
 	}
@@ -101,7 +106,7 @@ public class MemberController {
 	// 네이버 서버에서 들어온 콜백 요청 처리
 	// 결과 처리 후 로그인을 요청한 사용자가 보게될 화면으로 반환(html) -> MAV or String
 	@GetMapping("/member/sns/naver/callback")
-	public ModelAndView naverCallback(HttpServletRequest request) {
+	public ModelAndView naverCallback(HttpServletRequest request, HttpSession session) {
 		
 		String code = request.getParameter("code");
 		
@@ -167,7 +172,8 @@ public class MemberController {
 		ObjectMapper objectMapper2 = new ObjectMapper();
 		
 		// 준비된 DTO가 없을 경우 HashMap으로 key-value 사용
-		HashMap<String, Object> userMap = new HashMap<String, Object>();
+		// HashMap<String, Object> userMap = new HashMap<String, Object>();
+		HashMap<String, Object> userMap = null;
 		
 		try {
 			userMap = objectMapper2.readValue(userBody, HashMap.class);
@@ -191,7 +197,7 @@ public class MemberController {
 		member.setNickname(name);
 		member.setEmail(email);
 		member.setSns(snsService.selectByName("naver"));
-		member.setRole(roleService.selectByName("user")); // 일반 회원 가입
+		member.setRole(roleService.selectByName("USER")); // 일반 회원 가입
 		
 		// 중복된 회원이 없으면 가입 진행
 		Member dto = memberService.selectByUid(id);
@@ -201,6 +207,13 @@ public class MemberController {
 		
 		// session을 할당하여 main에 전달
 		session.setAttribute("member", dto);
+		log.debug("현재 가진 권한은 "+dto.getRole().getRole_name());
+		
+		// Spring security의 권한 부여를 강제적으로 관리
+		Authentication auth = new UsernamePasswordAuthenticationToken(member.getNickname(), null, Collections.singletonList(new SimpleGrantedAuthority("USER")));
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
+		
 		
 		// 로그인 성공 후 추천 영화 페이지로 이동(가볍기 때문에 테스트용)
 		ModelAndView mav = new ModelAndView("redirect:/movie/recommend/list");

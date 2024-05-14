@@ -16,8 +16,9 @@ import jakarta.servlet.http.HttpSession;
 
 // Spring security가 로그인 처리하는 시점을 알려주는 이벤트 메서드를 통해 개발자가 원하는 로그인 처리 커스터마이징 가능
 // session에 member를 담기 위함: 로그인 기술과의 통합(OAuth는 anonymoususer를 모른다)
-public class LoginEventHandler extends SavedRequestAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {   
+public class LoginEventHandler extends SavedRequestAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {    
 	
+	//유저가 스프링 시큐리티 기반으로 로그인을 성공하는 시점
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws ServletException, IOException {

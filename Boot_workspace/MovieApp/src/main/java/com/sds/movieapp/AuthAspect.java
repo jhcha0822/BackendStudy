@@ -2,11 +2,9 @@ package com.sds.movieapp;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -18,9 +16,13 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 // 사용자명을 저장할 AOP 구성: 모든 컨트롤러에서 사용
+
+// 더이상 사용할 필요가 없다.
+// Spring Security를 쓰기 이전, AOP를 이용하여 권한 설정을 사용하였음
+
 @Slf4j
-@Aspect
-@Component
+// @Aspect
+// @Component
 public class AuthAspect {
 
 	@Pointcut("execution(public * com.sds.movieapp.controller..*(..))")
