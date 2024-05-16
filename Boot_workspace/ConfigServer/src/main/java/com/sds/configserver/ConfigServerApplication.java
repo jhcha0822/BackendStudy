@@ -6,6 +6,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 
 // 이 어플리케이션을 설정 
 
+@SpringBootApplication
 @EnableConfigServer
 public class ConfigServerApplication {
 
