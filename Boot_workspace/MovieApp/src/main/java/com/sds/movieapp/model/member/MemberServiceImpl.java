@@ -1,7 +1,7 @@
 package com.sds.movieapp.model.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +10,8 @@ import com.sds.movieapp.domain.MemberDetail;
 import com.sds.movieapp.domain.Role;
 import com.sds.movieapp.domain.Sns;
 import com.sds.movieapp.exception.MemberException;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -26,8 +28,11 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDetailDAO memberDetailDAO;
 	
+//	@Autowired
+//	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private PasswordEncoder passwordEncoder;
 	
 	@Transactional
 	public void regist(Member member) throws MemberException{
@@ -40,8 +45,9 @@ public class MemberServiceImpl implements MemberService{
 		member.setRole(role); //role_idx가 채워진 DTO를 다시 Member DTO  에 대입
 		
 		int result = memberDAO.insert(member);
+//		log.debug("member result is "+result);
 		
-		if(result <1) {
+		if(result<1) {
 			throw new MemberException("회원 등록 실패");
 		}
 		
@@ -50,10 +56,12 @@ public class MemberServiceImpl implements MemberService{
 			//회원 상세 정보 등록 
 			MemberDetail memberDetail = member.getMemberDetail();
 			memberDetail.setMember(member);
-			memberDetail.setPassword(bCryptPasswordEncoder.encode(memberDetail.getPassword())); 
+//			memberDetail.setPassword(bCryptPasswordEncoder.encode(memberDetail.getPassword())); 
+			memberDetail.setPassword(passwordEncoder.encode(memberDetail.getPassword())); 
 			
 			//비밀번호 암호화 처리 
 			result = memberDetailDAO.insert(memberDetail);//회원 상세 정보 등록
+//			log.debug("memberDetail result is "+result);
 			if(result <1) {
 				throw new MemberException("회원 추가정보 등록 실패");
 			}

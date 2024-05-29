@@ -23,14 +23,31 @@
 		
 		<association column="sns_idx" property="sns" javaType="Sns" select="com.sds.movieapp.model.member.SnsDAO.select"/>
 		<association column="role_idx" property="role" javaType="Role" select="com.sds.movieapp.model.member.RoleDAO.select"/>
-		<association column="member_idx" property="memberDetail" javaType="MemberDetail" select="com.sds.movieapp.model.member.MemberDetailDAO.selectByMemberIdx"/>
-		
+		<association column="member_idx" property="memberDetail" javaType="MemberDetail" 
+			select="com.sds.movieapp.model.member.MemberDetailDAO.selectByMemberIdx"/>
 	</resultMap>
 	
 	<!-- uid를 이용한 회원조회 -->
 	<select id="selectByUid" parameterType="String" resultMap="MemberMap">
 		select member_idx, uid, nickname, email, sns_idx, role_idx
 		from member where uid=#{uid}
+	</select>
+	
+	<!-- 무한 루프를 끊기 위한 map -->
+	<resultMap type="Member" id="MemberMap2">
+		<id column="member_idx" property="member_idx"/>
+		<result column="uid" property="uid" />
+		<result column="nickname" property="nickname" />
+		<result column="email" property="email" />
+		
+		<association column="sns_idx" property="sns" javaType="Sns" select="com.sds.movieapp.model.member.SnsDAO.select"/>
+		<association column="role_idx" property="role" javaType="Role" select="com.sds.movieapp.model.member.RoleDAO.select"/>
+	</resultMap>	
+
+	<!-- memberDetail을 위한 쿼리문 -->
+	<select id="selectByMemberIdx" parameterType="int" resultMap="MemberMap2">
+		select * from member
+		where member_idx=#{member_idx}
 	</select>
 
 </mapper>
